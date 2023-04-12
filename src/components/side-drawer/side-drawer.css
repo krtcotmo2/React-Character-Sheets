@@ -1,0 +1,12 @@
+.MuiDrawer-paper p.shelfHeader{
+    min-width: 400px;
+    padding: 0 0 0 12px;
+}
+
+.pageLink{
+    cursor: pointer;
+    padding: 6px 6px 6px 24px
+}
+.pageLink:hover{
+    background: #ccc;
+}
