@@ -1,5 +1,5 @@
 import { Button, Grid, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Character } from "../../interfaces/character";
 import { StatsBar } from "../stats-bar/stats-bar";
 import { SavesBar } from "../saves-bar/saves-bar";
@@ -7,15 +7,36 @@ import { SkillsBar } from "../skills-bar/skills-bar";
 import { InitBar } from "../init-bar/init-bar";
 import { getChar } from "./business-logic/load-chars";
 import { showError } from "../modal/business-logic/error-handler";
+import { store } from "../../redux/configure-store";
+import { CharacterActions } from "../../redux/reducers/character-reducer";
+import { batch } from "react-redux";
+import { StatsActions } from "../../redux/reducers/stats-reducer";
+import { Stat } from "../../interfaces/stat";
+import { SavesActions } from "../../redux/reducers/saves-reducer";
+import { SavingThrow } from "../../interfaces/saving-throw";
+import { SkillActions } from "../../redux/reducers/skills.reducer";
+import { Skill } from "../../interfaces/skills";
+import { CharLevelActions } from "../../redux/reducers/level-reducer";
+import { CharLevel } from "../../interfaces/levels";
 
 const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
   const [char, setChar] = useState<Character | undefined>(undefined);
   const [charId, setCharId] = useState("");
 
-  const requestChar = async () => {
-    await getChar(charId)
+  const requestChar = async (id: string) => {
+    if(id==='') {
+      return
+    }
+    await getChar(id)
       .then( (charData: Character | undefined) => {
         setChar(charData);
+        batch(()=>{
+          store.dispatch(CharacterActions.setCharacter(charData as Character));
+          store.dispatch(StatsActions.setStat(charData?.stats as Stat));
+          store.dispatch(SavesActions.setSaves(charData?.saves as SavingThrow));
+          store.dispatch(SkillActions.setSkills(charData?.skills as Skill[]));
+          store.dispatch(CharLevelActions.setCharLevels(charData?.levels as CharLevel[]));
+        });
       })
       .catch(err => {
         switch(err.message){
@@ -28,31 +49,33 @@ const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
               [{key: 'userId', value: charId}]
             );
           break;
-          default:
-            showError('unknown-error');
-        }  
+        case 'stat_not_found':
+          showError(
+            err.message,
+            [{key: 'userId', value: charId}]
+          );
+          break;
+        default:
+          showError('unknown-error');
+      }  
       })
       .finally(()=>{
-        setCharId('');
+        //setCharId('');
       })
   }
 
+  const cb =  () => {
+    const pathParts = window.location.pathname.split('/');
+    const queryParam = pathParts[pathParts.length-1]
+    setCharId(queryParam);
+    requestChar(charId)
+  }
+  useEffect( cb, [charId])
   return (
     <>
       <Grid container>
         <Grid container item justifyContent='center'>
-          <form style={{ color: "white !important" }}>
-            Get character
-            <TextField
-              onChange={(event) => setCharId(event.target.value)}
-              value={charId}
-              type="number"
-              sx={{ input: { color: "black" } }}
-            >
-              {charId}
-            </TextField>
-            <Button onClick={requestChar}>Go</Button>
-          </form>
+            {char?.charName}
         </Grid>
       </Grid>
       {char?.stats && <StatsBar stats={char.stats} />}
