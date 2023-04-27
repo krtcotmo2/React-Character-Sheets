@@ -28,10 +28,17 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
         <div>
             <Drawer anchor="left" open={drawerStatus} onClose={toggleDrawer(false)}>
                 <p className='shelfHeader'>Characters</p>
-                <div className='pageLink' onClick={toggleDrawer(false)}>Load characters</div>
+                <div className='pageLink' onClick={toggleDrawer(false)}>
+                    <Link to="/main/loadChar">Load Character</Link>
+                </div>
                 <Divider/>
                 <p className='shelfHeader'>Current Character</p>
-                <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Stats Details</div>
+                <div className='pageLink' onClick={toggleDrawer(false)}>
+                    <Link to="/">View/Edit Core Details</Link>
+                </div>
+                <div className='pageLink' onClick={toggleDrawer(false)}>
+                    <Link to='/character/stats'>View/Edit Stats Details</Link>
+                </div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Saves Details</div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Skills Details</div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Spells Details</div>
