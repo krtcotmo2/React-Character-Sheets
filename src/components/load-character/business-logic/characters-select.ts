@@ -1,10 +1,5 @@
-import axios from "axios";
+import { getAllCharacters } from "../../../api/character-api";
 
-export const getAllCharacters = async () => {
-    const allCharacters = await axios
-    .get(`http://localhost:3001/api/character/with-levels/`)
-    .catch((err) => {
-        throw new Error(err.message);
-    });
-    return allCharacters?.data;
+export const loadCharacters = async () => {
+    return await getAllCharacters();
 }

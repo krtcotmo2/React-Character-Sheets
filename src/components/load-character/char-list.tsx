@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Character } from '../../interfaces/character';
 import { CharLevel } from '../../interfaces/levels';
-import { getAllCharacters } from './business-logic/characters-select';
+import { loadCharacters } from './business-logic/characters-select';
 import { CharacterRow } from './character-row';
 
 export const CharacterList: React.FC = (): JSX.Element => {
@@ -9,7 +9,7 @@ export const CharacterList: React.FC = (): JSX.Element => {
     const userId = 1;
 
     useEffect( () => {
-        getAllCharacters()
+        loadCharacters()
         .then( chars=> {
             setAllChars(chars)
         });

@@ -5,7 +5,7 @@ import { StatsBar } from "../stats-bar/stats-bar";
 import { SavesBar } from "../saves-bar/saves-bar";
 import { SkillsBar } from "../skills-bar/skills-bar";
 import { InitBar } from "../init-bar/init-bar";
-import { getChar } from "./business-logic/load-chars";
+import { loadChar } from "./business-logic/load-chars";
 import { showError } from "../modal/business-logic/error-handler";
 import { store } from "../../redux/configure-store";
 import { CharacterActions } from "../../redux/reducers/character-reducer";
@@ -28,7 +28,7 @@ const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
     if(id==='') {
       return
     }
-    await getChar(id)
+    await loadChar(id)
       .then( (charData: Character | undefined) => {
         setChar(charData);
         batch(()=>{
