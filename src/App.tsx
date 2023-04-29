@@ -13,6 +13,8 @@ import { MessageManager } from "./components/modal/modal-manager";
 import { SelectCharacter } from "./views/select-character/select-character";
 import { Provider as ReduxProvider } from "react-redux";
 import { CharacterStats } from "./views/stats/stats";
+import { CharacterSaves } from "./views/saves/saves";
+import { CharacterSkills } from "./views/skills/skills";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -33,7 +35,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/user/new" element={<NewUser />} />
                 <Route path="/main/loadChar" element={<SelectCharacter/>} />
-                <Route path="/character/stats" element={<CharacterStats />} />
+                <Route path="/character/stats/*" element={<CharacterStats />} />
+                <Route path="/character/save/*" element={<CharacterSaves />} />
+                <Route path="/character/skills/*" element={<CharacterSkills/>} />
                 <Route path="/character/*" element={<CharacterGetter />} />
               </Routes>
             </header>

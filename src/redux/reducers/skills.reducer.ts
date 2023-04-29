@@ -1,14 +1,15 @@
 import { createActionCreators, createReducerFunction, ImmerReducer } from "immer-reducer";
 import { Skill } from "../../interfaces/skills";
+import { RawSkill } from "../../interfaces/raw-skill";
 
 declare module '../../interfaces/skills' {
-    export const theSkills: Skill[]
+    export const theSkills: RawSkill[]
 }
 
-const initialState: Skill[] = []
+const initialState: RawSkill[] = []
 
-class SkillReducer extends ImmerReducer<Skill[]> {
-    public setSkills(skills: Skill[]){
+class SkillReducer extends ImmerReducer<RawSkill[]> {
+    public setSkills(skills: RawSkill[]){
         this.draftState = skills;
     }
     public clearSkills(){

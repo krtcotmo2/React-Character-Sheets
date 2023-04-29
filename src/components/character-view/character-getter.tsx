@@ -18,6 +18,7 @@ import { SkillActions } from "../../redux/reducers/skills.reducer";
 import { Skill } from "../../interfaces/skills";
 import { CharLevelActions } from "../../redux/reducers/level-reducer";
 import { CharLevel } from "../../interfaces/levels";
+import { RawSkill } from "../../interfaces/raw-skill";
 
 const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
   const [char, setChar] = useState<Character | undefined>(undefined);
@@ -34,7 +35,7 @@ const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
           store.dispatch(CharacterActions.setCharacter(charData as Character));
           store.dispatch(StatsActions.setStat(charData?.stats as Stat));
           store.dispatch(SavesActions.setSaves(charData?.saves as SavingThrow));
-          store.dispatch(SkillActions.setSkills(charData?.skills as Skill[]));
+          store.dispatch(SkillActions.setSkills(charData?.skills as RawSkill[]));
           store.dispatch(CharLevelActions.setCharLevels(charData?.levels as CharLevel[]));
         });
       })

@@ -2,6 +2,9 @@ import { Divider, Drawer } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 import './side-drawer.css';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Character } from '../../interfaces/character';
+import { store } from '../../redux/configure-store';
 
 
 
@@ -11,7 +14,7 @@ export interface DrawerProp{
 }
 export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerProp): JSX.Element =>{
     const {drawerStatus, setDrawerStatus} = props;
-   
+    const char: Character = useSelector(state => store.getState().character);
     const toggleDrawer = (status: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
@@ -34,13 +37,17 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
                 <Divider/>
                 <p className='shelfHeader'>Current Character</p>
                 <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to="/">View/Edit Core Details</Link>
+                    <Link to={`/character/${char.charID}`}>View/Edit Core Details</Link>
                 </div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to='/character/stats'>View/Edit Stats Details</Link>
+                    <Link to={`/character/stats/${char.charID}`}>View/Edit Stats Details</Link>
                 </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Saves Details</div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Skills Details</div>
+                <div className='pageLink' onClick={toggleDrawer(false)}>
+                    <Link to={`/character/save/${char.charID}`}>View/Edit Saves Details</Link>
+                </div>
+                <div className='pageLink' onClick={toggleDrawer(false)}>
+                    <Link to={`/character/skills/${char.charID}`}>View/Edit Skills Details</Link>
+                </div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Spells Details</div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Expendables Details</div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Notes Details</div>

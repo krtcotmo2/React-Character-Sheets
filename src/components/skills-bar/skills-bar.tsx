@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import {uniqBy} from 'lodash';
 
 import { Skill } from '../../interfaces/skills';
+import { RawSkill } from '../../interfaces/raw-skill';
 
 export const SkillsBar: React.FC<SkillProps> = (props: SkillProps):JSX.Element => {
   const {skills} = props  
@@ -33,5 +34,5 @@ export const SkillsBar: React.FC<SkillProps> = (props: SkillProps):JSX.Element =
 }
 
 interface SkillProps{
-    skills: Skill[];
+    skills: RawSkill[];
 }

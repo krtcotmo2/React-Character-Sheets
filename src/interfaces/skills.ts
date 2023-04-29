@@ -6,5 +6,4 @@ export interface Skill {
   skillName: string;
   skillID: number;
   pinned: boolean,
-  score: number;
 }

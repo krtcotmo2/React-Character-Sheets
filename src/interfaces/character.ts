@@ -1,4 +1,5 @@
 import { CharLevel } from "./levels";
+import { RawSkill } from "./raw-skill";
 import { SavingThrow } from "./saving-throw";
 import { Skill } from "./skills";
 import { Stat } from "./stat";
@@ -14,7 +15,7 @@ export interface Character {
     race: string;
     saves?: SavingThrow;
     stats?: Stat;
-    skills?: Skill[];
+    skills?: RawSkill[];
     userID: number;
     levels?: CharLevel[]
 }
