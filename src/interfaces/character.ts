@@ -1,5 +1,6 @@
+import { CharLevel } from "./levels";
 import { SavingThrow } from "./saving-throw";
-import { Skill } from "./skills";
+import { RawSkill } from "./skills";
 import { Stat } from "./stat";
 
 export interface Character {
@@ -11,8 +12,10 @@ export interface Character {
     init: number;
     isDead: boolean;
     race: string;
-    saves: SavingThrow;
-    stats: Stat;
-    skills: Skill[];
-    userId: number;
+    saves?: SavingThrow;
+    stats?: Stat;
+    skills?: RawSkill[];
+    userID: number;
+    levels?: CharLevel[]
 }
+
