@@ -1,7 +1,6 @@
 import { CharLevel } from "./levels";
-import { RawSkill } from "./raw-skill";
 import { SavingThrow } from "./saving-throw";
-import { Skill } from "./skills";
+import { RawSkill } from "./skills";
 import { Stat } from "./stat";
 
 export interface Character {

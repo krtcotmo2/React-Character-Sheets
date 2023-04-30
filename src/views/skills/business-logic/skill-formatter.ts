@@ -1,6 +1,5 @@
 import _ from "lodash";
-import { Skill } from "../../../interfaces/skills";
-import { RawSkill } from "../../../interfaces/raw-skill";
+import { Skill, RawSkill } from "../../../interfaces/skills";
 import { ModifierType } from "../../../enum/modifier-type";
 
 

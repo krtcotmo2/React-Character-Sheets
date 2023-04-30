@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Skill } from '../../interfaces/skills';
+import { Skill, RawSkill } from '../../interfaces/skills';
 import { useSelector } from 'react-redux';
 import { store } from '../../redux/configure-store';
-import { formatSkills, getSkillGroups } from './business-logic/skill-formatter';
-import { RawSkill } from '../../interfaces/raw-skill';
+import { formatSkills } from './business-logic/skill-formatter';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 
 interface SkillsProps {

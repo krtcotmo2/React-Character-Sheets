@@ -2,8 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import {uniqBy} from 'lodash';
 
-import { Skill } from '../../interfaces/skills';
-import { RawSkill } from '../../interfaces/raw-skill';
+import { RawSkill } from '../../interfaces/skills';
 
 export const SkillsBar: React.FC<SkillProps> = (props: SkillProps):JSX.Element => {
   const {skills} = props  

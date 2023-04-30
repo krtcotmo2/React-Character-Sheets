@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import "./App.css";
-import { AppState, store } from './redux/configure-store';
+import { store } from './redux/configure-store';
 import CharacterGetter from "./components/character-view/character-getter";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import { CharMain } from "./views/char-main";
@@ -15,6 +15,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { CharacterStats } from "./views/stats/stats";
 import { CharacterSaves } from "./views/saves/saves";
 import { CharacterSkills } from "./views/skills/skills";
+import { Spells } from "./views/spells/spells";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/character/save/*" element={<CharacterSaves />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />
                 <Route path="/character/*" element={<CharacterGetter />} />
+                <Route path="/spells/character/*" element={<Spells />} />
               </Routes>
             </header>
             <SideDrawer drawerStatus = {drawerOpen} setDrawerStatus={setDrawerOpen}/>

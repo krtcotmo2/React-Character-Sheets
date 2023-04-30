@@ -1,6 +1,5 @@
 import { createActionCreators, createReducerFunction, ImmerReducer } from "immer-reducer";
-import { Skill } from "../../interfaces/skills";
-import { RawSkill } from "../../interfaces/raw-skill";
+import { RawSkill } from "../../interfaces/skills";
 
 declare module '../../interfaces/skills' {
     export const theSkills: RawSkill[]

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Character } from '../../interfaces/character';
-import { CharLevel } from '../../interfaces/levels';
 import { loadCharacters } from './business-logic/characters-select';
 import { CharacterRow } from './character-row';
 
