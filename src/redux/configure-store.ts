@@ -6,6 +6,7 @@ import { SavesReducerFunctions } from "./reducers/saves-reducer";
 import { SkillReducerFunctions } from "./reducers/skills.reducer";
 import { CharLevelReducerFunctions } from "./reducers/level-reducer";
 import { SpellReducerFunctions } from "./reducers/spell-reducer";
+import { FeatsReducerFunctions } from "./reducers/feates-reducer";
 
 const rootReducer = combineReducers({
     character: CharacterReducerFunctions,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     skills: SkillReducerFunctions,
     levels: CharLevelReducerFunctions,
     spells: SpellReducerFunctions,
+    feats: FeatsReducerFunctions,
 })
 export type AppState = ReturnType<typeof rootReducer>
 

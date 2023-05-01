@@ -16,6 +16,7 @@ import { CharacterStats } from "./views/stats/stats";
 import { CharacterSaves } from "./views/saves/saves";
 import { CharacterSkills } from "./views/skills/skills";
 import { Spells } from "./views/spells/spells";
+import { CharacterFeats } from "./views/feats/feats";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -40,7 +41,8 @@ function App() {
                 <Route path="/character/save/*" element={<CharacterSaves />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />
                 <Route path="/character/*" element={<CharacterGetter />} />
-                <Route path="/spells/character/*" element={<Spells />} />
+                <Route path="/character/spells/*" element={<Spells />} />
+                <Route path="/character/feats/*" element={<CharacterFeats />} />
               </Routes>
             </header>
             <SideDrawer drawerStatus = {drawerOpen} setDrawerStatus={setDrawerOpen}/>
