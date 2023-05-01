@@ -54,9 +54,11 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
                 <div className='pageLink' onClick={toggleDrawer(false)}>
                     <Link to={`/character/skills/${char.charID}`}>View/Edit Skills Details</Link>
                 </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/spells/character/${char.charID}`}>View/Edit Spells Details</Link>
-                </div>
+                {char.isCaster && (
+                    <div className='pageLink' onClick={toggleDrawer(false)}>
+                        <Link to={`/spells/character/${char.charID}`}>View/Edit Spells Details</Link>
+                    </div>
+                )}
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Expendables Details</div>
                 <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Notes Details</div>
                 <Divider/>

@@ -16,6 +16,7 @@ export interface Character {
     stats?: Stat;
     skills?: RawSkill[];
     userID: number;
-    levels?: CharLevel[]
+    levels?: CharLevel[],
+    isCaster: boolean,
 }
 

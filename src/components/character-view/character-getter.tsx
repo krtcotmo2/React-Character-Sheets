@@ -5,7 +5,7 @@ import { StatsBar } from "../stats-bar/stats-bar";
 import { SavesBar } from "../saves-bar/saves-bar";
 import { SkillsBar } from "../skills-bar/skills-bar";
 import { InitBar } from "../init-bar/init-bar";
-import { loadChar } from "./business-logic/load-chars";
+import { checkForCaster, loadChar } from "./business-logic/load-chars";
 import { showError } from "../modal/business-logic/error-handler";
 import { store } from "../../redux/configure-store";
 import { CharacterActions } from "../../redux/reducers/character-reducer";
@@ -33,6 +33,9 @@ const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
       await loadChar(id)
         .then( (charData: Character | undefined) => {
           setChar(charData);
+          if(charData){
+            charData.isCaster = checkForCaster(charData?.levels);
+          }
           batch(()=>{
             store.dispatch(CharacterActions.setCharacter(charData as Character));
             store.dispatch(StatsActions.setStat(charData?.stats as Stat));
