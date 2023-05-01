@@ -1,5 +1,7 @@
 import { CharLevel } from "../../../interfaces/levels";
 import { getChar } from "../../../api/character-api";
+import _ from "lodash";
+import { updateReturn } from "typescript";
 
 export const loadChar = async (charId: string) => {
     const searchParam = charId;
@@ -20,5 +22,15 @@ export const loadChar = async (charId: string) => {
         return `${lvl.className} - ${lvl.classLevel.toString()}`
     })
     return a.join(', ')
+}
+export const checkForCaster = (levels: CharLevel[] | undefined): boolean => {
+    if(!levels){
+        return false;
+    }
+    const casters = ['Druid', 'Cleric', 'Paladin', 'Ranger', 'Sorcerer', 'Sorceress', 'Wizard', 'Magus'];
+    const arr = casters.map(caster => {
+        return levels.some(lvl => lvl.className === caster);
+    });
+    return arr.some(isCaster => isCaster);
 
 }

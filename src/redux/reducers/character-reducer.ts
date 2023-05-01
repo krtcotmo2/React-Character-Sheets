@@ -14,7 +14,8 @@ const initialState: Character = {
     init: 0,
     isDead: false,
     race: '',
-    userID: 0
+    userID: 0,
+    isCaster: true,
 }
 
 class CharacterReducer extends ImmerReducer<Character> {
@@ -28,7 +29,8 @@ class CharacterReducer extends ImmerReducer<Character> {
             init: char.init,
             isDead: char.isDead,
             race: char.race,
-            userID: char.userID
+            userID: char.userID,
+            isCaster: char.isCaster,
         };
     }
     public clearCharacter(){
