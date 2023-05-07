@@ -5,11 +5,12 @@ import { store } from '../../redux/configure-store';
 import { getCharacterToHits } from '../../api/to-hit-api';
 import { formatToHits } from './business-logic/to-hit-logic';
 import { ToHitGroup } from '../../interfaces/to-hit';
+import { ToHitActions } from '../../redux/reducers/to-hit-reducer';
 
 export const ToHitView: React.FC = ():JSX.Element => {
     const levels = useSelector(state => store.getState().levels);
     const stats = useSelector(state => store.getState().stats);
-    const toHit = levels.reduce( (orig, lvl) => orig + lvl.toHit, 1);
+    const toHit = levels.reduce( (orig, lvl) => orig + lvl.toHit, 0);
     const strBonus = Math.floor((stats.str.value - 10) / 2);
     const dexBonus = Math.floor((stats.dex.value - 10) / 2);
     const [curToHits, setCurToHits] = useState<ToHitGroup[]>([])
@@ -17,10 +18,9 @@ export const ToHitView: React.FC = ():JSX.Element => {
     useEffect( () => {
         getCharacterToHits(store.getState().character.charID.toString())
            .then( currentHits => {
-            const a = formatToHits(currentHits);
-            setCurToHits(a);
-            console.log(a)
-               //store.dispatch(SpellActions.setSpells(curentSpells));
+            const toHitGroups = formatToHits(currentHits);
+            setCurToHits(toHitGroups);
+            store.dispatch(ToHitActions.setToHitGroups(toHitGroups));
            })
        },[])
        
