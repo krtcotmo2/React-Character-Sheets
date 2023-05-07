@@ -35,7 +35,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
                 <Grid>Base CMB: {toHit} + {strBonus} = {toHit + strBonus}</Grid>
                 <Grid>Base CMD: 10 + {toHit} + {strBonus} + {dexBonus} = {10 + toHit + strBonus + dexBonus}</Grid>
             </Grid>
-            <Divider color='#fff' style={{margin: '12px 0'}}/>
+            <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
             <Grid container direction="column" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
                 {curToHits.map(hit => (
                     <Grid>

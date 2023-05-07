@@ -19,7 +19,7 @@ import { RawSkill } from "../../interfaces/skills";
 import { CharLevelActions } from "../../redux/reducers/level-reducer";
 import { CharLevel } from "../../interfaces/levels";
 
-const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
+const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
   const [char, setChar] = useState<Character | undefined>(undefined);
   const [charId, setCharId] = useState("");
 
@@ -88,19 +88,9 @@ const CharacterGetter: React.FunctionComponent = (): JSX.Element => {
         {char && <InitBar init={char.init ?? 0} />}
         {char?.skills && <SkillsBar skills={char.skills} />}
       </Grid>
-      <Grid container item direction="column" justifyContent={"flex-start"} gap={2} 
-        style={{fontSize:'18px', overflowY:'auto', flexWrap:'nowrap', flexGrow: '1'}}>
-        <p>{char?.charID}</p>
-        <p>{char?.charName}</p>
-        <p>{char?.race}</p>
-        <p>{char?.alignment}</p>
-        <p>{char?.charHP}</p>
-        <p>{char?.init}</p>
-        <p>{char?.image}</p>
-        <p>{char?.isDead.toString()}</p>
-      </Grid>
+      
     </>
   );
 };
 
-export default CharacterGetter;
+export default CharacterOverview;

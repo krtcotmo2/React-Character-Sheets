@@ -17,6 +17,7 @@
 
 .pageLink + hr {
     margin-top:  24px;
+    border-top-width: 2px;
   }
 .pageLink:hover {
   background: rgba(255,255,255,0.4);

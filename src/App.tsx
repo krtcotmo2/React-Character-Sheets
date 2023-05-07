@@ -2,7 +2,7 @@ import React from "react";
 
 import "./App.css";
 import { store } from './redux/configure-store';
-import CharacterGetter from "./components/character-view/character-getter";
+import CharacterOverview from "./components/character-view/character-overview";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import { CharMain } from "./views/char-main";
 import { Login } from "./views/login";
@@ -36,7 +36,7 @@ function App() {
             </Button>
             <header className="App-header">
               <Routes>
-                <Route path="/" element={<CharacterGetter />} />
+                <Route path="/" element={<CharacterOverview />} />
                 <Route path="/main" element={<CharMain />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/user/new" element={<NewUser />} />
@@ -44,7 +44,7 @@ function App() {
                 <Route path="/character/stats/*" element={<CharacterStats />} />
                 <Route path="/character/save/*" element={<CharacterSaves />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />
-                <Route path="/character/*" element={<CharacterGetter />} />
+                <Route path="/character/*" element={<CharacterOverview />} />
                 <Route path="/character/spells/*" element={<Spells />} />
                 <Route path="/character/feats/*" element={<CharacterFeats />} />
                 <Route path="/character/expendables/*" element={<ExpendablesView />} />
