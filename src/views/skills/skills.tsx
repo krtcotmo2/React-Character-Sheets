@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { store } from '../../redux/configure-store';
 import { formatSkills } from './business-logic/skill-formatter';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
+import { Character } from '../../interfaces/character';
+import { Grid } from '@mui/material';
 
 interface SkillsProps {
     skills?: Skill[];
@@ -14,22 +16,34 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
     
     const curSkills: RawSkill[] = useSelector(state => store.getState().skills);
     const [grpdSkills, setGrpdSkills] = useState<Skill[]>([]);
+    const char: Character = useSelector(state => store.getState().character);
+
     useEffect(()=>{
         const a = formatSkills(curSkills);
         setGrpdSkills(a);
     }, [curSkills]);
     return (
-        <div style={{padding:'72px 24px 0px 24px'}}>
-        {
-            grpdSkills.map(skl => (
-                <CollapsibleRow 
-                    title={skl.skillName} 
-                    breakdown={skl.breakdown} 
-                    value={skl.value}
-                    skillData={skl}
-                />
-            ))
-        }
-        </div>
+        
+        <>
+            <Grid container>
+                <Grid container item justifyContent="center">
+                <p>{char?.charName}</p>
+                </Grid>
+            </Grid>
+            <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
+            {
+                grpdSkills.map(skl => (
+                    <Grid item className="standardRow">
+                        <CollapsibleRow 
+                            title={skl.skillName} 
+                            breakdown={skl.breakdown} 
+                            value={skl.value}
+                            skillData={skl}
+                        />
+                    </Grid>
+                ))
+            }
+            </Grid>
+        </>     
     )
 }

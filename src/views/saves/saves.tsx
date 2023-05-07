@@ -3,15 +3,33 @@ import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
 import { SavingThrow } from "../../interfaces/saving-throw";
 import { CollapsibleRow } from "../../components/collapsible-row/collapsible-row";
+import { Grid } from "@mui/material";
+import { Character } from "../../interfaces/character";
 
 export const CharacterSaves: React.FC = (): JSX.Element => {
-    const char: SavingThrow = useSelector(state => store.getState().saves);
+  const charSave: SavingThrow = useSelector((state) => store.getState().saves);
+  const char: Character = useSelector((state) => store.getState().character);
 
-    return (
-        <div style={{padding:'72px 24px 0px 24px'}}>
-            <CollapsibleRow title='Fortitude' value={char.fortitude.value} breakdown={char.fortitude.breakdown}/>
-            <CollapsibleRow title='Reflex' value={char.reflex.value} breakdown={char.reflex.breakdown}/>
-            <CollapsibleRow title='Will' value={char.will.value} breakdown={char.will.breakdown}/>
-        </div>
-    )
-} 
+  return (
+    <>
+      <Grid container>
+        <Grid container item justifyContent="center">
+          <p>{char?.charName}</p>
+        </Grid>
+      </Grid>
+      <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
+        <Grid item className="standardRow">
+        <CollapsibleRow title="Fortitude" value={charSave.fortitude.value} breakdown={charSave.fortitude.breakdown}
+        />
+      </Grid>
+      <Grid item className="standardRow">
+        <CollapsibleRow title="Reflex" value={charSave.reflex.value} breakdown={charSave.reflex.breakdown} />
+      </Grid>
+      <Grid item className="standardRow">
+        <CollapsibleRow title="Will" value={charSave.will.value} breakdown={charSave.will.breakdown} />
+      </Grid>
+      
+      </Grid>
+    </>
+  );
+};
