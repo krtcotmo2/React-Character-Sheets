@@ -31,7 +31,9 @@ function App() {
             <Button 
               style={{position:'absolute', left: 0, top: '10px'}}
               onClick={()=>setDrawerOpen(!drawerOpen)}
-            >Nav</Button>
+            >
+              <img src='../images/shiled.png' width={32}/>
+            </Button>
             <header className="App-header">
               <Routes>
                 <Route path="/" element={<CharacterGetter />} />

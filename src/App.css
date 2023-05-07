@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-image: url('../public/images/map1.jpg');
 }
 
 .App-logo {
@@ -14,14 +15,13 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #6a6a6a;
   max-height: 100vh;
   overflow: hidden;
 }
@@ -54,27 +54,31 @@ svg.rotated{
   flex-wrap: nowrap;
   padding: 12px;
   overflow-y: auto;
+  align-items: center;
+  width: 100%;
 }
 
-.characterRow {
+.charList .characterRow {
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid #6a6a6a;
   margin-bottom: 6px;
   min-height: 74px;
   display: flex;
   align-items: flex-start;
   flex-wrap: nowrap !important;
   overflow: hidden;
+  width: 600px;
+  background-color: #e4dcc7;
 }
 .deceasedBanner{
   font-size: 14px;
   transform: rotate(45deg);
   position: relative;
   color: white;
-  background: rgb(251, 8, 8);
+  background: rgb(0, 0, 0);
   padding: 6px 32px;
   z-index: 1;
   right: -26px;
   top: 18px;
-  box-shadow: -1px 3px 12px 0px rgba(0,0,0,0.5);
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
 }
