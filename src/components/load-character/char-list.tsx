@@ -16,7 +16,7 @@ export const CharacterList: React.FC = (): JSX.Element => {
 
     
     return(
-        <div className='charList' >
+        <div className='charList standardList' >
             <p>Your Characters</p>
             {
                 allChars.filter(char => char.userID === userId).map(char => {

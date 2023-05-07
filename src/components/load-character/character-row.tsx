@@ -16,7 +16,7 @@ export const CharacterRow: React.FC<RowsData> = (props:RowsData): JSX.Element =>
         navigate(`/character/${charID}`);
     }
     return (
-        <Grid container gap={2}  className='characterRow' onClick={()=> loadChar(charID)}>
+        <Grid container gap={2}  className='characterRow standardRow' onClick={()=> loadChar(charID)}>
             <Grid item><img height={72} width={72} alt={charName} src={`https://dd-characters.herokuapp.com/assets/${image}`} /></Grid>
             <Grid container item direction='column' flexGrow={1}>
                 <Grid container>{charName}</Grid>

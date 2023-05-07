@@ -79,7 +79,7 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
     <>
       <Grid container>
         <Grid container item justifyContent='center'>
-            {char?.charName}
+            <p>{char?.charName}</p>
         </Grid>
       </Grid>
       {char?.stats && <StatsBar stats={char.stats} />}

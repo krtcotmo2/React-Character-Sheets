@@ -47,8 +47,7 @@ svg.rotated{
   }
 }
 
-
-.charList {
+.standardList {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -58,17 +57,21 @@ svg.rotated{
   width: 100%;
 }
 
-.charList .characterRow {
-  cursor: pointer;
-  border: 1px solid #6a6a6a;
-  margin-bottom: 6px;
-  min-height: 74px;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: nowrap !important;
+.standardList .standardRow{
   overflow: hidden;
   width: 600px;
   background-color: #e4dcc7;
+  border: 1px solid #6a6a6a;
+  cursor: pointer;
+  border: 1px solid #6a6a6a;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap !important;
+}
+
+.characterRow {
+  min-height: 74px;
 }
 .deceasedBanner{
   font-size: 14px;
