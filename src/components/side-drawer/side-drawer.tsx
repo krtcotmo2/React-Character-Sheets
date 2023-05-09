@@ -31,44 +31,25 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
         <div>
             <Drawer anchor="left" open={drawerStatus} onClose={toggleDrawer(false)}>
                 <p className='shelfHeader'>Characters</p>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to="/main/loadChar">Load Character</Link>
-                </div>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to="/main/loadChar">Load Character</Link>
                 <Divider/>
                 <p className='shelfHeader'>Current Character</p>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/${char.charID}`}>Overview</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/${char.charID}`}>View/Edit Core Details</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/stats/${char.charID}`}>View/Edit Stats Details</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/save/${char.charID}`}>View/Edit Saves Details</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/tohits/${char.charID}`}>View/Edit To Hits Details</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/feats/${char.charID}`}>View/Edit Feats Details</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/skills/${char.charID}`}>View/Edit Skills Details</Link>
-                </div>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/${char.charID}`}>Overview</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/${char.charID}`}>View/Edit Core Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/stats/${char.charID}`}>View/Edit Stats Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/save/${char.charID}`}>View/Edit Saves Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/acs/${char.charID}`}>View/Edit Armor Class Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/tohits/${char.charID}`}>View/Edit To Hits Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/feats/${char.charID}`}>View/Edit Feats Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/skills/${char.charID}`}>View/Edit Skills Details</Link>
                 {char.isCaster && (
-                    <div className='pageLink' onClick={toggleDrawer(false)}>
-                        <Link to={`/character/spells/${char.charID}`}>View/Edit Spells Details</Link>
-                    </div>
+                    <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/spells/${char.charID}`}>View/Edit Spells Details</Link>
                 )}
-                <div className='pageLink' onClick={toggleDrawer(false)}>
-                    <Link to={`/character/expendables/${char.charID}`}>View/Edit Expendables Details</Link>
-                </div>
-                <div className='pageLink' onClick={toggleDrawer(false)}>View/Edit Notes Details</div>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/expendables/${char.charID}`}>View/Edit Expendables Details</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/notes/${char.charID}`}>View/Edit Notes Details</Link>
                 <Divider/>
                 <p className='shelfHeader'>User Status</p>
-                <div className='pageLink' onClick={toggleDrawer(false)}>Log Out</div>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/`} style={{marginBottom: '24px'}}>Logout</Link>
             </Drawer>
         </div>
     )

@@ -10,7 +10,7 @@ import { ModifierType } from '../../enum/modifier-type';
 
 interface RowProps {
     title: string;
-    value: number;
+    value?: number;
     breakdown: Modifier[];
     includeStatBonus?: boolean;
     skillData?: Skill;
@@ -48,7 +48,10 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     )
 }
 
-export const calcBonus = (statValue: number): string => {
+export const calcBonus = (statValue: number | undefined): string => {
+    if(!statValue){
+        return '';
+    }
     const bonus = Math.floor((statValue - 10) / 2);
     return bonus >= 0 ? `+${bonus}`: bonus.toString();
 }

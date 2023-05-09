@@ -14,7 +14,7 @@ export const CharacterStats: React.FC = (): JSX.Element => {
         <>
             <Grid container>
                 <Grid container item justifyContent='center'>
-                    <p>{char?.charName}</p>
+                    <p>{char?.charName} - Stats</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">

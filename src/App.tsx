@@ -32,7 +32,7 @@ function App() {
               style={{position:'absolute', left: 0, top: '10px'}}
               onClick={()=>setDrawerOpen(!drawerOpen)}
             >
-              <img src='../images/shiled.png' width={32}/>
+              <img src={`${process.env.PUBLIC_URL}/images/shiled.png`} width={32}/>
             </Button>
             <header className="App-header">
               <Routes>

@@ -24,10 +24,10 @@
   border-top: 1px solid rgb(147, 147, 147);
   border-bottom: 1px solid rgb(147, 147, 147);
 }
-.pageLink a:link, 
-.pageLink a:hover, 
-.pageLink a:visited, 
-.pageLink a:active{
+.pageLink:link, 
+.pageLink:hover, 
+.pageLink:visited, 
+.pageLink:active{
     font-weight:500;
     font-size: 1.1rem;
     color: black;

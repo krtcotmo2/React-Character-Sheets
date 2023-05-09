@@ -27,7 +27,7 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
         <>
             <Grid container>
                 <Grid container item justifyContent="center">
-                <p>{char?.charName}</p>
+                <p>{char?.charName} - Skills</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
