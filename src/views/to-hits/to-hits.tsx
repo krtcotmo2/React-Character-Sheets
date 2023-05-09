@@ -6,10 +6,14 @@ import { getCharacterToHits } from '../../api/to-hit-api';
 import { formatToHits } from './business-logic/to-hit-logic';
 import { ToHitGroup } from '../../interfaces/to-hit';
 import { ToHitActions } from '../../redux/reducers/to-hit-reducer';
+import { strictEqual } from 'assert';
+import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
+import { ModifierType } from '../../enum/modifier-type';
 
 export const ToHitView: React.FC = ():JSX.Element => {
     const levels = useSelector(state => store.getState().levels);
     const stats = useSelector(state => store.getState().stats);
+    const char = useSelector(state => store.getState().character);
     const toHit = levels.reduce( (orig, lvl) => orig + lvl.toHit, 0);
     const strBonus = Math.floor((stats.str.value - 10) / 2);
     const dexBonus = Math.floor((stats.dex.value - 10) / 2);
@@ -27,13 +31,99 @@ export const ToHitView: React.FC = ():JSX.Element => {
     return (
         <>
             <Grid container>
-                <Grid container item justifyContent='center'>To Hits</Grid>
-            </Grid>
-            <Grid container direction="column" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
-                <Grid>Base Melee: {toHit} + {strBonus} = {toHit + strBonus}</Grid>
-                <Grid>Base Ranged: {toHit} + {dexBonus} = {toHit + dexBonus}</Grid>
-                <Grid>Base CMB: {toHit} + {strBonus} = {toHit + strBonus}</Grid>
-                <Grid>Base CMD: 10 + {toHit} + {strBonus} + {dexBonus} = {10 + toHit + strBonus + dexBonus}</Grid>
+        <Grid container item justifyContent="center">
+          <p>{char?.charName} - To Hits</p>
+        </Grid>
+      </Grid>
+            <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}}>
+                <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
+                    <Grid item className="standardRow">
+                        <CollapsibleRow title="Base Melee" value={toHit + strBonus} breakdown={[
+                            {
+                                id: 0,
+                                score: toHit,
+                                type: ModifierType.MODIFIER,
+                                modDesc: 'Base to Hit'
+                            },
+                            {
+                                id: 0,
+                                score: strBonus,
+                                type: ModifierType.MODIFIER,
+                                modDesc: 'Strength Bonus'
+                            },
+                            
+                        ]}/>
+                    </Grid>
+                </Grid>
+                <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
+                    <Grid item className="standardRow">
+                        <CollapsibleRow title="Base Ranged" value={toHit + dexBonus} breakdown={[
+                                {
+                                    id: 0,
+                                    score: toHit,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Base to Hit'
+                                },
+                                {
+                                    id: 0,
+                                    score: dexBonus,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Dexterity Bonus'
+                                },
+                                
+                            ]}/>
+                    </Grid>
+                </Grid>
+                <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
+                    <Grid item className="standardRow">
+                        <CollapsibleRow title="Base CMB" value={toHit + strBonus} breakdown={[
+                                {
+                                    id: 0,
+                                    score: toHit,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Base to Hit'
+                                },
+                                {
+                                    id: 0,
+                                    score: dexBonus,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Strength Bonus'
+                                },
+                                
+                            ]}/>
+                    </Grid>
+                </Grid>
+                <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
+                    <Grid item className="standardRow">
+                        <CollapsibleRow title="Base CMD" value={10 + toHit + dexBonus + strBonus} breakdown={[
+                                {
+                                    id: 0,
+                                    score: 10,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Base'
+                                }, 
+                                {
+                                    id: 0,
+                                    score: toHit,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Base to Hit'
+                                },
+                                {
+                                    id: 0,
+                                    score: strBonus,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Strength Bonus'
+                                },
+                                {
+                                    id: 0,
+                                    score: dexBonus,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Dexterity Bonus'
+                                },
+                                
+                            ]}/>
+                    </Grid>
+                </Grid>
             </Grid>
             <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
             <Grid container direction="column" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
