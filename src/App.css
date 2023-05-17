@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1.5vmin);
   color: #6a6a6a;
   font-weight: 600;
 }
@@ -70,7 +70,8 @@ svg.rotated{
 }
 
 .characterRow {
-  min-height: 74px;
+  height: 72px;
+  padding: 0;
 }
 .deceasedBanner{
   font-size: 14px;

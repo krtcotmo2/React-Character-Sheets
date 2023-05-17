@@ -126,10 +126,24 @@ export const ToHitView: React.FC = ():JSX.Element => {
                 </Grid>
             </Grid>
             <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-            <Grid container direction="column" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+            <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                 {curToHits.map(hit => (
-                    <Grid>
-                        {hit.hitName}: {toHit}  + {hit.isMelee ? strBonus : dexBonus} + {hit.value}= {toHit + hit.value + (hit.isMelee ? strBonus : dexBonus)}
+                    <Grid item className="standardRow">
+                        <CollapsibleRow title={hit.hitName} value={toHit + (hit.isMelee ? strBonus : dexBonus) + hit.breakdown.reduce((orig, line) => orig + line.score, 0)} breakdown={[
+                            {
+                                id: 0,
+                                score: toHit,
+                                type: ModifierType.MODIFIER,
+                                modDesc: 'Base to Hit'
+                            },
+                            {
+                                id: 0,
+                                score: hit.isMelee ? strBonus : dexBonus,
+                                type: ModifierType.MODIFIER,
+                                modDesc: (hit.isMelee ? 'Strength' : 'Dexterity') +  ' Bonus',
+                            },
+                            ...hit.breakdown,
+                        ]}/>
                     </Grid>
                 ))}
             </Grid>
