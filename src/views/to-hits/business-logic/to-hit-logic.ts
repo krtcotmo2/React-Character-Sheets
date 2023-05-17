@@ -29,7 +29,10 @@ export const getToHitGroups = (hits: ToHit[]): ToHitGroup[] => {
             hitName: hit.hitName,
             id: hit.toHitID,
             pinned: hit.pinned,
-            isMelee: hit.isMelee
+            isMelee: hit.isMelee,
+            damage: hit.damage,
+            critDamage: hit.critDamage,
+            critRange: hit.critRange,
         }
     })
     return categories;

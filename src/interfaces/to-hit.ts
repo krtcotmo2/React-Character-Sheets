@@ -10,6 +10,9 @@ export interface ToHit{
     hitOrder: number;
     pinned: boolean;
     isMelee: boolean;
+    damage: string,
+    critRange: string,
+    critDamage: string,
 }
 
 export interface ToHitGroup{
@@ -19,4 +22,7 @@ export interface ToHitGroup{
     hitName: string;
     pinned: boolean;
     isMelee: boolean;
+    damage: string,
+    critRange: string,
+    critDamage: string,
 }

@@ -9,6 +9,7 @@ import { ToHitActions } from '../../redux/reducers/to-hit-reducer';
 import { strictEqual } from 'assert';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { ModifierType } from '../../enum/modifier-type';
+import { DamageRow } from '../../components/damage-row/damage-row';
 
 export const ToHitView: React.FC = ():JSX.Element => {
     const levels = useSelector(state => store.getState().levels);
@@ -85,7 +86,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
                                 },
                                 {
                                     id: 0,
-                                    score: dexBonus,
+                                    score: strBonus,
                                     type: ModifierType.MODIFIER,
                                     modDesc: 'Strength Bonus'
                                 },
@@ -128,7 +129,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
             <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                 {curToHits.map(hit => (
-                    <Grid item className="standardRow">
+                    <Grid item className="standardRow" direction='column'>
                         <CollapsibleRow title={hit.hitName} value={toHit + (hit.isMelee ? strBonus : dexBonus) + hit.breakdown.reduce((orig, line) => orig + line.score, 0)} breakdown={[
                             {
                                 id: 0,
@@ -144,6 +145,11 @@ export const ToHitView: React.FC = ():JSX.Element => {
                             },
                             ...hit.breakdown,
                         ]}/>
+                        <DamageRow 
+                            critDamage={hit.critDamage} 
+                            critRange={hit.critRange}
+                            damage={hit.damage}
+                        />
                     </Grid>
                 ))}
             </Grid>

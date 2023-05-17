@@ -28,8 +28,8 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     return (
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>
             <Grid container item direction={'row'} flexWrap='nowrap'>
-                <Grid item container direction='row' wrap='nowrap' flexGrow={1} style={{width: 'fit-content', minWidth: 'fit-content'}}>
-                    {title}: {value}
+                <Grid item container direction='row' wrap='nowrap' flexGrow={1} style={{width: 'fit-content', minWidth: 'fit-content'}} gap={2}>
+                    <span>{title}: </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}</span>
                 </Grid>
                 <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>    
                     <InfoIcon onClick={clickIcon} className={`${classes.iconPadded}`}/>
