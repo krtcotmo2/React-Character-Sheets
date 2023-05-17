@@ -13,7 +13,7 @@ export const CharacterRow: React.FC<RowsData> = (props:RowsData): JSX.Element =>
     const navigate = useNavigate();
     const {charName, levels, image, charHP, isDead, charID} =  props.char;
     const loadChar = (charID: number) => {
-        navigate(`/character/${charID}`);
+        navigate(`/character/overview/${charID}`);
     }
     return (
         <Grid container gap={2}  className='characterRow standardRow' onClick={()=> loadChar(charID)}>

@@ -34,7 +34,7 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
                 <Link className='pageLink' onClick={toggleDrawer(false)} to="/main/loadChar">Load Character</Link>
                 <Divider/>
                 <p className='shelfHeader'>Current Character</p>
-                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/${char.charID}`}>Overview</Link>
+                <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/overview/${char.charID}`}>Overview</Link>
                 <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/${char.charID}`}>View/Edit Core Details</Link>
                 <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/stats/${char.charID}`}>View/Edit Stats Details</Link>
                 <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/save/${char.charID}`}>View/Edit Saves Details</Link>

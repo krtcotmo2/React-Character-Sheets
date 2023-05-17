@@ -19,6 +19,7 @@ import { Spells } from "./views/spells/spells";
 import { CharacterFeats } from "./views/feats/feats";
 import { ExpendablesView } from "./views/expendables/expenables";
 import { ToHitView } from "./views/to-hits/to-hits";
+import { CharacterCore } from "./views/char-core/char-core";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -44,7 +45,8 @@ function App() {
                 <Route path="/character/stats/*" element={<CharacterStats />} />
                 <Route path="/character/save/*" element={<CharacterSaves />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />
-                <Route path="/character/*" element={<CharacterOverview />} />
+                <Route path="/character/overview/*" element={<CharacterOverview />} />
+                <Route path="/character/*" element={<CharacterCore />} />
                 <Route path="/character/spells/*" element={<Spells />} />
                 <Route path="/character/feats/*" element={<CharacterFeats />} />
                 <Route path="/character/expendables/*" element={<ExpendablesView />} />
