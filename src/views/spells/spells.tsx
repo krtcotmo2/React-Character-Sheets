@@ -3,19 +3,24 @@ import { getCharacterSpells } from '../../api/spells-api';
 import { Spell, SpellLevelCategory } from '../../interfaces/spell';
 import { store } from '../../redux/configure-store';
 import { SpellActions } from '../../redux/reducers/spell-reducer';
-import { organizeSpellList } from './business-logic/spells-hepler';
+import { getStaModifier, organizeSpellList } from './business-logic/spells-hepler';
 import { Grid } from '@mui/material';
 import { Character } from '../../interfaces/character';
+import { CharLevel } from '../../interfaces/levels';
+import { Stat } from '../../interfaces/stat';
 
 export const Spells: React.FC = (): JSX.Element => {
+    const [stats] = useState<Stat | undefined>(store.getState().stats);
+    const [lvls] = useState<CharLevel[] | undefined>(store.getState().levels);
     const [char] = useState<Character | undefined>(store.getState().character);
     const [spellGroups, setSpellGroups] = useState<SpellLevelCategory[]>([]);
     useEffect( () => {
-     getCharacterSpells(store.getState().character.charID.toString())
-        .then( currentSpells => {
-            store.dispatch(SpellActions.setSpells(currentSpells));
-            setSpellGroups(organizeSpellList(currentSpells));
-        })
+        const mod = getStaModifier(lvls || [], stats );
+        getCharacterSpells(store.getState().character.charID.toString())
+            .then( currentSpells => {
+                store.dispatch(SpellActions.setSpells(currentSpells));
+                setSpellGroups(organizeSpellList(currentSpells, mod));
+            })
     },[])
 
     return(
@@ -31,8 +36,11 @@ export const Spells: React.FC = (): JSX.Element => {
                 });
                 return (
                     <>
-                        <p>{grp.spellLevel}</p>
-                        {spellLst}
+                        <p>Level {grp.spellLevel}: Base \
+                        DC - {grp.dcCheck}</p>
+                        <div className='spellsInLevel'>
+                            {spellLst}
+                        </div>
                     </>
                 )
                 
