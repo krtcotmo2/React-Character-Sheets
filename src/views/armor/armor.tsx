@@ -8,6 +8,8 @@ import { Grid } from '@mui/material';
 import { ArmorSet } from '../../interfaces/armor';
 import { getCharacterArmor } from '../../api/armor-api';
 import { Modifier } from 'typescript';
+import { Stat } from '../../interfaces/stat';
+import { addStatsToArmor } from './business-logic/armor-helper';
 // import { getCharacterArmor } from './business-logic/armor-helper';
 
 interface ArmorProps {
@@ -19,11 +21,15 @@ export const CharacterArmor:React.FC<ArmorProps> = (props: ArmorProps): JSX.Elem
     
     const [armors, setArmors] = useState<ArmorSet[]>([]);
     const char: Character = useSelector(state => store.getState().character);
+    const stats: Stat = useSelector(state => store.getState().stats);
 
     useEffect( () => {
         console.log(char)
         getCharacterArmor(store.getState().character.charID.toString())
             .then(armors => {
+                addStatsToArmor(armors, stats.dex.value);
+
+
                 // store.dispatch(SpellActions.setSpells(armors));
                 setArmors(armors, );
             })
@@ -41,7 +47,7 @@ export const CharacterArmor:React.FC<ArmorProps> = (props: ArmorProps): JSX.Elem
                     <Grid item className="standardRow">
                         <CollapsibleRow 
                             title={armor.name} 
-                            breakdown={[]} 
+                            breakdown={armor.values} 
                             value={armor.score}
                             //skillData='';
                         />

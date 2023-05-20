@@ -1,6 +1,8 @@
+import { Modifier } from "./modifier";
+
 export interface ArmorSet {
     name:string;
-    values: Armor[];
+    values: Modifier[];
     score: number;
 }
 
