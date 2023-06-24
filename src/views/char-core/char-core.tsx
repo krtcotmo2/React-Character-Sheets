@@ -13,8 +13,8 @@ export const CharacterCore: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
     const levels: CharLevel[] = useSelector((state) => store.getState().levels);
 
+    
     useEffect( () => {
-        
     },[])
 
     return(

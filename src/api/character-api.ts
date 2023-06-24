@@ -1,8 +1,11 @@
 import axios from "axios";
 
+const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
+    `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
+
 export const getAllCharacters = async () => {
     const allCharacters = await axios
-    .get(`http://localhost:3001/api/character/with-levels/`)
+    .get(`${siteHost}/api/character/with-levels/`)
     .catch((err) => {
         throw new Error(err.message);
     });
@@ -15,7 +18,7 @@ export const getChar = async (charId: string) => {
         throw new Error('invalid_id');
     }
     const aCharacter = await axios
-        .get(`http://localhost:3001/api/character/with-calc-stats/${searchParam}`)
+        .get(`${siteHost}/api/character/with-calc-stats/${searchParam}`)
         .catch((err) => {
             if(err.response.data.message === 'Character Not Found'){
                 return;

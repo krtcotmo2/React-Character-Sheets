@@ -25,7 +25,7 @@ import { CharacterNotes } from "./views/notes/notes";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-
+  console.log(`Running in ${process.env.REACT_APP_NODE_MODE} mode`)
   return (
     <>
       <ReduxProvider store={store}>
@@ -35,7 +35,7 @@ function App() {
               style={{position:'absolute', left: 0, top: '10px'}}
               onClick={()=>setDrawerOpen(!drawerOpen)}
             >
-              <img src={`${process.env.PUBLIC_URL}/images/shiled.png`} width={32}/>
+              <img alt='menu' src={`${process.env.PUBLIC_URL}/images/shiled.png`} width={32}/>
             </Button>
             <header className="App-header">
               <Routes>

@@ -1,12 +1,13 @@
-// /api/stat
-
 
 import axios from "axios";
+const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
+    `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
+
 
 export const saveStatLine = async (charId: string, body:any) => {
     const statData = body;
     return await axios
-        .post(`http://localhost:3001/api/stat/${charId}`, statData)
+        .post(`${siteHost}/api/stat/${charId}`, statData)
         .then(results => results.data)
         .catch((err) => {
             throw new Error(err.message);
@@ -15,7 +16,7 @@ export const saveStatLine = async (charId: string, body:any) => {
 
 export const deleteStatLine = async (charId: string, id:string) => {
     return await axios
-        .delete(`http://localhost:3001/api/stat/${charId}/${id}`)
+        .delete(`${siteHost}/api/stat/${charId}/${id}`)
         .then(results => results.data)
         .catch((err) => {
             throw new Error(err.message);
