@@ -24,7 +24,6 @@ export const CharacterArmor:React.FC<ArmorProps> = (props: ArmorProps): JSX.Elem
     const stats: Stat = useSelector(state => store.getState().stats);
 
     useEffect( () => {
-        console.log(char)
         getCharacterArmor(store.getState().character.charID.toString())
             .then(armors => {
                 addStatsToArmor(armors, stats.dex.value);
@@ -49,7 +48,6 @@ export const CharacterArmor:React.FC<ArmorProps> = (props: ArmorProps): JSX.Elem
                             title={armor.name} 
                             breakdown={armor.values} 
                             value={armor.score}
-                            //skillData='';
                         />
                     </Grid>
                 ))

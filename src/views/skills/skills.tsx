@@ -33,7 +33,7 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
             {
                 grpdSkills.map(skl => (
-                    <Grid item className="standardRow">
+                    <Grid item className="standardRow" key={skl.skillID}>
                         <CollapsibleRow 
                             title={skl.skillName} 
                             breakdown={skl.breakdown} 

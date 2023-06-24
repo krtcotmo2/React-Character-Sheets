@@ -9,7 +9,7 @@ export const addStatsToArmor = (armors: ArmorSet[], dex: number) => {
             id: 0,
             modDesc: 'Base',
             score: 10,
-            type: ModifierType.BASE,
+            type: ModifierType.MODIFIER,
         });
         if(!armor.name.toLowerCase().includes('flat')){
             armor.score += dexBonus;
@@ -17,7 +17,7 @@ export const addStatsToArmor = (armors: ArmorSet[], dex: number) => {
                 id: 0,
                 modDesc: 'Dex',
                 score: dexBonus,
-                type: ModifierType.BASE,
+                type: ModifierType.MODIFIER,
             });
         }
     })

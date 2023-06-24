@@ -32,7 +32,13 @@ export const CharacterCore: React.FC = (): JSX.Element => {
                     <p style={{textAlign:'left'}}>Race: {char.race}</p>
                     <p style={{textAlign:'left'}}>Hit Points: {char.charHP}</p>
                     <p style={{textAlign:'left'}}>Initiative: {char.init}</p>
-                    
+                </Grid>
+                <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
+                    <p>Levels</p>
+                    {levels.map((lvl) => {
+                            return (<p>{`Level: ${lvl.className} - ${lvl.classLevel}`}</p>)
+                        }
+                    )}
                 </Grid>
             </Grid>
 

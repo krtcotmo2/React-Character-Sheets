@@ -25,9 +25,16 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
                 <p>{char?.charName} - Expendables</p>
             </Grid>
         </Grid>
-        {expendables.map(expendable => {
-            return (<p>{expendable.description} {expendable.qty} {expendable.expType}</p>)
-        })}
+        <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+            {expendables.map(expendable => {
+                return (
+                    <Grid item className="standardRow">
+                        <p>{expendable.description} {expendable.qty} {expendable.expType}</p>
+                    </Grid>
+                )
+            })}
+
+        </Grid>
         </>
     )
 }

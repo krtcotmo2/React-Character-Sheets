@@ -3,13 +3,67 @@ import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
 import { Stat } from "../../interfaces/stat";
 import { CollapsibleRow } from "../../components/collapsible-row/collapsible-row";
-import { Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 import { Character } from "../../interfaces/character";
+import { AddTempAdjustment, FromInput } from "../../components/add-temp-adjustment/add-temp-bar";
+import { ModifierType } from "../../enum/modifier-type";
+import { TempBonus } from "../../components/temp-bonus/temp-bonus";
+import { Modifier } from "../../interfaces/modifier";
 
 export const CharacterStats: React.FC = (): JSX.Element => {
     const charStats: Stat = useSelector(state => store.getState().stats);
+    const [allTemps, setAllTemps] = useState<Modifier[]>([]);
     const char: Character = useSelector(state => store.getState().character);
+    const [showAdj, setShowAdj] = useState(false);
+    const toggleShowNewAdjustment = (): void => {
+        setShowAdj(!showAdj);
+    }
 
+    useEffect(()=> {
+        const arr = [
+            ...charStats.str.breakdown.filter(mod => mod.type === ModifierType.TEMPORARY)
+            .map(arg => ({...arg, stat:' Str'})),
+            ...charStats.dex.breakdown.filter(mod => mod.type === ModifierType.TEMPORARY)
+            .map(arg => ({...arg, stat:' Dex'})),
+            ...charStats.con.breakdown.filter(mod => mod.type === ModifierType.TEMPORARY)
+            .map(arg => ({...arg, stat:' Con'})),
+            ...charStats.int.breakdown.filter(mod => mod.type === ModifierType.TEMPORARY)
+            .map(arg => ({...arg, stat:' Int'})),
+            ...charStats.wis.breakdown.filter(mod => mod.type === ModifierType.TEMPORARY)
+            .map(arg => ({...arg, stat:' Wis'})),
+            ...charStats.chr.breakdown.filter(mod => mod.type === ModifierType.TEMPORARY)
+            .map(arg => ({...arg, stat:' Chr'})),
+        ];
+        setAllTemps(arr);
+    },[charStats]);
+
+    const formItems: FromInput[] = [
+        {
+          label: 'Str',
+          propName: 'str'
+        },
+        {
+          label: 'Dex',
+          propName: 'dex'
+        },
+        {
+          label: 'Con',
+          propName: 'con'
+        },
+        {
+          label: 'Int',
+          propName: 'int'
+        },
+        {
+          label: 'Wis',
+          propName: 'wis'
+        },
+        {
+          label: 'Chr',
+          propName: 'chr'
+        },
+    ]
+    
     return (
         <>
             <Grid container>
@@ -65,6 +119,21 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         breakdown={charStats.chr.breakdown} 
                         includeStatBonus= {true}
                         altText="Chr based skill checks"/>
+                </Grid>
+            </Grid>
+            <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+            <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
+                { allTemps.map( (temp: Modifier) => {
+                    return (
+                        <Grid item className="standardRow" key={temp.guid}>
+                            <TempBonus title={temp.modDesc} value={temp.score} guid={temp.id.toString()} reducer='stats' stat={temp.stat}/>
+                        </Grid>
+                    )
+                })
+                }
+                <Grid item>
+                    {!showAdj && (<Button onClick={toggleShowNewAdjustment} variant="contained">Add Temp Bonus</Button>)}
+                    {showAdj && (<AddTempAdjustment items={formItems} showMethod={toggleShowNewAdjustment} category='stats'/>)}
                 </Grid>
             </Grid>
         </>

@@ -130,21 +130,25 @@ export const ToHitView: React.FC = ():JSX.Element => {
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                 {curToHits.map(hit => (
                     <Grid item className="standardRow" direction='column'>
-                        <CollapsibleRow title={hit.hitName} value={toHit + (hit.isMelee ? strBonus : dexBonus) + hit.breakdown.reduce((orig, line) => orig + line.score, 0)} breakdown={[
-                            {
-                                id: 0,
-                                score: toHit,
-                                type: ModifierType.MODIFIER,
-                                modDesc: 'Base to Hit'
-                            },
-                            {
-                                id: 0,
-                                score: hit.isMelee ? strBonus : dexBonus,
-                                type: ModifierType.MODIFIER,
-                                modDesc: (hit.isMelee ? 'Strength' : 'Dexterity') +  ' Bonus',
-                            },
-                            ...hit.breakdown,
-                        ]}/>
+                        <CollapsibleRow 
+                            title={hit.hitName} 
+                            value={toHit + (hit.isMelee ? strBonus : dexBonus) + hit.breakdown.reduce((orig, line) => orig + line.score, 0)} 
+                            breakdown={[
+                                {
+                                    id: 0,
+                                    score: toHit,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: 'Base to Hit'
+                                },
+                                {
+                                    id: 0,
+                                    score: hit.isMelee ? strBonus : dexBonus,
+                                    type: ModifierType.MODIFIER,
+                                    modDesc: (hit.isMelee ? 'Strength' : 'Dexterity') +  ' Bonus',
+                                },
+                                ...hit.breakdown,
+                            ]}
+                            toHitData={hit}/>
                         <DamageRow 
                             critDamage={hit.critDamage} 
                             critRange={hit.critRange}

@@ -21,6 +21,7 @@ import { ExpendablesView } from "./views/expendables/expenables";
 import { ToHitView } from "./views/to-hits/to-hits";
 import { CharacterCore } from "./views/char-core/char-core";
 import { CharacterArmor } from "./views/armor/armor";
+import { CharacterNotes } from "./views/notes/notes";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -53,6 +54,7 @@ function App() {
                 <Route path="/character/expendables/*" element={<ExpendablesView />} />
                 <Route path="/character/tohits/*" element={<ToHitView />} />
                 <Route path="/character/acs/*" element={<CharacterArmor />} />
+                <Route path="/character/notes/*" element={<CharacterNotes />} />
               </Routes>
             </header>
             <SideDrawer drawerStatus = {drawerOpen} setDrawerStatus={setDrawerOpen}/>

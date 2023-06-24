@@ -5,4 +5,6 @@ export interface Modifier{
     score: number;
     type: ModifierType;
     modDesc: string;
+    guid?: string;
+    stat?: string;
 }

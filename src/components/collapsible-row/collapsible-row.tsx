@@ -3,10 +3,15 @@ import { Modifier } from '../../interfaces/modifier';
 import { Grid, } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import PushPinIcon from '@mui/icons-material/PushPin';
+import PushPinIconOutlined from '@mui/icons-material/PushPinOutlined';
 import { useStyles } from './collapsible-row-styles';
 import "../../App.css";
 import { Skill } from '../../interfaces/skills';
 import { ModifierType } from '../../enum/modifier-type';
+import { pinSkill, unpinSkill } from '../../api/skills-api';
+import { store } from '../../redux/configure-store';
+import { ToHit, ToHitGroup } from '../../interfaces/to-hit';
+import { pinToHit, unpinToHit } from '../../api/to-hit-api';
 
 interface RowProps {
     title: string;
@@ -15,15 +20,39 @@ interface RowProps {
     includeStatBonus?: boolean;
     skillData?: Skill;
     altText?: string;
+    toHitData?: ToHitGroup
 }
 
 
 export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element => {
     const [hidden, setHidden] = useState(true);
+    const [pinned, setPinned] = useState(props.skillData?.pinned || props.toHitData?.pinned);
     const clickIcon = (arg: any) => {
         setHidden(!hidden);
     }
+    const char = store.getState().character;
+    const togglePinned = () =>{
+        if(props.skillData){
+            if(!pinned){
+                pinSkill(char.charID.toString(), skillData?.skillID.toString() || '');
+            }else{
+                unpinSkill(char.charID.toString(), skillData?.skillID.toString() || '');
+            }
+            setPinned(!pinned);
+        }
+
+        if(props.toHitData){
+            if(!pinned){
+                pinToHit(char.charID.toString(), tohitData?.id.toString() || '');
+            }else{
+                unpinToHit(char.charID.toString(), tohitData?.id.toString() || '');
+            }
+            setPinned(!pinned);
+        }
+    }
     const { classes } = useStyles();
+    const skillData = props.skillData;
+    const tohitData = props.toHitData;
     const {title, value, breakdown, includeStatBonus, altText} = props;
     return (
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>
@@ -37,12 +66,17 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
                 <Grid item container flexShrink={1} style={{textAlign: 'left', paddingLeft: '18px'}}> 
                     {includeStatBonus ? calcBonus(value) : ''} {altText}
                 </Grid>
-                <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>    
-                    <PushPinIcon onClick={clickIcon} className={`${props.skillData?.pinned ? '' : 'hidden'} ${classes.iconPadded}`}/>
+                <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}> 
+                    {(props.skillData || props.toHitData) && pinned && (
+                        <PushPinIcon onClick={togglePinned} className={`${classes.iconPadded}`}/>
+                    )}
+                    {(props.skillData || props.toHitData) && !pinned && (
+                        <PushPinIconOutlined onClick={togglePinned} className={`${classes.iconPadded}`}/>
+                    )}   
                 </Grid>
             </Grid>
             <Grid container direction={'column'} className={`${hidden ? 'hidden' : ''}`} >
-                {breakdown.map( mod => (<Grid container item className={`${classes.breakDownSection}`}>{mod.score} - {getDescription(mod, mod.modDesc)}</Grid>))}
+                {breakdown.map( (mod, i) => (<Grid key={i} container item className={`${classes.breakDownSection}`}>{mod.score} - {getDescription(mod, mod.modDesc)}</Grid>))}
             </Grid>
         </Grid>
     )
