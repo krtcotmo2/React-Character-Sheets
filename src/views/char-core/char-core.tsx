@@ -8,6 +8,7 @@ import { Character } from '../../interfaces/character';
 import { Grid } from '@mui/material';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { CharLevel } from '../../interfaces/levels';
+import { Link } from 'react-router-dom';
 
 export const CharacterCore: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
@@ -21,7 +22,7 @@ export const CharacterCore: React.FC = (): JSX.Element => {
         <>
         <Grid container>
             <Grid container item justifyContent="center">
-                <p>{char?.charName} - Core</p>
+            <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Core</p>
             </Grid>
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">

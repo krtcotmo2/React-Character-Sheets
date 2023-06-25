@@ -10,6 +10,7 @@ import { strictEqual } from 'assert';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { ModifierType } from '../../enum/modifier-type';
 import { DamageRow } from '../../components/damage-row/damage-row';
+import { Link } from 'react-router-dom';
 
 export const ToHitView: React.FC = ():JSX.Element => {
     const levels = useSelector(state => store.getState().levels);
@@ -33,7 +34,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
         <>
             <Grid container>
         <Grid container item justifyContent="center">
-          <p>{char?.charName} - To Hits</p>
+        <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - To Hits</p>
         </Grid>
       </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}}>
@@ -132,7 +133,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
                     <Grid item className="standardRow" direction='column'>
                         <CollapsibleRow 
                             title={hit.hitName} 
-                            value={toHit + (hit.isMelee ? strBonus : dexBonus) + hit.breakdown.reduce((orig, line) => orig + line.score, 0)} 
+                            value={toHit + (hit.isMelee ? strBonus : dexBonus) + hit.value} 
                             breakdown={[
                                 {
                                     id: 0,

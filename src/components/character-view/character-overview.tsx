@@ -9,7 +9,7 @@ import { checkForCaster, loadChar } from "./business-logic/load-chars";
 import { showError } from "../modal/business-logic/error-handler";
 import { store } from "../../redux/configure-store";
 import { CharacterActions } from "../../redux/reducers/character-reducer";
-import { batch } from "react-redux";
+import { batch, useSelector } from "react-redux";
 import { StatsActions } from "../../redux/reducers/stats-reducer";
 import { Stat } from "../../interfaces/stat";
 import { SavesActions } from "../../redux/reducers/saves-reducer";
@@ -18,11 +18,13 @@ import { SkillActions } from "../../redux/reducers/skills.reducer";
 import { RawSkill } from "../../interfaces/skills";
 import { CharLevelActions } from "../../redux/reducers/level-reducer";
 import { CharLevel } from "../../interfaces/levels";
+import { ToHitGroup } from "../../interfaces/to-hit";
+import { HitsBar } from "../hits-bar/hits-bar";
 
 const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
   const [char, setChar] = useState<Character | undefined>(undefined);
   const [charId, setCharId] = useState("");
-
+  const toHits: ToHitGroup[] = useSelector(state => store.getState().toHitGroups);
   
 
   const cb =  () => {
@@ -79,16 +81,20 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
     <>
       <Grid container>
         <Grid container item justifyContent='center'>
-            <p>{char?.charName}</p>
+            <p>{char?.charName} - Overview</p>
         </Grid>
       </Grid>
       {char?.stats && <StatsBar stats={char.stats} />}
       <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
         {char?.saves && <SavesBar saves={char.saves} />}
         {char && <InitBar init={char.init ?? 0} />}
+      </Grid>
+      <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
         {char?.skills && <SkillsBar skills={char.skills} />}
       </Grid>
-      
+      <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+        {toHits && <HitsBar hits={toHits} />}
+      </Grid>
     </>
   );
 };

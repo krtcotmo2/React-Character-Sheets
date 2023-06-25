@@ -8,6 +8,7 @@ import { Grid } from '@mui/material';
 import { Character } from '../../interfaces/character';
 import { CharLevel } from '../../interfaces/levels';
 import { Stat } from '../../interfaces/stat';
+import { Link } from 'react-router-dom';
 
 export const Spells: React.FC = (): JSX.Element => {
     const [stats] = useState<Stat | undefined>(store.getState().stats);
@@ -27,7 +28,7 @@ export const Spells: React.FC = (): JSX.Element => {
         <>
            <Grid container>
                 <Grid container item justifyContent='center'>
-                    <p>{char?.charName} - Spells</p>
+                    <p><Link className='nonDecLink' to={`/character/overview/${char?.charID}`}>{char?.charName}</Link> - Spells</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">

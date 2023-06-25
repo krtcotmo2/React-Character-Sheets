@@ -10,6 +10,7 @@ import { Modifier } from "../../interfaces/modifier";
 import { ModifierType } from "../../enum/modifier-type";
 import { TempBonus } from "../../components/temp-bonus/temp-bonus";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 export const CharacterSaves: React.FC = (): JSX.Element => {
   const charSave: SavingThrow = useSelector((state) => store.getState().saves);
@@ -50,7 +51,7 @@ export const CharacterSaves: React.FC = (): JSX.Element => {
     <>
       <Grid container>
         <Grid container item justifyContent="center">
-          <p>{char?.charName} - Saves</p>
+        <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Saves</p>
         </Grid>
       </Grid>
       <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">

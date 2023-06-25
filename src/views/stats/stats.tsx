@@ -9,6 +9,7 @@ import { AddTempAdjustment, FromInput } from "../../components/add-temp-adjustme
 import { ModifierType } from "../../enum/modifier-type";
 import { TempBonus } from "../../components/temp-bonus/temp-bonus";
 import { Modifier } from "../../interfaces/modifier";
+import { Link } from "react-router-dom";
 
 export const CharacterStats: React.FC = (): JSX.Element => {
     const charStats: Stat = useSelector(state => store.getState().stats);
@@ -68,7 +69,7 @@ export const CharacterStats: React.FC = (): JSX.Element => {
         <>
             <Grid container>
                 <Grid container item justifyContent='center'>
-                    <p>{char?.charName} - Stats</p>
+                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Stats</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">

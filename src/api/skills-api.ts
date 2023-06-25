@@ -20,3 +20,12 @@ export const unpinSkill = async (charId: string, id:string) => {
             throw new Error(err.message);
         });
 }
+
+export const getAllSkills = async (charId: string) => {
+    return await axios
+        .get(`${siteHost}/api/skill/char/${charId}`)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}

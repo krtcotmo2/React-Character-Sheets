@@ -10,6 +10,7 @@ import { getCharacterArmor } from '../../api/armor-api';
 import { Modifier } from 'typescript';
 import { Stat } from '../../interfaces/stat';
 import { addStatsToArmor } from './business-logic/armor-helper';
+import { Link } from 'react-router-dom';
 // import { getCharacterArmor } from './business-logic/armor-helper';
 
 interface ArmorProps {
@@ -37,7 +38,7 @@ export const CharacterArmor:React.FC<ArmorProps> = (props: ArmorProps): JSX.Elem
         <>
             <Grid container>
                 <Grid container item justifyContent="center">
-                <p>{char?.charName} - Armor</p>
+                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Armor</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">

@@ -8,6 +8,7 @@ import { Character } from '../../interfaces/character';
 import { Grid } from '@mui/material';
 import { getCharacterNotes } from '../../api/notes-api';
 import { Note } from '../../interfaces/note';
+import { Link } from 'react-router-dom';
 
 export const CharacterNotes: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
@@ -22,7 +23,7 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
         <>
              <Grid container>
                 <Grid container item justifyContent="center">
-                    <p>{char?.charName} - Notes</p>
+                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Notes</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
