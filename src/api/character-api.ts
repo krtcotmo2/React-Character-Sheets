@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SaveCharacter } from "../interfaces/character";
 
 const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
     `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
@@ -34,3 +35,12 @@ export const getChar = async (charId: string) => {
     }
     return aCharacter.data;
   };
+
+  export const saveCharacter = async (char: SaveCharacter) => {
+    const allCharacters = await axios
+    .post(`${siteHost}/api/character/create`, {...char})
+    .catch((err) => {
+        throw new Error(err.message);
+    });
+    return allCharacters?.data;
+}

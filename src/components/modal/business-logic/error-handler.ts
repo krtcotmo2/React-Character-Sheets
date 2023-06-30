@@ -24,6 +24,16 @@ export const showError = (err: string, param?: KeyValuePair[]) => {
             title = `Invalid User ID`
             modalName = 'invalid_id'
             break;
+        case 'log_in_failed':
+            msg = `Please check the emil and password and try again`;
+            title = `Login Failed`
+            modalName = 'log_in_failed'
+            break;
+        case 'not_logged_in':
+            title = 'Not Logged In';
+            msg = "You will need to login to proceed with that action";
+            modalName= 'not_logged_in'
+            break;
         default:
             title = err;
             msg = 'undefined error';

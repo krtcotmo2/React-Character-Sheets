@@ -5,9 +5,8 @@ import { store } from './redux/configure-store';
 import CharacterOverview from "./components/character-view/character-overview";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import { CharMain } from "./views/char-main";
-import { Login } from "./views/login";
 import { Button} from "@mui/material";
-import { NewUser } from "./views/new-user/new-user";
+import { NewUser } from "./components/new-user/new-user";
 import { SideDrawer } from "./components/side-drawer/side-drawer";
 import { MessageManager } from "./components/modal/modal-manager";
 import { SelectCharacter } from "./views/select-character/select-character";
@@ -22,10 +21,12 @@ import { ToHitView } from "./views/to-hits/to-hits";
 import { CharacterCore } from "./views/char-core/char-core";
 import { CharacterArmor } from "./views/armor/armor";
 import { CharacterNotes } from "./views/notes/notes";
+import { LandingPage } from "./views/landing/landing";
+import { checkPerm } from "./components/redirect";
+import NewCharacter from "./components/character-view/new-character";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  console.log(`Running in ${process.env.REACT_APP_NODE_MODE} mode`)
   return (
     <>
       <ReduxProvider store={store}>
@@ -39,11 +40,12 @@ function App() {
             </Button>
             <header className="App-header">
               <Routes>
-                <Route path="/" element={<CharacterOverview />} />
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/main" element={<CharMain />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<LandingPage />} />
                 <Route path="/user/new" element={<NewUser />} />
                 <Route path="/main/loadChar" element={<SelectCharacter/>} />
+                <Route path="/main/newChar" element={<NewCharacter />} />
                 <Route path="/character/stats/*" element={<CharacterStats />} />
                 <Route path="/character/save/*" element={<CharacterSaves />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />

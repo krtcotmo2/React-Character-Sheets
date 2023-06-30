@@ -32,7 +32,7 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
         {feats.map(feat => {
             return (
                 <Grid item className="standardRow">
-                    <CollapsibleRow title={feat.desc.name} breakdown={[]}/>
+                    <CollapsibleRow title={feat.desc.name} breakdown={[]} allowEditing={false}/>
             
                    
                 </Grid>

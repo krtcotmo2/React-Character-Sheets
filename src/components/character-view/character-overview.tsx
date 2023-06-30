@@ -22,8 +22,11 @@ import { ToHitGroup } from "../../interfaces/to-hit";
 import { HitsBar } from "../hits-bar/hits-bar";
 
 const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
-  const [char, setChar] = useState<Character | undefined>(undefined);
-  const [charId, setCharId] = useState("");
+  const char = useSelector(state => store.getState().character);
+  const skills = useSelector(state => store.getState().skills);
+  const saves = useSelector(state => store.getState().saves);
+  const stats = useSelector(state => store.getState().stats);
+  const [charId, setCharId] = useState("");;
   const toHits: ToHitGroup[] = useSelector(state => store.getState().toHitGroups);
   
 
@@ -34,7 +37,6 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
       }
       await loadChar(id)
         .then( (charData: Character | undefined) => {
-          setChar(charData);
           if(charData){
             charData.isCaster = checkForCaster(charData?.levels);
           }
@@ -76,25 +78,37 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
     setCharId(queryParam);
     requestChar(charId);
   }
-  useEffect( cb, [charId])
+  useEffect( cb, [charId]);
+
   return (
     <>
       <Grid container>
         <Grid container item justifyContent='center'>
-            <p>{char?.charName} - Overview</p>
+            <p>{char?.charName} {char.charName && `-`} Overview</p>
         </Grid>
       </Grid>
-      {char?.stats && <StatsBar stats={char.stats} />}
-      <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
-        {char?.saves && <SavesBar saves={char.saves} />}
-        {char && <InitBar init={char.init ?? 0} />}
-      </Grid>
-      <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
-        {char?.skills && <SkillsBar skills={char.skills} />}
-      </Grid>
-      <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
-        {toHits && <HitsBar hits={toHits} />}
-      </Grid>
+      {
+        stats && <StatsBar stats={stats} />
+      }
+      {
+      saves &&
+        (<Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+          <SavesBar saves={saves} />
+          <InitBar init={char.init ?? 0} />
+        </Grid>)
+      }
+      {
+        skills && skills.length > 0 &&
+        <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+          {skills && <SkillsBar skills={skills} />}
+        </Grid>
+      }
+      {
+        toHits?.length > 0 &&
+        <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+          {toHits && <HitsBar hits={toHits} />}
+        </Grid>
+    }
     </>
   );
 };

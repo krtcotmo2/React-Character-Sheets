@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { CharLevel } from '../../interfaces/levels';
 import { Link } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const CharacterCore: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
@@ -29,13 +30,13 @@ export const CharacterCore: React.FC = (): JSX.Element => {
             <Grid container item direction={'row'} wrap='nowrap' gap={2}>
                 <img src={`https://dd-characters.herokuapp.com/assets/${char.image}`}/>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
-                    <p style={{textAlign:'left'}}>Alignment: {char.alignment}</p>
-                    <p style={{textAlign:'left'}}>Race: {char.race}</p>
-                    <p style={{textAlign:'left'}}>Hit Points: {char.charHP}</p>
-                    <p style={{textAlign:'left'}}>Initiative: {char.init}</p>
+                    <div><p style={{textAlign:'left'}}>Alignment: {char.alignment} <EditIcon className='editIcon' /></p></div>
+                    <div><p style={{textAlign:'left'}}>Race: {char.race} <EditIcon/></p></div>
+                    <div><p style={{textAlign:'left'}}>Hit Points: {char.charHP} <EditIcon/></p></div>
+                    <div><p style={{textAlign:'left'}}>Initiative: {char.init} <EditIcon/></p></div>
                 </Grid>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
-                    <p>Levels</p>
+                    <div><p>Levels <EditIcon/></p></div>
                     {levels.map((lvl) => {
                             return (<p>{`Level: ${lvl.className} - ${lvl.classLevel}`}</p>)
                         }

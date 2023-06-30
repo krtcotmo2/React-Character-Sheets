@@ -33,6 +33,11 @@ export const NewUser: React.FunctionComponent = (newUserProps):JSX.Element => {
     
         <form onSubmit={handleSubmit}>
             <Grid container direction='column' rowGap='12px' style={{paddingTop:'12px'}}>
+                <TextField
+                    value={userName} onChange={ (evt)=> setUserName(evt.target.value) }
+                    label="Name"
+                    required
+                />
                 <TextField 
                     value={userEmail} 
                     onChange={ (evt)=> setEmail(evt.target.value) }
@@ -44,11 +49,6 @@ export const NewUser: React.FunctionComponent = (newUserProps):JSX.Element => {
                     type='password' 
                     value={userPassword} onChange={ (evt)=> setPassword(evt.target.value) }
                     label="Password"
-                    required
-                />
-                <TextField
-                    value={userName} onChange={ (evt)=> setUserName(evt.target.value) }
-                    label="Name"
                     required
                 />
                 <Button type="submit">Submit</Button>

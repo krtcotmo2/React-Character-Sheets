@@ -50,7 +50,7 @@ svg.rotated{
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  padding: 12px;
+  padding: 12px 0;
   overflow-y: auto;
   align-items: center;
   width: 100%;

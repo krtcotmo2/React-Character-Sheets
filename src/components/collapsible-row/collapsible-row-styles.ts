@@ -11,8 +11,10 @@ const useStyles = makeStyles<void>()((theme, _params, classes) => ({
      iconPadded:{
         margin: '3px 6px 0px',
         fontSize: '16px'
+     },
+     editIcon:{
+      alignSelf: 'center'
      }
-
  }));
 
 export {useStyles}

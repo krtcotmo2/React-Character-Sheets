@@ -40,7 +40,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}}>
                 <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                     <Grid item className="standardRow">
-                        <CollapsibleRow title="Base Melee" value={toHit + strBonus} breakdown={[
+                        <CollapsibleRow title="Base Melee" value={toHit + strBonus} allowEditing={false} breakdown={[
                             {
                                 id: 0,
                                 score: toHit,
@@ -59,7 +59,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
                 </Grid>
                 <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                     <Grid item className="standardRow">
-                        <CollapsibleRow title="Base Ranged" value={toHit + dexBonus} breakdown={[
+                        <CollapsibleRow title="Base Ranged" value={toHit + dexBonus} allowEditing={false} breakdown={[
                                 {
                                     id: 0,
                                     score: toHit,
@@ -78,7 +78,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
                 </Grid>
                 <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                     <Grid item className="standardRow">
-                        <CollapsibleRow title="Base CMB" value={toHit + strBonus} breakdown={[
+                        <CollapsibleRow title="Base CMB" value={toHit + strBonus} allowEditing={false} breakdown={[
                                 {
                                     id: 0,
                                     score: toHit,
@@ -97,7 +97,7 @@ export const ToHitView: React.FC = ():JSX.Element => {
                 </Grid>
                 <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px", padding: '0' }} className="standardList">
                     <Grid item className="standardRow">
-                        <CollapsibleRow title="Base CMD" value={10 + toHit + dexBonus + strBonus} breakdown={[
+                        <CollapsibleRow title="Base CMD" value={10 + toHit + dexBonus + strBonus} allowEditing={false} breakdown={[
                                 {
                                     id: 0,
                                     score: 10,
