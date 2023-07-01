@@ -90,3 +90,6 @@ p a:-webkit-any-link{
     text-decoration: none;
     color:#6a6a6a;
 }
+.pointer{
+  cursor: pointer;
+}

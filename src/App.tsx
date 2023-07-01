@@ -22,8 +22,8 @@ import { CharacterCore } from "./views/char-core/char-core";
 import { CharacterArmor } from "./views/armor/armor";
 import { CharacterNotes } from "./views/notes/notes";
 import { LandingPage } from "./views/landing/landing";
-import { checkPerm } from "./components/redirect";
 import NewCharacter from "./components/character-view/new-character";
+import { LevelsModified } from "./components/levels-modifier/levels";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -48,6 +48,7 @@ function App() {
                 <Route path="/main/newChar" element={<NewCharacter />} />
                 <Route path="/character/stats/*" element={<CharacterStats />} />
                 <Route path="/character/save/*" element={<CharacterSaves />} />
+                <Route path="/character/levels/*" element={<LevelsModified />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />
                 <Route path="/character/overview/*" element={<CharacterOverview />} />
                 <Route path="/character/*" element={<CharacterCore />} />

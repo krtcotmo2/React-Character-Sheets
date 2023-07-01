@@ -4,6 +4,7 @@ import { Character, SaveCharacter } from "../../interfaces/character";
 import { useStyles } from "./character-styles";
 import { store } from "../../redux/configure-store";
 import { saveCharacter } from "../../api/character-api";
+import { useNavigate } from "react-router-dom";
 
 const NewCharacter: React.FunctionComponent = (): JSX.Element => {
   const { classes } = useStyles();
@@ -15,7 +16,9 @@ const NewCharacter: React.FunctionComponent = (): JSX.Element => {
   const [alignment, setAlignment] = useState('');
   const [hp, setHP] = useState('');
   const [xp, setXP] = useState('');
-  const handleSubmit = (event: FormEvent) => {
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const newChar: SaveCharacter = {
         charName: name,
@@ -28,7 +31,8 @@ const NewCharacter: React.FunctionComponent = (): JSX.Element => {
         raceID: +race,
         userID: +store.getState().user.id
     }
-    saveCharacter(newChar);
+    const ch = await saveCharacter(newChar);
+    navigate(`/character/overview/${ch.charID}`);
   };
   return (
     <>

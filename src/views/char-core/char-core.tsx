@@ -5,6 +5,7 @@ import { store } from '../../redux/configure-store';
 import { FeatsActions } from '../../redux/reducers/feates-reducer';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
+import { useNavigate } from "react-router-dom";
 import { Grid } from '@mui/material';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { CharLevel } from '../../interfaces/levels';
@@ -14,11 +15,14 @@ import EditIcon from '@mui/icons-material/Edit';
 export const CharacterCore: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
     const levels: CharLevel[] = useSelector((state) => store.getState().levels);
-
+    const navigate = useNavigate();
     
     useEffect( () => {
     },[])
 
+    const adjustLevels = () => {
+        navigate(`/character/levels/${char.charID}`);
+    }
     return(
         <>
         <Grid container>
@@ -30,13 +34,13 @@ export const CharacterCore: React.FC = (): JSX.Element => {
             <Grid container item direction={'row'} wrap='nowrap' gap={2}>
                 <img src={`https://dd-characters.herokuapp.com/assets/${char.image}`}/>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
-                    <div><p style={{textAlign:'left'}}>Alignment: {char.alignment} <EditIcon className='editIcon' /></p></div>
-                    <div><p style={{textAlign:'left'}}>Race: {char.race} <EditIcon/></p></div>
-                    <div><p style={{textAlign:'left'}}>Hit Points: {char.charHP} <EditIcon/></p></div>
-                    <div><p style={{textAlign:'left'}}>Initiative: {char.init} <EditIcon/></p></div>
+                    <div><p style={{textAlign:'left'}}>Alignment: {char.alignment} <EditIcon className='pointer editIcon' /></p></div>
+                    <div><p style={{textAlign:'left'}}>Race: {char.race} <EditIcon className='pointer' /></p></div>
+                    <div><p style={{textAlign:'left'}}>Hit Points: {char.charHP} <EditIcon className='pointer' /></p></div>
+                    <div><p style={{textAlign:'left'}}>Initiative: {char.init} <EditIcon className='pointer' /></p></div>
                 </Grid>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
-                    <div><p>Levels <EditIcon/></p></div>
+                    <div><p>Levels <EditIcon className='pointer' onClick={adjustLevels}/></p></div>
                     {levels.map((lvl) => {
                             return (<p>{`Level: ${lvl.className} - ${lvl.classLevel}`}</p>)
                         }
