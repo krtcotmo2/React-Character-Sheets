@@ -21,6 +21,7 @@ import { StatsActions } from "../../redux/reducers/stats-reducer";
 interface LevelsProps {
     level: CharLevel;
     updateLevel: (arg: number) => {};
+    addingLevel?: boolean;
 }
 
 
@@ -51,8 +52,6 @@ export const LevelRow: React.FC<LevelsProps> = (props: LevelsProps): JSX.Element
                     });
                   })
             });
-
-        console.log(newLevel)
     }
     return (
         <>
@@ -66,26 +65,11 @@ export const LevelRow: React.FC<LevelsProps> = (props: LevelsProps): JSX.Element
                         type="number"
                         value={level.classLevel}
                         onChange={(event) => doLevel(event)}
+                        disabled={props.addingLevel}
+                        InputProps={{ inputProps: { min: "1", step: "1" } }}
                     />
                 </Grid>
             </Grid>
         </>
     )
 };
-
-/*
-    <FormControl>
-        <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={c.find(lvl => lvl.className === level.className)?.classID}
-            >
-            {charClasses.map( (aClass: CharClass)=> {
-                console.log(c)
-                return (
-                    <MenuItem value={aClass.classID}>{aClass.className}</MenuItem>
-                )
-                })}
-        </Select>
-    </FormControl>
-*/

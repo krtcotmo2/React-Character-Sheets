@@ -32,7 +32,7 @@ const NewCharacter: React.FunctionComponent = (): JSX.Element => {
         userID: +store.getState().user.id
     }
     const ch = await saveCharacter(newChar);
-    navigate(`/character/overview/${ch.charID}`);
+    navigate(`/character/levels/${ch.charID}`);
   };
   return (
     <>

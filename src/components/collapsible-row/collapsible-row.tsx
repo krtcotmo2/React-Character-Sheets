@@ -15,6 +15,8 @@ import { ToHit, ToHitGroup } from '../../interfaces/to-hit';
 import { pinToHit, unpinToHit } from '../../api/to-hit-api';
 import { STAT_TYPE } from '../../enum/stat-type';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { WHATISMOD } from '../../enum/what-is-mod-type';
 
 interface RowProps {
     title: string;
@@ -32,7 +34,8 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     const [hidden, setHidden] = useState(true);
     const [pinned, setPinned] = useState(props.skillData?.pinned || props.toHitData?.pinned);
     const charOwner = useSelector(state => store.getState().character.userID.toString());
-    const userId = useSelector(state => store.getState().user.id);
+    const userId = useSelector(state => store.getState().user.id)
+    const navigate = useNavigate();
     const clickIcon = (arg: any) => {
         setHidden(!hidden);
     }
@@ -62,7 +65,7 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     const allowEdit = props.allowEditing === undefined ?  true : props.allowEditing;
     const {title, value, breakdown, includeStatBonus, altText} = props;
     const editStat = ( a: string) => {
-        console.log(Object.values(STAT_TYPE).indexOf(a)+1);
+        navigate('/character/stat/edit', {replace: true, state: {whatIsMod: WHATISMOD.STAT, modified: a}})
     }
     return (
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>

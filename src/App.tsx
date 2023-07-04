@@ -24,6 +24,7 @@ import { CharacterNotes } from "./views/notes/notes";
 import { LandingPage } from "./views/landing/landing";
 import NewCharacter from "./components/character-view/new-character";
 import { LevelsModified } from "./components/levels-modifier/levels";
+import { ModifierView } from "./components/modifier/modifier";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/character/tohits/*" element={<ToHitView />} />
                 <Route path="/character/acs/*" element={<CharacterArmor />} />
                 <Route path="/character/notes/*" element={<CharacterNotes />} />
+                <Route path="/character/stat/edit/" element={ <ModifierView/>} />
               </Routes>
             </header>
             <SideDrawer drawerStatus = {drawerOpen} setDrawerStatus={setDrawerOpen}/>

@@ -32,7 +32,7 @@ export const CharacterCore: React.FC = (): JSX.Element => {
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
             <Grid container item direction={'row'} wrap='nowrap' gap={2}>
-                <img src={`https://dd-characters.herokuapp.com/assets/${char.image}`}/>
+                <img src={`../images/${char.image}`}/>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
                     <div><p style={{textAlign:'left'}}>Alignment: {char.alignment} <EditIcon className='pointer editIcon' /></p></div>
                     <div><p style={{textAlign:'left'}}>Race: {char.race} <EditIcon className='pointer' /></p></div>
