@@ -59,7 +59,7 @@ function App() {
                 <Route path="/character/tohits/*" element={<ToHitView />} />
                 <Route path="/character/acs/*" element={<CharacterArmor />} />
                 <Route path="/character/notes/*" element={<CharacterNotes />} />
-                <Route path="/character/stat/edit/" element={ <ModifierView/>} />
+                <Route path="/character/characteristic/edit/" element={ <ModifierView/>} />
               </Routes>
             </header>
             <SideDrawer drawerStatus = {drawerOpen} setDrawerStatus={setDrawerOpen}/>

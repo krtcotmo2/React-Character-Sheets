@@ -66,7 +66,7 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     const allowEdit = props.allowEditing === undefined ?  true : props.allowEditing;
     const {title, value, breakdown, includeStatBonus, altText} = props;
     const editStat = ( a: string) => {
-        navigate('/character/stat/edit', {replace: true, state: {whatIsMod: props.characteristic, modified: a}})
+        navigate('/character/characteristic/edit', {replace: true, state: {whatIsMod: props.characteristic, modified: a}})
     }
     return (
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>
