@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { WHATISMOD } from "../../enum/what-is-mod-type";
 import { Modifier } from "../../interfaces/modifier";
@@ -25,8 +25,10 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
     return (
         <>
             
-            <Grid container item justifyContent="center">
+            <Grid container direction='column' justifyContent="center" alignItems='center'>
                 <ModifierRow whatIsMod={state.whatIsMod} modified={state.modified}/>
+            <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+            <Button style={{width:'fit-content'}} variant="contained">Add New Modifier</Button>
             </Grid>
         </>
     )
