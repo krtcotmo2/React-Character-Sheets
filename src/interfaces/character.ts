@@ -2,6 +2,7 @@ import { CharLevel } from "./levels";
 import { SavingThrow } from "./saving-throw";
 import { RawSkill } from "./skills";
 import { Stat } from "./stat";
+import { ToHitGroup } from "./to-hit";
 
 export interface Character {
   alignment: string;
@@ -18,6 +19,7 @@ export interface Character {
   userID: number;
   levels?: CharLevel[];
   isCaster: boolean;
+  toHitGroups: ToHitGroup[];
 }
 
 export interface SaveCharacter {

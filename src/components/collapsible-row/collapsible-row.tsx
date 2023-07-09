@@ -25,8 +25,9 @@ interface RowProps {
     includeStatBonus?: boolean;
     skillData?: Skill;
     altText?: string;
-    toHitData?: ToHitGroup
-    allowEditing?: boolean
+    toHitData?: ToHitGroup;
+    allowEditing?: boolean;
+    characteristic?: WHATISMOD;
 }
 
 
@@ -65,23 +66,27 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     const allowEdit = props.allowEditing === undefined ?  true : props.allowEditing;
     const {title, value, breakdown, includeStatBonus, altText} = props;
     const editStat = ( a: string) => {
-        navigate('/character/stat/edit', {replace: true, state: {whatIsMod: WHATISMOD.STAT, modified: a}})
+        navigate('/character/stat/edit', {replace: true, state: {whatIsMod: props.characteristic, modified: a}})
     }
     return (
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>
             <Grid container item direction={'row'} flexWrap='nowrap'>
-                <Grid item container direction='row' wrap='nowrap' flexGrow={1} style={{width: 'fit-content', minWidth: 'fit-content'}} gap={2}>
-                    <span>{title}: </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}</span>
+                <Grid item container direction='row' wrap='nowrap' flexGrow={1} style={{textAlign: 'left', width: 'fit-content'}} gap={2}>
+                    <span style={{width:'max-content'}}>{title}: </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}</span>
                 </Grid>
                 <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>    
                     <InfoIcon onClick={clickIcon} className={`${classes.iconPadded}`}/>
                 </Grid>
-                <Grid item container flexShrink={1} style={{textAlign: 'left', paddingLeft: '18px'}}> 
-                    {includeStatBonus ? calcBonus(value) : ''} {altText}
-                </Grid>
+                {
+                    props.characteristic === WHATISMOD.STAT && (
+                        <Grid item container flexShrink={1} style={{textAlign: 'left', paddingLeft: '18px'}}> 
+                            {includeStatBonus ? calcBonus(value) : ''} {altText}
+                        </Grid>
+                    )
+                }
                 {
                     userId === charOwner  && allowEdit &&
-                    (<Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>
+                    (<Grid item container  flexShrink={1} style={{maxWidth: 'fit-content', alignContent:'start'}}>
                         <EditIcon className={classes.editIcon} onClick={() => editStat(title)}/>
                     </Grid>)
                 }

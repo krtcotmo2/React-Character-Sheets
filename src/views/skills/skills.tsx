@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 import { getAllSkills } from '../../api/skills-api';
 import { SkillActions } from '../../redux/reducers/skills.reducer';
 import { Link } from 'react-router-dom';
+import { WHATISMOD } from '../../enum/what-is-mod-type';
 
 interface SkillsProps {
     skills?: Skill[];
@@ -49,6 +50,7 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
                             breakdown={skl.breakdown} 
                             value={skl.value}
                             skillData={skl}
+                            characteristic={WHATISMOD.SKILL}
                         />
                     </Grid>
                 ))

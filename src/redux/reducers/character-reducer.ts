@@ -16,6 +16,7 @@ const initialState: Character = {
     race: '',
     userID: 0,
     isCaster: true,
+    toHitGroups: []
 }
 
 class CharacterReducer extends ImmerReducer<Character> {
@@ -31,6 +32,7 @@ class CharacterReducer extends ImmerReducer<Character> {
             race: char.race,
             userID: char.userID,
             isCaster: char.isCaster,
+            toHitGroups: char.toHitGroups,
         };
     }
     public clearCharacter(){

@@ -11,6 +11,7 @@ import { CollapsibleRow } from "../../components/collapsible-row/collapsible-row
 import { ModifierType } from "../../enum/modifier-type";
 import { DamageRow } from "../../components/damage-row/damage-row";
 import { Link } from "react-router-dom";
+import { WHATISMOD } from "../../enum/what-is-mod-type";
 
 export const ToHitView: React.FC = (): JSX.Element => {
   const levels = useSelector((state) => store.getState().levels);
@@ -217,6 +218,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
                 ...hit.breakdown,
               ]}
               toHitData={hit}
+              characteristic={WHATISMOD.TOHIT}
             />
             <DamageRow
               critDamage={hit.critDamage}

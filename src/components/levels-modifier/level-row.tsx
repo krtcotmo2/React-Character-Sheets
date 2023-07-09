@@ -16,6 +16,7 @@ import { CharacterActions } from "../../redux/reducers/character-reducer";
 import { SavesActions } from "../../redux/reducers/saves-reducer";
 import { SkillActions } from "../../redux/reducers/skills.reducer";
 import { StatsActions } from "../../redux/reducers/stats-reducer";
+import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
 
 
 interface LevelsProps {

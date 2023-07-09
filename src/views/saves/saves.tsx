@@ -11,6 +11,7 @@ import { ModifierType } from "../../enum/modifier-type";
 import { TempBonus } from "../../components/temp-bonus/temp-bonus";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import { WHATISMOD } from "../../enum/what-is-mod-type";
 
 export const CharacterSaves: React.FC = (): JSX.Element => {
   const charSave: SavingThrow = useSelector((state) => store.getState().saves);
@@ -56,13 +57,28 @@ export const CharacterSaves: React.FC = (): JSX.Element => {
       </Grid>
       <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
         <Grid item className="standardRow">
-          <CollapsibleRow title="Fortitude" value={charSave.fortitude.value} breakdown={charSave.fortitude.breakdown}/>
+          <CollapsibleRow 
+            title="Fortitude" 
+            value={charSave.fortitude.value} 
+            breakdown={charSave.fortitude.breakdown}
+            characteristic={WHATISMOD.SAVE}
+          />
         </Grid>
         <Grid item className="standardRow">
-            <CollapsibleRow title="Reflex" value={charSave.reflex.value} breakdown={charSave.reflex.breakdown} />
+            <CollapsibleRow 
+              title="Reflex" 
+              value={charSave.reflex.value} 
+              breakdown={charSave.reflex.breakdown}
+              characteristic={WHATISMOD.SAVE}
+            />
         </Grid>
         <Grid item className="standardRow">
-            <CollapsibleRow title="Will" value={charSave.will.value} breakdown={charSave.will.breakdown} />
+            <CollapsibleRow 
+              title="Will" 
+              value={charSave.will.value} 
+              breakdown={charSave.will.breakdown}
+              characteristic={WHATISMOD.SAVE}
+            />
         </Grid>
       </Grid>
       <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>

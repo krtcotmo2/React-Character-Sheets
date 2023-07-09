@@ -10,6 +10,7 @@ import { ModifierType } from "../../enum/modifier-type";
 import { TempBonus } from "../../components/temp-bonus/temp-bonus";
 import { Modifier } from "../../interfaces/modifier";
 import { Link } from "react-router-dom";
+import { WHATISMOD } from "../../enum/what-is-mod-type";
 
 export const CharacterStats: React.FC = (): JSX.Element => {
     const charStats: Stat = useSelector(state => store.getState().stats);
@@ -79,7 +80,8 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         value={charStats.str.value} 
                         breakdown={charStats.str.breakdown} 
                         includeStatBonus= {true}
-                        altText="Melee Attack and Damage and Str based skill checks"/>
+                        altText="Melee Attack and Damage and Str based skill checks"
+                        characteristic={WHATISMOD.STAT}/>
                 </Grid>
                 <Grid item className="standardRow">
                     <CollapsibleRow 
@@ -87,7 +89,8 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         value={charStats.dex.value} 
                         breakdown={charStats.dex.breakdown} 
                         includeStatBonus= {true}
-                        altText="Ranged Attack and AC Bonus and Reflex Save and Dex based skill checks"/>
+                        altText="Ranged Attack and AC Bonus and Reflex Save and Dex based skill checks"
+                        characteristic={WHATISMOD.STAT}/>
                 </Grid>
                 <Grid item className="standardRow">
                     <CollapsibleRow 
@@ -95,7 +98,8 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         value={charStats.con.value} 
                         breakdown={charStats.con.breakdown} 
                         includeStatBonus= {true}
-                        altText="HP and Fort Save and Con based skill checks"/>
+                        altText="HP and Fort Save and Con based skill checks"
+                        characteristic={WHATISMOD.STAT}/>
                     </Grid>
                 <Grid item className="standardRow">
                     <CollapsibleRow 
@@ -103,7 +107,8 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         value={charStats.int.value} 
                         breakdown={charStats.int.breakdown} 
                         includeStatBonus= {true}
-                        altText="Skill points and Int based skill checks"/>
+                        altText="Skill points and Int based skill checks"
+                        characteristic={WHATISMOD.STAT}/>
                 </Grid>
                 <Grid item className="standardRow">
                     <CollapsibleRow 
@@ -111,7 +116,8 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         value={charStats.wis.value}
                         breakdown={charStats.wis.breakdown} 
                         includeStatBonus= {true}
-                        altText="Will Save and Wis based skill checks"/>
+                        altText="Will Save and Wis based skill checks"
+                        characteristic={WHATISMOD.STAT}/>
                 </Grid>
                 <Grid item className="standardRow">
                     <CollapsibleRow 
@@ -119,7 +125,8 @@ export const CharacterStats: React.FC = (): JSX.Element => {
                         value={charStats.chr.value} 
                         breakdown={charStats.chr.breakdown} 
                         includeStatBonus= {true}
-                        altText="Chr based skill checks"/>
+                        altText="Chr based skill checks"
+                        characteristic={WHATISMOD.STAT}/>
                 </Grid>
             </Grid>
             <Divider color='#fff' style={{margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>

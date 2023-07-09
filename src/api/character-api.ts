@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SaveCharacter } from "../interfaces/character";
+import { formatToHits } from "../views/to-hits/business-logic/to-hit-logic";
 
 const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
     `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
@@ -20,6 +21,10 @@ export const getChar = async (charId: string) => {
     }
     const aCharacter = await axios
         .get(`${siteHost}/api/character/with-calc-stats/${searchParam}`)
+        .then(char => {
+            char.data.toHitGroups = formatToHits(char.data.toHitGroups);
+            return char;
+        })
         .catch((err) => {
             if(err.response.data.message === 'Character Not Found'){
                 return;

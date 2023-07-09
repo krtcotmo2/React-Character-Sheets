@@ -20,6 +20,7 @@ import { CharLevelActions } from "../../redux/reducers/level-reducer";
 import { CharLevel } from "../../interfaces/levels";
 import { ToHitGroup } from "../../interfaces/to-hit";
 import { HitsBar } from "../hits-bar/hits-bar";
+import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
 
 const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
   const char = useSelector(state => store.getState().character);
@@ -46,6 +47,7 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
             store.dispatch(SavesActions.setSaves(charData?.saves as SavingThrow));
             store.dispatch(SkillActions.setSkills(charData?.skills as RawSkill[]));
             store.dispatch(CharLevelActions.setCharLevels(charData?.levels as CharLevel[]));
+            store.dispatch(ToHitActions.setToHitGroups(charData?.toHitGroups as ToHitGroup[]));
           });
         })
         .catch(err => {
