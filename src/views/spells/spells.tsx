@@ -4,7 +4,7 @@ import { Spell, SpellLevelCategory } from '../../interfaces/spell';
 import { store } from '../../redux/configure-store';
 import { SpellActions } from '../../redux/reducers/spell-reducer';
 import { getStaModifier, organizeSpellList } from './business-logic/spells-hepler';
-import { Grid } from '@mui/material';
+import { Button, Divider, Grid } from '@mui/material';
 import { Character } from '../../interfaces/character';
 import { CharLevel } from '../../interfaces/levels';
 import { Stat } from '../../interfaces/stat';
@@ -51,6 +51,9 @@ export const Spells: React.FC = (): JSX.Element => {
                     )
                     
                 })}
+                
+                <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+                <Button style={{width:'fit-content'}} variant="contained">Add New Spell</Button>
             </Grid>
         </>
     )

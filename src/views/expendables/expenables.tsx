@@ -5,7 +5,7 @@ import { Expendable } from '../../interfaces/expendable';
 import { getCharacterExpendables } from '../../api/expenndables-api';
 import { ExpendableAction } from '../../redux/reducers/expendables-reducer';
 import { Character } from '../../interfaces/character';
-import { Grid } from '@mui/material';
+import { Button, Divider, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const ExpendablesView: React.FC = (): JSX.Element => {
@@ -34,7 +34,9 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
                     </Grid>
                 )
             })}
-
+            
+            <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+            <Button style={{width:'fit-content'}} variant="contained">Add New Expendable</Button>
         </Grid>
         </>
     )

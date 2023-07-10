@@ -5,7 +5,7 @@ import { store } from '../../redux/configure-store';
 import { FeatsActions } from '../../redux/reducers/feates-reducer';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
-import { Grid } from '@mui/material';
+import { Button, Divider, Grid } from '@mui/material';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { Link } from 'react-router-dom';
 
@@ -29,16 +29,18 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
             </Grid>
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
-        {feats.map(feat => {
-            return (
-                <Grid item className="standardRow">
-                    <CollapsibleRow title={feat.desc.name} breakdown={[]} allowEditing={false}/>
+            {feats.map(feat => {
+                return (
+                    <Grid item className="standardRow">
+                        <CollapsibleRow title={feat.desc.name} breakdown={[]} allowEditing={false}/>
+                
+                    
+                    </Grid>
+                )
+            })}
             
-                   
-                </Grid>
-            )
-        })}
-
+            <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+            <Button style={{width:'fit-content'}} variant="contained">Add New Feat</Button>
         </Grid>
         </>
     )

@@ -5,7 +5,7 @@ import { store } from '../../redux/configure-store';
 import { FeatsActions } from '../../redux/reducers/feates-reducer';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
-import { Grid } from '@mui/material';
+import { Button, Divider, Grid } from '@mui/material';
 import { getCharacterNotes } from '../../api/notes-api';
 import { Note } from '../../interfaces/note';
 import { Link } from 'react-router-dom';
@@ -34,6 +34,9 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
                         </Grid>
                     )
                 })}
+                
+                <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+                <Button style={{width:'fit-content'}} variant="contained">Add New Note</Button>
             </Grid>
         </>
     );

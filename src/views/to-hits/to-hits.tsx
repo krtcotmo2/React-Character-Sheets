@@ -1,4 +1,4 @@
-import { Divider, Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
@@ -227,6 +227,9 @@ export const ToHitView: React.FC = (): JSX.Element => {
             />
           </Grid>
         ))}
+        
+        <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+        <Button style={{width:'fit-content'}} variant="contained">Add New Defined To Hit</Button>
       </Grid>
     </>
   );

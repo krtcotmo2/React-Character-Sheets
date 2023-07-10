@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { store } from '../../redux/configure-store';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { Character } from '../../interfaces/character';
-import { Grid } from '@mui/material';
+import { Button, Divider, Grid } from '@mui/material';
 import { ArmorSet } from '../../interfaces/armor';
 import { getCharacterArmor } from '../../api/armor-api';
 import { Modifier } from 'typescript';
@@ -42,17 +42,19 @@ export const CharacterArmor:React.FC<ArmorProps> = (props: ArmorProps): JSX.Elem
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
-            {
-                armors.map(armor => (
-                    <Grid item className="standardRow">
-                        <CollapsibleRow 
-                            title={armor.name} 
-                            breakdown={armor.values} 
-                            value={armor.score}
-                        />
-                    </Grid>
-                ))
-            }
+                {
+                    armors.map(armor => (
+                        <Grid item className="standardRow">
+                            <CollapsibleRow 
+                                title={armor.name} 
+                                breakdown={armor.values} 
+                                value={armor.score}
+                            />
+                        </Grid>
+                    ))
+                }
+                <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+                <Button style={{width:'fit-content'}} variant="contained">Add New Defined AC</Button>
             </Grid>
         </>     
     )
