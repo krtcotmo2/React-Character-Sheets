@@ -26,11 +26,32 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
     const { state } = useLocation();
     const emptyModifiers: Modifier[] = [];
     const [modifiers, setModifiers] = useState(emptyModifiers);
+    const [modified, setModified] = useState<Modifier[]>([]);
+    
     useEffect(() => {
         const theReducer = getReducer(state.whatIsMod || '');
         const mods = getModifiers(state.modified, theReducer);
         setModifiers(mods);
     },[]);
+
+    const updateModified = (m: Modifier) => {
+        const newVals = [
+            ...modified.filter(item => item.id !== m.id),
+            m
+        ]
+        setModified(newVals)
+        console.log(newVals);
+    }
+    const checkDelta = (modifiers: Modifier[]) => {
+        const needsUpdates: Modifier[] = [];
+        modified.forEach(mod => {
+            const oldVal = modifiers.find(old => old.id === mod.id);
+            if(oldVal?.modDesc !== mod.modDesc || oldVal?.score !== mod.score){
+                needsUpdates.push(mod);
+            }
+            console.log(needsUpdates)
+        })
+    }
     const char: Character = useSelector(state => store.getState().character);
     return (
         <Grid container direction='column' justifyContent="center" alignItems='center'>
@@ -40,15 +61,17 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
             <Grid direction='column' rowGap={2} style={{display:"flex"}}>
                 <Grid container direction='column' rowGap={2} item alignContent='center'>
                     {
-                        modifiers.map( 
-                            (m: Modifier, i) => (<ModifierRow modifier={m} index={i}/>)
+                        modifiers?.map( 
+                            (m: Modifier, i) => (<ModifierRow modifier={m} index={i} saveFunction={updateModified}/>)
                         )
                     }
                 </Grid>
             </Grid>
-            {/*  */}
             <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-            <Button style={{width:'fit-content'}} variant="contained">Add New Modifier</Button>
+            <Grid direction='row' rowGap={2} style={{display:"flex"}} columnGap={2}>
+                <Button style={{width:'fit-content'}} variant="contained">Add New Modifier</Button>
+                <Button style={{width:'fit-content'}} variant="contained" onClick={() => checkDelta(modifiers)}>Save</Button>
+            </Grid>
         </Grid>
     )
 };

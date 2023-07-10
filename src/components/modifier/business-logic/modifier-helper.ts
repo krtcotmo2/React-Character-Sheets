@@ -51,6 +51,28 @@ export const getModifiers = (
   if (!characteristic || !value) {
     return [] as Modifier[];
   }
+  if(Array.isArray(characteristic)){
+    if(instanceOfRawSkill(characteristic[0])){
+      let arr = characteristic as RawSkill[];
+      arr =  arr.filter(skill => skill.skillName === value);
+      return arr.map(skill => {
+        return {
+          id: +skill.id,
+          score: skill.score,
+          type: skill.isMod ? ModifierType.MODIFIER : skill.isClassSkill ? ModifierType.CLASSSKILL :
+            skill.isRanks ? ModifierType.BASE : ModifierType.TEMPORARY,
+          modDesc: skill.modDesc
+        }
+      })
+    };
+
+    if(instanceOfToHit(characteristic[0])){
+      
+      const arr = characteristic as ToHitGroup[];
+      const hitGroup =  arr.find(hit => hit.hitName === value);
+      return hitGroup?.breakdown || []
+    };
+  }
   let c;
   switch (value.substring(0, 3).toLowerCase()) {
     case "str":
@@ -82,28 +104,7 @@ export const getModifiers = (
       return c.will.breakdown;
 
   }
-  if(Array.isArray(characteristic)){
-    if(instanceOfRawSkill(characteristic[0])){
-      let arr = characteristic as RawSkill[];
-      arr =  arr.filter(skill => skill.skillName === value);
-      return arr.map(skill => {
-        return {
-          id: +skill.id,
-          score: skill.score,
-          type: skill.isMod ? ModifierType.MODIFIER : skill.isClassSkill ? ModifierType.CLASSSKILL :
-            skill.isRanks ? ModifierType.BASE : ModifierType.TEMPORARY,
-          modDesc: skill.modDesc
-        }
-      })
-    };
-
-    if(instanceOfToHit(characteristic[0])){
-      
-      const arr = characteristic as ToHitGroup[];
-      const hitGroup =  arr.find(hit => hit.hitName === value);
-      return hitGroup?.breakdown || []
-    };
-  }
+  
   return []
 };
 
