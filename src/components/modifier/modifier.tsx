@@ -1,19 +1,17 @@
-import { Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Divider, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect, useState } from 'react';
-import { WHATISMOD } from "../../enum/what-is-mod-type";
 import { Modifier } from "../../interfaces/modifier";
-import { Link, useLocation } from "react-router-dom"
-import { getModifiers, getReducer, getStatToModify } from "./business-logic/modifier-helper";
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { getModifiers, getNavigateUrl, getReducer, getSaveFunction, getStatToModify } from "./business-logic/modifier-helper";
 import { Character } from "../../interfaces/character";
-import { Expendable } from "../../interfaces/expendable";
-import { Feat } from "../../interfaces/feats";
-import { CharLevel } from "../../interfaces/levels";
-import { SavingThrow } from "../../interfaces/saving-throw";
-import { RawSkill } from "../../interfaces/skills";
-import { Stat } from "../../interfaces/stat";
 import { ModifierRow } from "./modifier-row";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
+
+import { StatsActions } from "../../redux/reducers/stats-reducer";
+import { SavesActions } from "../../redux/reducers/saves-reducer";
+import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
+import { updateReducersAfterCharUpdates } from "../../api/skills-api";
 
 interface ModifierProps {
     whatIsMod?: any;
@@ -27,6 +25,7 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
     const emptyModifiers: Modifier[] = [];
     const [modifiers, setModifiers] = useState(emptyModifiers);
     const [modified, setModified] = useState<Modifier[]>([]);
+    const navigate = useNavigate();
     
     useEffect(() => {
         const theReducer = getReducer(state.whatIsMod || '');
@@ -39,19 +38,26 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
             ...modified.filter(item => item.id !== m.id),
             m
         ]
-        setModified(newVals)
-        console.log(newVals);
+        setModified(newVals);
     }
     const checkDelta = (modifiers: Modifier[]) => {
         const needsUpdates: Modifier[] = [];
         modified.forEach(mod => {
             const oldVal = modifiers.find(old => old.id === mod.id);
             if(oldVal?.modDesc !== mod.modDesc || oldVal?.score !== mod.score){
+                delete mod.type;
                 needsUpdates.push(mod);
             }
-            console.log(needsUpdates)
-        })
-    }
+        });
+        if(needsUpdates.length > 0){
+            const updateFunction = getSaveFunction(state.whatIsMod);
+            updateFunction(char.charID.toString(), needsUpdates)
+                .then( async (c: Character) => {
+                   updateReducersAfterCharUpdates(c);
+                });
+            }
+            navigate(`${getNavigateUrl(state.whatIsMod, char.charID.toString())}`);
+        }
     const char: Character = useSelector(state => store.getState().character);
     return (
         <Grid container direction='column' justifyContent="center" alignItems='center'>

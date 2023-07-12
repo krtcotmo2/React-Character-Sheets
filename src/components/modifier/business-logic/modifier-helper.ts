@@ -10,6 +10,9 @@ import { Modifier } from "../../../interfaces/modifier";
 import { ModifierType } from "../../../enum/modifier-type";
 import { Module } from "module";
 import { ToHit, ToHitGroup } from "../../../interfaces/to-hit";
+import { updateStatLines } from "../../../api/stats-api";
+import { updateSavesLines } from "../../../api/saves-api";
+import { updateSkillLines } from "../../../api/skills-api";
 
 export const getStatToModify = (stat: string) => {
   return stat;
@@ -129,4 +132,36 @@ export const getModDescription = (m :Modifier, characteristic: string)=> {
     default:
       return m.modDesc;
   }
-} 
+}
+
+export const getSaveFunction = (whatIsMod: string) => {
+  switch (whatIsMod) {
+    case "Save":
+      return updateSavesLines;
+    case "Skill":
+      return updateSkillLines;
+    // case "Character":
+    //   return store.getState().character;
+    case "Stat":
+    default:
+      return updateStatLines;
+    // case "ToHit":
+    //   return store.getState().toHitGroups;
+  }
+}
+
+export const getNavigateUrl = (whatIsMod: string, charId: string) =>{
+  switch (whatIsMod) {
+    case "Save":
+      return `/character/save/${charId}`;
+    case "Skill":
+      return `/character/skills/${charId}`;
+    // case "Character":
+    //   return store.getState().character;
+    case "Stat":
+    default:
+      return  `/character/stats/${charId}`;
+    // case "ToHit":
+    //   return store.getState().toHitGroups;
+  }
+}
