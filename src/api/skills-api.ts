@@ -57,3 +57,22 @@ export const updateReducersAfterCharUpdates = async (c: Character) => {
         await store.dispatch(StatsActions.setStat(c.stats));
     }
 }
+
+export const saveSkillLine = async (charId: string, body:any) => {
+    const statData = body;
+    return await axios
+        .post(`${siteHost}/api/skill/${charId}`, statData)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}
+
+export const deleteSkillLines = async (charId: string, id:string) => {
+    return await axios
+        .delete(`${siteHost}/api/skill/${charId}/${id}`)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}

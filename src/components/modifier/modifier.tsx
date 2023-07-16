@@ -1,8 +1,8 @@
-import { Button, Divider, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Divider, FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Modifier } from "../../interfaces/modifier";
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { getModifiers, getNavigateUrl, getReducer, getSaveFunction, getStatToModify } from "./business-logic/modifier-helper";
+import { addNewModifier, getAddFunction, getModifiers, getNavigateUrl, getReducer, getSaveFunction, getStatToModify, getStateIdFromName, saveModifier } from "./business-logic/modifier-helper";
 import { Character } from "../../interfaces/character";
 import { ModifierRow } from "./modifier-row";
 import { useSelector } from "react-redux";
@@ -25,6 +25,10 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
     const emptyModifiers: Modifier[] = [];
     const [modifiers, setModifiers] = useState(emptyModifiers);
     const [modified, setModified] = useState<Modifier[]>([]);
+    const [addingMod, setAddingMod] = useState(false);
+    const [newScore, setNewScore] = useState('');
+    const [newDesc, setNewDesc] = useState('');
+
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -40,24 +44,24 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
         ]
         setModified(newVals);
     }
-    const checkDelta = (modifiers: Modifier[]) => {
-        const needsUpdates: Modifier[] = [];
-        modified.forEach(mod => {
-            const oldVal = modifiers.find(old => old.id === mod.id);
-            if(oldVal?.modDesc !== mod.modDesc || oldVal?.score !== mod.score){
-                delete mod.type;
-                needsUpdates.push(mod);
-            }
-        });
-        if(needsUpdates.length > 0){
-            const updateFunction = getSaveFunction(state.whatIsMod);
-            updateFunction(char.charID.toString(), needsUpdates)
-                .then( async (c: Character) => {
-                   updateReducersAfterCharUpdates(c);
-                });
-            }
-            navigate(`${getNavigateUrl(state.whatIsMod, char.charID.toString())}`);
+    const checkDelta = async (modifiers: Modifier[]) => {
+        if(addingMod){
+            await addNewModifier(
+                char,
+                +newScore,
+                newDesc,
+                state
+            );
+        }else{
+            await saveModifier(
+                char,
+                modified,
+                state,
+                modifiers
+            );
         }
+        navigate(`${getNavigateUrl(state.whatIsMod, char.charID.toString())}`);
+    }
     const char: Character = useSelector(state => store.getState().character);
     return (
         <Grid container direction='column' justifyContent="center" alignItems='center'>
@@ -68,14 +72,40 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
                 <Grid container direction='column' rowGap={2} item alignContent='center'>
                     {
                         modifiers?.map( 
-                            (m: Modifier, i) => (<ModifierRow modifier={m} index={i} saveFunction={updateModified}/>)
+                            (m: Modifier, i) => (<ModifierRow modifier={m} index={i} saveFunction={updateModified} addingMod={addingMod}/>)
                         )
                     }
                 </Grid>
             </Grid>
             <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
+            {addingMod && (
+                <>
+                    <Grid container item justifyContent="center" direction='row' columnGap={2}>
+                            <Grid item style={{alignSelf:'left'}}>
+                                <FormControl>
+                                    <TextField
+                                        value={newScore}
+                                        onChange={(evt)=> setNewScore(evt.target.value)}
+                                        required
+                                        type="number"
+                                        InputProps={{ inputProps: { step: "1", placeholder: 'Score' } }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item style={{marginBottom: '12px'}}>
+                                <TextField
+                                        value={newDesc}
+                                        onChange={(evt)=> setNewDesc(evt.target.value)}
+                                    required
+                                    InputProps={{ inputProps: { placeholder: 'Description' } }}
+                                />
+                            </Grid>
+                    </Grid>
+                </>
+            )}
             <Grid direction='row' rowGap={2} style={{display:"flex"}} columnGap={2}>
-                <Button style={{width:'fit-content'}} variant="contained">Add New Modifier</Button>
+                {!addingMod && <Button style={{width:'fit-content'}} variant="contained" onClick={()=>setAddingMod(true)}>Add New Modifier</Button>}
+                {addingMod && <Button onClick={()=>setAddingMod(false)} variant="contained" >Cancel</Button> }
                 <Button style={{width:'fit-content'}} variant="contained" onClick={() => checkDelta(modifiers)}>Save</Button>
             </Grid>
         </Grid>
