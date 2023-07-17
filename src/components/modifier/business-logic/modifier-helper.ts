@@ -3,16 +3,13 @@ import { store } from "../../../redux/configure-store";
 import { RawSkill } from "../../../interfaces/skills";
 import { Character } from "../../../interfaces/character";
 import { SavingThrow } from "../../../interfaces/saving-throw";
-import { Expendable } from "../../../interfaces/expendable";
-import { Feat } from "../../../interfaces/feats";
-import { CharLevel } from "../../../interfaces/levels";
 import { Modifier } from "../../../interfaces/modifier";
 import { ModifierType } from "../../../enum/modifier-type";
-import { Module } from "module";
-import { ToHit, ToHitGroup } from "../../../interfaces/to-hit";
+import { ToHitGroup } from "../../../interfaces/to-hit";
 import { deleteStatLine, saveStatLine, updateStatLines } from "../../../api/stats-api";
 import { deleteSavesLine, saveSavesLine, updateSavesLines } from "../../../api/saves-api";
 import { deleteSkillLines, saveSkillLine, updateReducersAfterCharUpdates, updateSkillLines } from "../../../api/skills-api";
+import { deleteToHitLine, saveToHitLine, updateToHitLines } from "../../../api/to-hit-api";
 
 export const getStatToModify = (stat: string) => {
   return stat;
@@ -158,13 +155,11 @@ export const getSaveFunction = (whatIsMod: string) => {
       return updateSavesLines;
     case "Skill":
       return updateSkillLines;
-    // case "Character":
-    //   return store.getState().character;
     case "Stat":
-    default:
       return updateStatLines;
-    // case "ToHit":
-    //   return store.getState().toHitGroups;
+    case "ToHit":
+    default:
+      return updateToHitLines;
   }
 };
 
@@ -174,13 +169,12 @@ export const getAddFunction = (whatIsMod: string) => {
       return saveSavesLine;
     case "Skill":
       return saveSkillLine;
-    // case "Character":
-    //   return store.getState().character;
     case "Stat":
-    default:
       return saveStatLine;
-    // case "ToHit":
-    //   return saveStatLine;
+    case "ToHit":
+      return saveToHitLine;
+    default:
+      return async (charId: string, body:{}) =>{}
   }
 };
 
@@ -190,13 +184,12 @@ export const getDeleteFunction = (whatIsMod: string) => {
       return deleteSavesLine;
     case "Skill":
       return deleteSkillLines;
-    // case "Character":
-    //   return store.getState().character;
     case "Stat":
-    default:
       return deleteStatLine;
-    // case "ToHit":
-    //   return store.getState().toHitGroups;
+    case "ToHit":
+      return deleteToHitLine;
+    default:
+      return async (charId: string, id:string) =>{}
   }
 };
 
@@ -206,13 +199,12 @@ export const getNavigateUrl = (whatIsMod: string, charId: string) => {
       return `/character/save/${charId}`;
     case "Skill":
       return `/character/skills/${charId}`;
-    // case "Character":
-    //   return store.getState().character;
     case "Stat":
-    default:
       return `/character/stats/${charId}`;
-    // case "ToHit":
-    //   return store.getState().toHitGroups;
+    case "ToHit":
+      return `/character/tohits/${charId}`;
+    default:
+      return `/character/overview/${charId}`;
   }
 };
 
@@ -252,6 +244,7 @@ export const addNewModifier = (
       statID: getStateIdFromName(state.modified), 
       saveID: getStateIdFromName(state.modified), 
       skillID: state.id, 
+      toHitID: state.id, 
       score: +newScore,
       isMod: true,
       isBase: false,
@@ -261,12 +254,10 @@ export const addNewModifier = (
       pinned: state.pinned || false
   }
   // need to define other methods including update api
-  if(state.whatIsMod === 'Stat' || state.whatIsMod === 'Save' || state.whatIsMod === 'Skill'){
     addFunction(char.charID.toString(), newMod)
         .then( async (c: Character) => {
             updateReducersAfterCharUpdates(c);
         });
-  }
 }
 
 export const deleteModifier = (char: Character, state: any, id: number) => {

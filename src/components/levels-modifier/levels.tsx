@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Character } from '../../interfaces/character';
 import { useSelector } from 'react-redux';
 import { store } from '../../redux/configure-store';
-import { Button, Divider, FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { LevelRow } from './level-row';
 import { Link } from "react-router-dom";
 import { charClasses, CharClass } from '../../enum/class-types';
@@ -63,7 +63,7 @@ export const LevelsModified: React.FC = (): JSX.Element => {
                             }}/>
                         {!addingStat && (
                             <Grid container item justifyContent="center" direction='row' rowGap={5} >
-                                 <Button onClick={()=>setAddingStat(true)}>Add New</Button> 
+                                 <Button onClick={()=>setAddingStat(true)} variant="contained">Add New</Button> 
                             </Grid>
                         )}
                     </form>
@@ -73,9 +73,12 @@ export const LevelsModified: React.FC = (): JSX.Element => {
                         <Grid container item justifyContent="center" direction='row' columnGap={2}>
                                 <Grid item style={{alignSelf:'left'}}>
                                     <FormControl>
+                                        <InputLabel variant="filled" htmlFor="new-class-select">
+                                            Class
+                                        </InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
+                                            id="new-class-select"
                                             style={{minWidth: '200px', backgroundColor:'white'}}
                                             onChange={(event)=>setNewClass(event.target.value)}
                                             value={newClass}
@@ -98,9 +101,9 @@ export const LevelsModified: React.FC = (): JSX.Element => {
                                     />
                                 </Grid>
                         </Grid>
-                        <Grid container item justifyContent="center" direction='row' rowGap={5} >
-                            <Button onClick={()=>setAddingStat(false)}>Cancel</Button> 
-                            <Button onClick={saveLevels}>Save</Button> 
+                        <Grid style={{margin:'24px 0'}}container item justifyContent="center" direction='row' rowGap={5} columnGap={2} >
+                            <Button onClick={()=>setAddingStat(false)} variant="contained">Cancel</Button> 
+                            <Button onClick={saveLevels} variant="contained">Save</Button> 
                         </Grid>
                     </>
                 ) }
