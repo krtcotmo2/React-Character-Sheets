@@ -106,7 +106,7 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
         </Grid>
       }
       {
-        toHits?.length > 0 &&
+        toHits.filter(grp => grp.pinned)?.length > 0 &&
         <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
           {toHits && <HitsBar hits={toHits} />}
         </Grid>

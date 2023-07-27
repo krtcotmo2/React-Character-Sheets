@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import { Character } from "../../interfaces/character";
 import { buildLevelString } from "../character-view/business-logic/load-chars";
+import { ExpendableAction } from "../../redux/reducers/expendables-reducer";
+import { store } from "../../redux/configure-store";
 
 interface RowsData {
     char: Character
@@ -13,6 +15,7 @@ export const CharacterRow: React.FC<RowsData> = (props:RowsData): JSX.Element =>
     const navigate = useNavigate();
     const {charName, levels, image, charHP, isDead, charID} =  props.char;
     const loadChar = (charID: number) => {
+        store.dispatch(ExpendableAction.cleartExpendable());
         navigate(`/character/overview/${charID}`);
     }
     return (
