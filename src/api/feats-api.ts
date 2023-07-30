@@ -28,4 +28,12 @@ export const getFeatsOfType = async ( typ: string) => {
         throw new Error(err.message);
     });
 }
+export const saveNewFeat = async ( charId: string, featId: string) => {
+    return await axios
+    .post(`${siteHost}/api/feat/new/${charId}/${featId}`)
+    .then(results => results.data)
+    .catch((err) => {
+        throw new Error(err.message);
+    });
+}
 

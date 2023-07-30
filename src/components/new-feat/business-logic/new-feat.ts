@@ -1,4 +1,4 @@
-import { getFeatsOfType, getFeatsType } from "../../../api/feats-api"
+import { getFeatsOfType, getFeatsType, saveNewFeat } from "../../../api/feats-api"
 
 export const loadFeatTypes = async () => {
     const types = await getFeatsType();
@@ -7,5 +7,9 @@ export const loadFeatTypes = async () => {
 
 export const loadFeatOfTypes = async (typ: string) => {
     const feats = await getFeatsOfType(typ);
-    return feats
+    return feats;
+}
+
+export const createFeat = async (charId: string, featId: string) => {
+    return await saveNewFeat(charId, featId);
 }

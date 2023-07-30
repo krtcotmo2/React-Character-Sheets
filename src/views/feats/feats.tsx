@@ -11,17 +11,15 @@ import { Link } from 'react-router-dom';
 import { NewFeat } from '../../components/new-feat/new-feat';
 
 export const CharacterFeats: React.FC = (): JSX.Element => {
-    const [feats, setFeats] = useState<Feat[]>([]);
     const [isAdding, setIsAdding] = useState(false);
     const char: Character = useSelector((state) => store.getState().character);
-
+    const feats: Feat[] = useSelector((state) => store.getState().feats);
     useEffect( () => {
         getCharacterFeats(store.getState().character.charID.toString())
         .then( currentFeats => {
-            setFeats(currentFeats);
             store.dispatch(FeatsActions.setCharFeats(currentFeats));
         })
-    },[])
+    },[feats])
 
     const toggleIsAdding = (val: boolean) => {
         setIsAdding(val ||!isAdding);
@@ -38,8 +36,6 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
                 return (
                     <Grid item className="standardRow">
                         <CollapsibleRow key={i} title={feat.desc.name} desc={feat.desc} breakdown={[]} allowEditing={false}/>
-                
-                    
                     </Grid>
                 )
             })}
