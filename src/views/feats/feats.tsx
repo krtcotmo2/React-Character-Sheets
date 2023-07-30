@@ -8,9 +8,11 @@ import { Character } from '../../interfaces/character';
 import { Button, Divider, Grid } from '@mui/material';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { Link } from 'react-router-dom';
+import { NewFeat } from '../../components/new-feat/new-feat';
 
 export const CharacterFeats: React.FC = (): JSX.Element => {
     const [feats, setFeats] = useState<Feat[]>([]);
+    const [isAdding, setIsAdding] = useState(false);
     const char: Character = useSelector((state) => store.getState().character);
 
     useEffect( () => {
@@ -21,6 +23,9 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
         })
     },[])
 
+    const toggleIsAdding = (val: boolean) => {
+        setIsAdding(val ||!isAdding);
+    }
     return(
         <>
         <Grid container>
@@ -29,10 +34,10 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
             </Grid>
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
-            {feats.map(feat => {
+            {feats.map((feat, i) => {
                 return (
                     <Grid item className="standardRow">
-                        <CollapsibleRow title={feat.desc.name} breakdown={[]} allowEditing={false}/>
+                        <CollapsibleRow key={i} title={feat.desc.name} desc={feat.desc} breakdown={[]} allowEditing={false}/>
                 
                     
                     </Grid>
@@ -40,7 +45,11 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
             })}
             
             <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-            <Button style={{width:'fit-content'}} variant="contained">Add New Feat</Button>
+            
+            { !isAdding && 
+                <Button style={{width:'fit-content'}} variant="contained" onClick={ () => toggleIsAdding(true) } >Add New Feat</Button> 
+            }
+            { isAdding &&  <NewFeat cancel={toggleIsAdding}></NewFeat> }
         </Grid>
         </>
     )

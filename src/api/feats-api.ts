@@ -11,3 +11,21 @@ export const getCharacterFeats = async (charId: string) => {
         throw new Error(err.message);
     });
 }
+
+export const getFeatsType = async () => {
+    return await axios
+    .get(`${siteHost}/api/feat/type`)
+    .then(results => results.data)
+    .catch((err) => {
+        throw new Error(err.message);
+    });
+}
+export const getFeatsOfType = async ( typ: string) => {
+    return await axios
+    .get(`${siteHost}/api/feat/type/${typ}`)
+    .then(results => results.data)
+    .catch((err) => {
+        throw new Error(err.message);
+    });
+}
+

@@ -28,6 +28,7 @@ interface RowProps {
     toHitData?: ToHitGroup;
     allowEditing?: boolean;
     characteristic?: WHATISMOD;
+    desc?: any;
 }
 
 
@@ -64,7 +65,7 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     const skillData = props.skillData;
     const tohitData = props.toHitData;
     const allowEdit = props.allowEditing === undefined ?  true : props.allowEditing;
-    const {title, value, breakdown, includeStatBonus, altText} = props;
+    const {title, value, breakdown, includeStatBonus, altText, desc} = props;
     const editStat = ( a: string) => {
         navigate('/character/characteristic/edit', {
             replace: true, 
@@ -80,21 +81,19 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>
             <Grid container item direction={'row'} flexWrap='nowrap'>
                 <Grid item container direction='row' wrap='nowrap' flexGrow={1} style={{textAlign: 'left', width: 'fit-content'}} gap={2}>
-                    <span>{title}: </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}</span>
+                    <span>{title} </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}</span>
                 </Grid>
                 {/* <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>    
                     <InfoIcon onClick={clickIcon} className={`${classes.iconPadded}`}/>
                 </Grid> */}
-                {
-                    props.characteristic === WHATISMOD.STAT && (
-                        <Grid item container flexShrink={1} style={{textAlign: 'left', paddingLeft: '18px'}}> 
-                            {includeStatBonus ? calcBonus(value) : ''} {altText}
-                        </Grid>
-                    )
-                }
+                {props.characteristic === WHATISMOD.STAT && (
+                    <Grid item container flexShrink={1} style={{textAlign: 'left', paddingLeft: '18px'}}> 
+                        {includeStatBonus ? calcAndShowBonus(value) : ''} {altText}
+                    </Grid>
+                )}
                 {
                     userId === charOwner  && allowEdit &&
-                    (<Grid item container  flexShrink={1} style={{maxWidth: 'fit-content', alignContent:'start'}}>
+                    (<Grid item container flexShrink={1} style={{maxWidth: 'fit-content', alignContent:'start'}}>
                         <EditIcon className={classes.editIcon} onClick={() => editStat(title)}/>
                     </Grid>)
                 }
@@ -113,12 +112,23 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
             <Grid container direction={'column'} className={`${hidden ? 'hidden' : ''}`} >
                 {breakdown.map( (mod, i) => (<Grid key={i} container item className={`${classes.breakDownSection}`}>{mod.score} - {getDescription(mod, mod.modDesc)}</Grid>))}
             </Grid>
+            {
+                desc?.id &&
+                <Grid container direction={'column'} className={`${hidden ? 'hidden' : ''}`} >
+                    <Grid item style={{textAlign:'left'}}>Type: {desc.type}</Grid>
+                    <Grid item style={{textAlign:'left', paddingBottom: '16px'}}>Prerequisite: {desc.prerequisites || 'none'}</Grid>
+                    <Grid item style={{textAlign:'left', paddingBottom: '16px'}}>Description: {desc.shortdescription}</Grid>
+                    <Grid item style={{textAlign:'left', paddingBottom: '16px'}}>{desc.benefit}</Grid>
+                    <Grid item style={{textAlign:'left', paddingBottom: '16px'}}>{desc.normal}</Grid>
+                    <Grid item style={{textAlign:'left'}}>{desc.special}</Grid>
+                </Grid>
+            }
             
         </Grid>
     )
 }
 
-export const calcBonus = (statValue: number | undefined): string => {
+export const calcAndShowBonus = (statValue: number | undefined): string => {
     if(!statValue){
         return '';
     }
