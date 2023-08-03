@@ -23,6 +23,17 @@ export const CharacterCore: React.FC = (): JSX.Element => {
     const adjustLevels = () => {
         navigate(`/character/levels/${char.charID}`);
     }
+
+    const adjustCore = (core: string, val: number | string) => {
+        navigate(`/character/core/${char.charID}`, {
+            replace: true, 
+            state: {
+                whatIsModified: core,
+                currentValue: val,
+            }
+        });
+    }
+
     return(
         <>
         <Grid container>
@@ -34,10 +45,22 @@ export const CharacterCore: React.FC = (): JSX.Element => {
             <Grid container item direction={'row'} wrap='nowrap' gap={2}>
                 <img src={`../images/${char.image}`}/>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
-                    <div><p style={{textAlign:'left'}}>Alignment: {char.alignment} <EditIcon className='pointer editIcon' /></p></div>
-                    <div><p style={{textAlign:'left'}}>Race: {char.race} <EditIcon className='pointer' /></p></div>
-                    <div><p style={{textAlign:'left'}}>Hit Points: {char.charHP} <EditIcon className='pointer' /></p></div>
-                    <div><p style={{textAlign:'left'}}>Initiative: {char.init} <EditIcon className='pointer' /></p></div>
+                    <div>
+                        <p style={{textAlign:'left'}}>Alignment: {char.alignment} 
+                        <EditIcon className='pointer editIcon' onClick={()=> adjustCore('Alignment', char.alignment)}/></p>
+                    </div>
+                    <div>
+                        <p style={{textAlign:'left'}}>Race: {char.race} 
+                        <EditIcon className='pointer' onClick={()=> adjustCore('Race', char.race)}/></p>
+                    </div>
+                    <div>
+                        <p style={{textAlign:'left'}}>Hit Points: {char.charHP} 
+                        <EditIcon className='pointer' onClick={()=> adjustCore('Hit Points', char.charHP)}/></p>
+                    </div>
+                    <div>
+                        <p style={{textAlign:'left'}}>Initiative: {char.init} 
+                        <EditIcon className='pointer' onClick={()=> adjustCore('Initiative', char.init)}/></p>
+                    </div>
                 </Grid>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
                     <div><p>Levels <EditIcon className='pointer' onClick={adjustLevels}/></p></div>

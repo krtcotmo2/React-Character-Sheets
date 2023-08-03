@@ -25,6 +25,7 @@ import { LandingPage } from "./views/landing/landing";
 import NewCharacter from "./components/character-view/new-character";
 import { LevelsModified } from "./components/levels-modifier/levels";
 import { ModifierView } from "./components/modifier/modifier";
+import { CoreModifier } from "./components/char-core/modify-char-core";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/main/newChar" element={<NewCharacter />} />
                 <Route path="/character/stats/*" element={<CharacterStats />} />
                 <Route path="/character/save/*" element={<CharacterSaves />} />
+                <Route path="/character/core/*" element={<CoreModifier />} />
                 <Route path="/character/levels/*" element={<LevelsModified />} />
                 <Route path="/character/skills/*" element={<CharacterSkills/>} />
                 <Route path="/character/overview/*" element={<CharacterOverview />} />

@@ -23,13 +23,17 @@ export interface Character {
 }
 
 export interface SaveCharacter {
-  userID: number;
-  charName: string;
+  userID?: number;
+  charName?: string;
   charHP: number;
-  CharXP: number;
+  CharXP?: number;
   raceID: number;
   alignID: number;
   init: number;
-  isDead: boolean;
-  image: string;
+  isDead?: boolean;
+  image?: string;
+}
+
+export interface UpdateCharacter extends SaveCharacter{
+  charID: number;
 }

@@ -93,3 +93,6 @@ p a:-webkit-any-link{
 .pointer{
   cursor: pointer;
 }
+svg.editIcon{
+    /* fill: red;     */
+ }

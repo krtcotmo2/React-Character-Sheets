@@ -4,13 +4,14 @@ import { Spell, SpellLevelCategory } from '../../interfaces/spell';
 import { store } from '../../redux/configure-store';
 import { SpellActions } from '../../redux/reducers/spell-reducer';
 import { getStaModifier, organizeSpellList } from './business-logic/spells-hepler';
-import { Button, Divider, Grid } from '@mui/material';
+import { Button, Divider, Grid, TextField } from '@mui/material';
 import { Character } from '../../interfaces/character';
 import { CharLevel } from '../../interfaces/levels';
 import { Stat } from '../../interfaces/stat';
 import { Link } from 'react-router-dom';
 
 export const Spells: React.FC = (): JSX.Element => {
+    const [isAdding, setIsAdding] = useState(false);
     const [stats] = useState<Stat | undefined>(store.getState().stats);
     const [lvls] = useState<CharLevel[] | undefined>(store.getState().levels);
     const [char] = useState<Character | undefined>(store.getState().character);
@@ -24,6 +25,9 @@ export const Spells: React.FC = (): JSX.Element => {
             })
     },[])
 
+    const addNewSpell = () => {
+        setIsAdding(true);
+    }
     return(
         <>
            <Grid container>
@@ -49,11 +53,34 @@ export const Spells: React.FC = (): JSX.Element => {
                         </Grid>
                         </>
                     )
-                    
                 })}
-                
+            </Grid>
+            <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList"> 
                 <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-                <Button style={{width:'fit-content'}} variant="contained">Add New Spell</Button>
+                { !isAdding &&
+                    <Button style={{width:'fit-content'}} variant="contained" onClick={() => addNewSpell()}>Add New Spell</Button>
+                }
+                { isAdding &&
+                    <>
+                        <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                            <TextField
+                                required
+                                type="text"
+                                placeholder='Spell'
+                            />
+                            <TextField
+                                required
+                                type="number"
+                                placeholder='Level'
+                                InputProps={{ inputProps: { min: "0", step: "1" } }}
+                            />
+                        </Grid>
+                        <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                            <Button style={{width:'fit-content'}} variant="contained" onClick={() => setIsAdding(false)}>Cancel</Button>
+                            <Button style={{width:'fit-content'}} variant="contained">Save</Button>
+                        </Grid>
+                    </>
+                }
             </Grid>
         </>
     )

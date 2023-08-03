@@ -1,3 +1,9 @@
  .MuiFormControl-root input {
     background-color: white !important;
 }
+
+.MuiSelect-select{
+    background-color: white !important;
+    min-width: 225px !important;
+    text-align: left;
+}

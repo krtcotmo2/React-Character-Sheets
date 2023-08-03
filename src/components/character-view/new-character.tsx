@@ -136,9 +136,9 @@ const NewCharacter: React.FunctionComponent = (): JSX.Element => {
                 className={classes.inputField}
               />
               </Grid>
-              <Grid container item justifyContent="center">
-              <Button type="submit">Submit</Button>
-            </Grid>
+              <Grid container item justifyContent="center" className="standardList">
+                <Button type="submit" variant="contained">Submit</Button>
+              </Grid>
           </form>
         </Grid>
       </Grid>
