@@ -16,6 +16,7 @@ export const CharacterCore: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
     const levels: CharLevel[] = useSelector((state) => store.getState().levels);
     const navigate = useNavigate();
+    const userID = store.getState().user.id;
     
     useEffect( () => {
     },[])
@@ -43,29 +44,38 @@ export const CharacterCore: React.FC = (): JSX.Element => {
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
             <Grid container item direction={'row'} wrap='nowrap' gap={2}>
-                <img src={`../images/${char.image}`}/>
+                <img src={`../images/${char.image}`} style={{width:'fit-content', height:'fit-content'}}/>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
                     <div>
+                        <p style={{textAlign:'left'}}>Name: {char.charName} 
+                        {userID === char.userID.toString() && (<EditIcon className='pointer editIcon' onClick={()=> adjustCore('Name', char.charName)}/>)}</p>
+                    </div>
+                    <div>
                         <p style={{textAlign:'left'}}>Alignment: {char.alignment} 
-                        <EditIcon className='pointer editIcon' onClick={()=> adjustCore('Alignment', char.alignment)}/></p>
+                        {userID === char.userID.toString() && (<EditIcon className='pointer editIcon' onClick={()=> adjustCore('Alignment', char.alignment)}/>)}</p>
                     </div>
                     <div>
                         <p style={{textAlign:'left'}}>Race: {char.race} 
-                        <EditIcon className='pointer' onClick={()=> adjustCore('Race', char.race)}/></p>
+                        {userID === char.userID.toString() && (<EditIcon className='pointer' onClick={()=> adjustCore('Race', char.race)}/>)}</p>
                     </div>
                     <div>
                         <p style={{textAlign:'left'}}>Hit Points: {char.charHP} 
-                        <EditIcon className='pointer' onClick={()=> adjustCore('Hit Points', char.charHP)}/></p>
+                        {userID === char.userID.toString() && (<EditIcon className='pointer' onClick={()=> adjustCore('Hit Points', char.charHP)}/>)}</p>
                     </div>
                     <div>
                         <p style={{textAlign:'left'}}>Initiative: {char.init} 
-                        <EditIcon className='pointer' onClick={()=> adjustCore('Initiative', char.init)}/></p>
+                        {userID === char.userID.toString() && (<EditIcon className='pointer' onClick={()=> adjustCore('Initiative', char.init)}/>)}</p>
                     </div>
+                    <div>
+                        <p style={{textAlign:'left'}}>Image: {char.image} 
+                        {userID === char.userID.toString() && (<EditIcon className='pointer' onClick={()=> adjustCore('Image', char.image)}/>)}</p>
+                    </div>
+                    
                 </Grid>
                 <Grid container direction={'column'} justifyContent={'flex-start'} alignContent={'flex-start'}>
-                    <div><p>Levels <EditIcon className='pointer' onClick={adjustLevels}/></p></div>
+                    <div><p>Levels {userID === char.userID.toString() && (<EditIcon className='pointer' onClick={adjustLevels}/>)}</p></div>
                     {levels.map((lvl) => {
-                            return (<p>{`Level: ${lvl.className} - ${lvl.classLevel}`}</p>)
+                            return (<p>{`${lvl.className} - ${lvl.classLevel}`}</p>)
                         }
                     )}
                 </Grid>

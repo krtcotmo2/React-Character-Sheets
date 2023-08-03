@@ -29,9 +29,9 @@ interface CoreProps{
 export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
     const navigate = useNavigate();
     const { state } = useLocation();
-    const [input, setInput] = useState(0);
-    const [align, setAlign] = useState(0);
-    const [race, setRace] = useState(0);
+    const [input, setInput] = useState('');
+    const [align, setAlign] = useState('');
+    const [race, setRace] = useState('');
     const char: Character = useSelector(state => store.getState().character);
     const getAlignment = (al:string) => {
         return alignments.find(a => a.value === al)?.id || 0;
@@ -42,14 +42,16 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
     }
 
     useEffect( () => {
-        setAlign(getAlignment(state.currentValue));
-        setRace(getRaces(state.currentValue));
+        setAlign(getAlignment(state.currentValue).toString());
+        setRace(getRaces(state.currentValue).toString());
         setInput(state.currentValue);
     },[]);
 
     const updateChar = async () =>{
         const inputVal = state.whatIsModified === "Hit Points" ? input :
-            state.whatIsModified === "Initiative" ? input :
+        state.whatIsModified === "Image" ? input :
+        state.whatIsModified === "Name" ? input :
+        state.whatIsModified === "Initiative" ? input :
             state.whatIsModified === "Alignment" ? align : race;
         const updatedChar = buildChar(char, state.whatIsModified, inputVal);
         await updateCharacter(updatedChar).then(charData => {
@@ -87,7 +89,7 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={align}
-                        onChange={(event) => setAlign(+event.target.value)}
+                        onChange={(event) => setAlign(event.target.value)}
                         inputProps={{
                             inputProps: {
                                 placeholder: state.whatIsModified,
@@ -111,7 +113,7 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
                         id="demo-simple-select"
                        
                         value={race}
-                        onChange={(event) => setRace(+event.target.value)}
+                        onChange={(event) => setRace(event.target.value)}
                         inputProps={{
                             inputProps: {
                                 placeholder: state.whatIsModified,
@@ -135,13 +137,18 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
                         <MenuItem value={9}>Mountain Lion</MenuItem>
                     </Select>
                 }
-                {(state.whatIsModified === 'Hit Points' ||  state.whatIsModified === 'Initiative') &&
+                {(
+                    state.whatIsModified === 'Hit Points' ||  
+                    state.whatIsModified === 'Initiative' ||  
+                    state.whatIsModified === 'Image' ||  
+                    state.whatIsModified === 'Name') 
+                    &&
                     <TextField
                         required
                         placeholder={state.whatIsModified}
-                        type='number'
+                        type= {(state.whatIsModified === 'Name' || state.whatIsModified === 'Image') ? 'text' : 'number'}
                         value={input}
-                        onChange={event => setInput(+event?.target.value)}
+                        onChange={event => setInput(event?.target.value)}
                     />
                 }  
 
