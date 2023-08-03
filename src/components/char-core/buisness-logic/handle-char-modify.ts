@@ -1,5 +1,5 @@
 import { Character, UpdateCharacter } from "../../../interfaces/character";
-import { alignments, races } from "../../../enum/coreVals";
+import { getAlignment, getRaces } from "../../../enum/coreVals";
 
 export const buildChar = (
   char: Character,
@@ -8,8 +8,8 @@ export const buildChar = (
 ) => {
   const c: UpdateCharacter = {
     charID: char.charID,
-    alignID: alignments.find((a) => a.value === char.alignment)?.id || 0,
-    raceID: races.find((r) => r.value === char.race)?.id || 0,
+    alignID: getAlignment(char.alignment),
+    raceID: getRaces(char.race),
     charHP: char.charHP,
     charName: char.charName,
     image: char.image,

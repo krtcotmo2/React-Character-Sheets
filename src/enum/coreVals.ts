@@ -27,3 +27,11 @@ export const alignments = [
   { id: 19, value: "Chaotic Neutral" },
   { id: 20, value: "Chaotic Evil" },
 ];
+
+export const getAlignment = (al:string): number => {
+  return alignments.find(a => a.value === al)?.id || 0;
+}
+
+export const getRaces = (rce:string): number => {
+  return races.find(r => r.value === rce)?.id || 0;
+}

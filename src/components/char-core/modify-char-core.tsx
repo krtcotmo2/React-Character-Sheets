@@ -1,11 +1,10 @@
 import { Select, MenuItem, TextField, Grid, Button } from '@mui/material';
-import React, {useEffect, useState, useRef} from 'react';
-import { useStyles } from '../collapsible-row/collapsible-row-styles';
+import React, {useEffect, useState} from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { batch, useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
 import { store } from '../../redux/configure-store';
-import { alignments, races } from '../../enum/coreVals';
+import { alignments, getAlignment, getRaces, races } from '../../enum/coreVals';
 import { buildChar } from './buisness-logic/handle-char-modify';
 import { updateCharacter } from '../../api/character-api';
 import { CharLevel } from '../../interfaces/levels';
@@ -33,14 +32,7 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
     const [align, setAlign] = useState('');
     const [race, setRace] = useState('');
     const char: Character = useSelector(state => store.getState().character);
-    const getAlignment = (al:string) => {
-        return alignments.find(a => a.value === al)?.id || 0;
-    }
-
-    const getRaces = (rce:string) => {
-        return races.find(r => r.value === rce)?.id || 0;
-    }
-
+    
     useEffect( () => {
         setAlign(getAlignment(state.currentValue).toString());
         setRace(getRaces(state.currentValue).toString());
@@ -49,9 +41,9 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
 
     const updateChar = async () =>{
         const inputVal = state.whatIsModified === "Hit Points" ? input :
-        state.whatIsModified === "Image" ? input :
-        state.whatIsModified === "Name" ? input :
-        state.whatIsModified === "Initiative" ? input :
+            state.whatIsModified === "Image" ? input :
+            state.whatIsModified === "Name" ? input :
+            state.whatIsModified === "Initiative" ? input :
             state.whatIsModified === "Alignment" ? align : race;
         const updatedChar = buildChar(char, state.whatIsModified, inputVal);
         await updateCharacter(updatedChar).then(charData => {
