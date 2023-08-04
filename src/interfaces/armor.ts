@@ -6,6 +6,12 @@ export interface ArmorSet {
     score: number;
 }
 
+export interface ArmorGrouping {
+    charID: number;
+    acDesc:string;
+    sortValue: number;
+}
+
 export interface Armor {
     id: number;
     charID: number;

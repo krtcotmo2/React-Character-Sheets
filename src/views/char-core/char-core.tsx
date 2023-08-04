@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Feat } from "../../interfaces/feats";
-import { getCharacterFeats } from "../../api/feats-api";
 import { store } from "../../redux/configure-store";
-import { FeatsActions } from "../../redux/reducers/feates-reducer";
 import { useSelector } from "react-redux";
 import { Character } from "../../interfaces/character";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
-import { CollapsibleRow } from "../../components/collapsible-row/collapsible-row";
 import { CharLevel } from "../../interfaces/levels";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
