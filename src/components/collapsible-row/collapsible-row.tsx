@@ -17,6 +17,7 @@ import { STAT_TYPE } from '../../enum/stat-type';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { WHATISMOD } from '../../enum/what-is-mod-type';
+import { Armor } from '../../interfaces/armor';
 
 interface RowProps {
     title: string;
@@ -26,6 +27,7 @@ interface RowProps {
     skillData?: Skill;
     altText?: string;
     toHitData?: ToHitGroup;
+    acID?: number
     allowEditing?: boolean;
     characteristic?: WHATISMOD;
     desc?: any;
@@ -64,6 +66,7 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
     const { classes } = useStyles();
     const skillData = props.skillData;
     const tohitData = props.toHitData;
+    const armor = props.acID ;
     const allowEdit = props.allowEditing === undefined ?  true : props.allowEditing;
     const {title, value, breakdown, includeStatBonus, altText, desc} = props;
     const editStat = ( a: string) => {
@@ -72,7 +75,7 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
             state: {
                 whatIsMod: props.characteristic, 
                 modified: a, 
-                id: skillData?.skillID || tohitData?.id,
+                id: skillData?.skillID || tohitData?.id || armor,
                 pinned: skillData?.pinned
             }
         })

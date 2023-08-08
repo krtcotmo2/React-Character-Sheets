@@ -4,11 +4,13 @@ import { store } from '../../redux/configure-store';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { Character } from '../../interfaces/character';
 import { Button, Divider, Grid, TextField } from '@mui/material';
-import { ArmorGrouping, ArmorSet } from '../../interfaces/armor';
+import { Armor, ArmorGrouping, ArmorSet } from '../../interfaces/armor';
 import { createArmorGrouping, getCharacterArmor } from '../../api/armor-api';
 import { Stat } from '../../interfaces/stat';
 import { addStatsToArmor } from './business-logic/armor-helper';
 import { Link } from 'react-router-dom';
+import { ArmorActions } from '../../redux/reducers/armor-reducer';
+import { WHATISMOD } from '../../enum/what-is-mod-type';
 
 
 export const CharacterArmor:React.FC = (): JSX.Element => {
@@ -24,10 +26,8 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
         getCharacterArmor(store.getState().character.charID.toString())
             .then(armors => {
                 addStatsToArmor(armors, stats.dex.value);
-
-
-                // store.dispatch(SpellActions.setSpells(armors));
                 setArmors(armors);
+                store.dispatch(ArmorActions.setArmorGroups(armors));
             })
     }, []);
     const saveAC = async () => {
@@ -53,6 +53,8 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
                                 title={armor.name} 
                                 breakdown={armor.values} 
                                 value={armor.score}
+                                characteristic={WHATISMOD.ARMOR}
+                                acID={armor.acID}
                             />
                         </Grid>
                     ))

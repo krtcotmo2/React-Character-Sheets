@@ -9,6 +9,7 @@ import { SpellReducerFunctions } from "./reducers/spell-reducer";
 import { FeatsReducerFunctions } from "./reducers/feates-reducer";
 import { ExpendableReducerFunctions } from "./reducers/expendables-reducer";
 import { ToHitReducerFunctions } from "./reducers/to-hit-reducer";
+import { ArmorReducerFunctions } from "./reducers/armor-reducer";
 import { UserReducerFunctions } from "./reducers/user-reducer";
 
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     expendables: ExpendableReducerFunctions,
     toHitGroups: ToHitReducerFunctions,
     user: UserReducerFunctions,
+    armor: ArmorReducerFunctions,
 })
 export type AppState = ReturnType<typeof rootReducer>
 

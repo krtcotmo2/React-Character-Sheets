@@ -11,6 +11,7 @@ import { StatsActions } from '../../redux/reducers/stats-reducer';
 import { SavesActions } from '../../redux/reducers/saves-reducer';
 import { SkillActions } from '../../redux/reducers/skills.reducer';
 import { UserActions } from '../../redux/reducers/user-reducer';
+import { ArmorActions } from '../../redux/reducers/armor-reducer';
 
 
 
@@ -39,6 +40,7 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
             store.dispatch(SavesActions.clearSaves());
             store.dispatch(SkillActions.clearSkills());
             store.dispatch(CharacterActions.clearCharacter());
+            store.dispatch(ArmorActions.clearArmor());
             store.dispatch(ToHitActions.clearToHits());
             store.dispatch(UserActions.clearUser());
         });

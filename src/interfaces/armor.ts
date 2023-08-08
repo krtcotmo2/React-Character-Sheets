@@ -1,6 +1,7 @@
 import { Modifier } from "./modifier";
 
 export interface ArmorSet {
+    acID?: number;
     name:string;
     values: Modifier[];
     score: number;
