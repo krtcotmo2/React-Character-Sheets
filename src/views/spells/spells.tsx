@@ -11,6 +11,7 @@ import { Stat } from '../../interfaces/stat';
 import { Link } from 'react-router-dom';
 import { SpellLevelBar } from '../../components/spells/spell-level-bar';
 import { SpellRow } from '../../components/spells/spell-row';
+import { useSelector } from 'react-redux';
 
 export const Spells: React.FC = (): JSX.Element => {
     const [isAdding, setIsAdding] = useState(false);
@@ -19,15 +20,21 @@ export const Spells: React.FC = (): JSX.Element => {
     const [stats] = useState<Stat | undefined>(store.getState().stats);
     const [lvls] = useState<CharLevel[] | undefined>(store.getState().levels);
     const [char] = useState<Character | undefined>(store.getState().character);
+    const memorizedSpells = useSelector<Spell[]>( state => store.getState().spells);
     const [spellGroups, setSpellGroups] = useState<SpellLevelCategory[]>([]);
     useEffect( () => {
         const mod = getStaModifier(lvls || [], stats );
         getCharacterSpells(store.getState().character.charID.toString())
             .then( currentSpells => {
                 store.dispatch(SpellActions.setSpells(currentSpells));
-                setSpellGroups(organizeSpellList(currentSpells, mod));
+                setSpellGroups(organizeSpellList(memorizedSpells as Spell[], mod));
             })
     },[])
+    useEffect( () => {
+        setSpellGroups([]);
+        const mod = getStaModifier(lvls || [], stats );
+        setSpellGroups(organizeSpellList(memorizedSpells as Spell[], mod));
+    }, [memorizedSpells])
 
     const addNewSpell = () => {
         setIsAdding(true);
@@ -62,23 +69,16 @@ export const Spells: React.FC = (): JSX.Element => {
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
                 {spellGroups.map(grp => {
-                    return (
-                        <>
+                    return (<>
                         <SpellLevelBar spellGrp={grp}/>
-                            <div className='spellGrp'>
-                                {
-                                    grp.spells.map(sp => {
-                                        return (<SpellRow spell={sp} isAdding={isAdding}/>)
-                                    } )
-                                }
-                            </div>
-                        {/* <Grid item className="standardRow">
-                            <div className='spellsInLevel'>
-                                {spellLst}
-                            </div>
-                        </Grid> */}
-                        </>
-                    )
+                        <div className='spellGrp'>
+                            {
+                                grp.spells.map(sp => {
+                                    return (<SpellRow spell={sp} isAdding={isAdding}/>)
+                                } )
+                            }
+                        </div>
+                    </>)
                 })}
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList"> 

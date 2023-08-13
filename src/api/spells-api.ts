@@ -22,6 +22,14 @@ export const updateSpell = async (spellId: string, spell: Spell) => {
     });
 }
 
+export const deleteSelectedSpell = async (spellId: string) => {
+    return await axios
+    .delete(`${siteHost}/api/spells/${spellId}`)
+    .catch((err) => {
+        throw new Error(err.message);
+    });
+}
+
 export const createNewSpell = async (charId: string, spell: Spell) => {
     const spellData = {
         ...spell,
