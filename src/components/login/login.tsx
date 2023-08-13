@@ -56,7 +56,7 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
                     label="Password"
                     required
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" variant="contained">Submit</Button>
                 {/* <Button type="button" onClick={resendPassword}>Forgot</Button> */}
             </Grid>
         </form>

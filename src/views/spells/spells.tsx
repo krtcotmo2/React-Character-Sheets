@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCharacterSpells } from '../../api/spells-api';
+import { createNewSpell, getCharacterSpells } from '../../api/spells-api';
 import { Spell, SpellLevelCategory } from '../../interfaces/spell';
 import { store } from '../../redux/configure-store';
 import { SpellActions } from '../../redux/reducers/spell-reducer';
@@ -9,9 +9,13 @@ import { Character } from '../../interfaces/character';
 import { CharLevel } from '../../interfaces/levels';
 import { Stat } from '../../interfaces/stat';
 import { Link } from 'react-router-dom';
+import { SpellLevelBar } from '../../components/spells/spell-level-bar';
+import { SpellRow } from '../../components/spells/spell-row';
 
 export const Spells: React.FC = (): JSX.Element => {
     const [isAdding, setIsAdding] = useState(false);
+    const [spellLvl, setSpellLvl] = useState('');
+    const [spellName, setSpellName] = useState('');
     const [stats] = useState<Stat | undefined>(store.getState().stats);
     const [lvls] = useState<CharLevel[] | undefined>(store.getState().levels);
     const [char] = useState<Character | undefined>(store.getState().character);
@@ -28,6 +32,27 @@ export const Spells: React.FC = (): JSX.Element => {
     const addNewSpell = () => {
         setIsAdding(true);
     }
+    const saveNewSpell = () => {
+        const newSpell: Spell = {
+            id: '0',
+            charID: char?.charID.toString() || '',
+            spellLevel: +spellLvl,
+            spellName: spellName,
+            spellID: undefined,
+            isCast: false,
+        }
+        createNewSpell(newSpell.charID, newSpell).then( async () => {
+            setSpellLvl('');
+            setSpellName('');
+            setIsAdding(false);
+            return getCharacterSpells(newSpell.charID);
+        })
+        .then(spells =>{
+            const mod = getStaModifier(lvls || [], stats );
+            store.dispatch(SpellActions.setSpells(spells));
+            setSpellGroups(organizeSpellList(spells, mod));
+        });
+    }
     return(
         <>
            <Grid container>
@@ -37,20 +62,21 @@ export const Spells: React.FC = (): JSX.Element => {
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
                 {spellGroups.map(grp => {
-                    const spellLst = grp.spells.map(spl => {
-                        return (<p>{spl.spellName}</p>)
-                    });
                     return (
                         <>
-                        <Grid item className="standardRow">
-                            <p>Level {grp.spellLevel}: Base \
-                            DC - {grp.dcCheck}</p>
-                        </Grid>
-                        <Grid item className="standardRow">
+                        <SpellLevelBar spellGrp={grp}/>
+                            <div className='spellGrp'>
+                                {
+                                    grp.spells.map(sp => {
+                                        return (<SpellRow spell={sp} isAdding={isAdding}/>)
+                                    } )
+                                }
+                            </div>
+                        {/* <Grid item className="standardRow">
                             <div className='spellsInLevel'>
                                 {spellLst}
                             </div>
-                        </Grid>
+                        </Grid> */}
                         </>
                     )
                 })}
@@ -67,17 +93,21 @@ export const Spells: React.FC = (): JSX.Element => {
                                 required
                                 type="text"
                                 placeholder='Spell'
+                                value={spellName}
+                                onChange={(event)=>setSpellName(event.target.value)}
                             />
                             <TextField
                                 required
                                 type="number"
                                 placeholder='Level'
+                                value={spellLvl}
+                                onChange={(event)=>setSpellLvl(event.target.value)}
                                 InputProps={{ inputProps: { min: "0", step: "1" } }}
                             />
                         </Grid>
                         <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
                             <Button style={{width:'fit-content'}} variant="contained" onClick={() => setIsAdding(false)}>Cancel</Button>
-                            <Button style={{width:'fit-content'}} variant="contained">Save</Button>
+                            <Button style={{width:'fit-content'}} variant="contained" onClick={saveNewSpell}>Save</Button>
                         </Grid>
                     </>
                 }

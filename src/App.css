@@ -96,3 +96,31 @@ p a:-webkit-any-link{
 svg.editIcon{
     /* fill: red;     */
  }
+
+ .padding12{
+  padding: 12px;
+ }
+ .vCen{
+  align-items: center !important;
+ }
+
+ .standardList .spellRow{
+  overflow: hidden;
+  width: 600px;
+  background-color: #e4dcc7;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap !important;
+  border-right:1px solid #6a6a6a; 
+  border-left:1px solid #6a6a6a; 
+  padding: 0 20px;
+}
+
+.standardList .spellGrp:last-child .spellRow:last-child{
+  border-bottom:1px solid #6a6a6a; 
+}
+.hiddenGrp{
+  height: 0px;
+  overflow: hidden;
+}
