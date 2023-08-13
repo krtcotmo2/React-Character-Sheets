@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { SpellLevelBar } from '../../components/spells/spell-level-bar';
 import { SpellRow } from '../../components/spells/spell-row';
 import { useSelector } from 'react-redux';
+import { SpellGroup } from '../../components/spells/spell-group';
 
 export const Spells: React.FC = (): JSX.Element => {
     const [isAdding, setIsAdding] = useState(false);
@@ -29,12 +30,13 @@ export const Spells: React.FC = (): JSX.Element => {
                 store.dispatch(SpellActions.setSpells(currentSpells));
                 setSpellGroups(organizeSpellList(memorizedSpells as Spell[], mod));
             })
-    },[])
+    },[]);
+
     useEffect( () => {
         setSpellGroups([]);
         const mod = getStaModifier(lvls || [], stats );
         setSpellGroups(organizeSpellList(memorizedSpells as Spell[], mod));
-    }, [memorizedSpells])
+    }, [memorizedSpells]);
 
     const addNewSpell = () => {
         setIsAdding(true);
@@ -70,14 +72,7 @@ export const Spells: React.FC = (): JSX.Element => {
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
                 {spellGroups.map(grp => {
                     return (<>
-                        <SpellLevelBar spellGrp={grp}/>
-                        <div className='spellGrp'>
-                            {
-                                grp.spells.map(sp => {
-                                    return (<SpellRow spell={sp} isAdding={isAdding}/>)
-                                } )
-                            }
-                        </div>
+                        <SpellGroup isAdding={isAdding} grp={grp} hidden={false}/>
                     </>)
                 })}
             </Grid>

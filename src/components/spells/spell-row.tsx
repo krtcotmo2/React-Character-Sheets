@@ -25,19 +25,25 @@ export const SpellRow: React.FC<SpellRowProps> = (props: SpellRowProps): JSX.Ele
     const charId = store.getState().character.charID;
     const [editSpellName, setEditSpellName] = useState(spellName);
 
-    const toggleSpell = () => {
+    const toggleSpell = async() => {
         const theSpell: Spell = {
             ...props.spell,
             isCast: !spellCast,
             spellName: editSpellName,
         };
-        updateSpell(id, theSpell);
+        await updateSpell(id, theSpell);
         setSpellCast(!spellCast);
+        const spells = await getCharacterSpells(charId.toString());
+        store.dispatch(SpellActions.setSpells(spells));
     }
 
     useEffect(()=>{
         setEditSpellName(spellName);
     },[spellName]);
+
+    useEffect(()=>{
+        setSpellCast(isCast);
+    },[isCast]);
 
     const deleteSpell =  async (spellId: string) => {
         await deleteSelectedSpell(spellId);
