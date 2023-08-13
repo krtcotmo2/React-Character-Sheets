@@ -26,6 +26,7 @@ import NewCharacter from "./components/character-view/new-character";
 import { LevelsModified } from "./components/levels-modifier/levels";
 import { ModifierView } from "./components/modifier/modifier";
 import { CoreModifier } from "./components/char-core/modify-char-core";
+import { NoteNewUpdate } from "./components/notes/add-update-note";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -35,7 +36,7 @@ function App() {
         <Router>
           <div className="App">
             <Button 
-              style={{position:'absolute', left: 0, top: '10px'}}
+              style={{position:'fixed', left: 0, top: '10px'}}
               onClick={()=>setDrawerOpen(!drawerOpen)}
             >
               <img alt='menu' src={`${process.env.PUBLIC_URL}/images/shiled.png`} width={32}/>
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/character/expendables/*" element={<ExpendablesView />} />
                 <Route path="/character/tohits/*" element={<ToHitView />} />
                 <Route path="/character/acs/*" element={<CharacterArmor />} />
+                <Route path="/note/edit/*" element={ <NoteNewUpdate /> } />
                 <Route path="/character/notes/*" element={<CharacterNotes />} />
                 <Route path="/character/characteristic/edit/" element={ <ModifierView/>} />
               </Routes>

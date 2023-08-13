@@ -5,4 +5,11 @@ export interface Note {
     noteTitle: string,
     createdAt: Date;
     updatedAt: Date;
+    notes: NoteItem[];
+}
+
+export interface NoteItem {
+    id: number,
+    itemOrder: number,
+    itemDetails: string,
 }

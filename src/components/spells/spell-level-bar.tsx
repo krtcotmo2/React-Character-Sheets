@@ -12,7 +12,7 @@ export const SpellLevelBar: React.FC<SpellLevelProps> = (props: SpellLevelProps)
     const {spellLevel, dcCheck, spells} = props.spellGrp
     return (
         <Grid container item className="standardRow spellTitleBar padding12 vCen" style={{marginBottom:0}} justifyContent='space-between' onClick={props.onClick}>
-            <Grid item  columnGap={1}>
+            <Grid item columnGap={1}>
                 <strong>Level {spellLevel}: </strong>
                 <span style={{fontSize: "0.8rem"}}>Base DC - {dcCheck}</span> 
             </Grid>

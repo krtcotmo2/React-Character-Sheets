@@ -9,9 +9,12 @@ import { Button, Divider, Grid } from '@mui/material';
 import { getCharacterNotes } from '../../api/notes-api';
 import { Note } from '../../interfaces/note';
 import { Link } from 'react-router-dom';
+import { NoteGroup } from '../../components/notes/note-group';
 
 export const CharacterNotes: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
+    const [isAdding, setIsAdding] = useState(false);
+
     const [notes, setNotes] = useState<Note[]>([])
     useEffect(() => {
         getCharacterNotes(char.charID.toString()).
@@ -29,9 +32,7 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
                 {notes.map(note => {
                     return (
-                        <Grid item className="standardRow">
-                            <p>{note.noteTitle}</p>
-                        </Grid>
+                        <NoteGroup grp={note} isAdding={isAdding} hidden={true}/>
                     )
                 })}
                 

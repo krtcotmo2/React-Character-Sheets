@@ -122,14 +122,13 @@ svg.editIcon{
   border: 1px solid #6a6a6a;
   border-bottom: none;
 }
-.spellGrp:last-child{
-  border: 1px solid #6a6a6a;
-  border-bottom: 1px solid #6a6a6a;
-}
-
-.hiddenSpells{
+.hiddenContents{
   height: 50px;
   overflow: hidden;
+}
+.spellGrp:last-of-type{
+  border: 1px solid #6a6a6a;
+  border-bottom: 1px solid #6a6a6a;
 }
 
 .hiddenGrp{

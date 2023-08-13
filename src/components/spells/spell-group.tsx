@@ -15,11 +15,10 @@ export const SpellGroup: React.FC<SpellGrpProps> = (props: SpellGrpProps): JSX.E
     const {grp, isAdding} = props;
     const [holder, setHolder] = useState(props.hidden);
     const toggleBar = () => {
-        console.log('bs')
-       setHolder(!holder);
+        setHolder(!holder);
     }
     return (
-        <div className={`spellGrp ${holder ? 'hiddenSpells' : ''}`}>
+        <div className={`spellGrp ${holder ? 'hiddenContents' : ''}`}>
             
             <SpellLevelBar spellGrp={grp} onClick={()=> toggleBar()}/>
             {
