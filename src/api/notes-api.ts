@@ -12,3 +12,12 @@ export const getCharacterNotes = async (charId: string) => {
         throw new Error(err.message);
     });
 }
+
+export const deleteCharacterNotes = async (noteId: string, charId: string) => {
+    return await axios
+    .delete(`${siteHost}/api/notes/${noteId}/${charId}`)
+    .then(results => results.data as Note[])
+    .catch((err) => {
+        throw new Error(err.message);
+    });
+}

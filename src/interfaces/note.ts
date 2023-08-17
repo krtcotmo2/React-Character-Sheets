@@ -12,4 +12,5 @@ export interface NoteItem {
     id: number,
     itemOrder: number,
     itemDetails: string,
+    changed?: boolean
 }
