@@ -6,7 +6,7 @@ import { FeatsActions } from '../../redux/reducers/feates-reducer';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
 import { Button, Divider, Grid, TextField } from '@mui/material';
-import { getCharacterNotes } from '../../api/notes-api';
+import { getCharacterNotes, sendNewNote } from '../../api/notes-api';
 import { Note } from '../../interfaces/note';
 import { Link } from 'react-router-dom';
 import { NoteGroup } from '../../components/notes/note-group';
@@ -19,11 +19,29 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
     const [noteName, setNoteName] = useState('');
     const [notes, setNotes] = useState<Note[]>([])
     useEffect(() => {
-        getCharacterNotes(char.charID.toString()).
-        then(theNotes => {
+        getCharacterNotes(char.charID.toString())
+         .then(theNotes => {
             setNotes(theNotes);
-        })
+          })
     }, []);
+
+    const createNote = () => {
+        const n: Note = {
+            charID: char.charID,
+            noteID: 0,
+            noteTitle: noteName,
+            notes:[],
+            noteOrder:notes.length,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+        sendNewNote(n, char.charID.toString()).then(theNotes => {
+            setNotes(theNotes);
+            setNoteName('');
+            setIsAdding(false);
+        })
+
+    }
     return (
         <>
              <Grid container>
@@ -55,7 +73,7 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
                     </Grid>
                     <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
                         <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
-                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Save</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={createNote}>Save</Button>
                     </Grid>
                 </Grid>
             }
