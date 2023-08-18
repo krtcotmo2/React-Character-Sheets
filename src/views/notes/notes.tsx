@@ -5,16 +5,18 @@ import { store } from '../../redux/configure-store';
 import { FeatsActions } from '../../redux/reducers/feates-reducer';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
-import { Button, Divider, Grid } from '@mui/material';
+import { Button, Divider, Grid, TextField } from '@mui/material';
 import { getCharacterNotes } from '../../api/notes-api';
 import { Note } from '../../interfaces/note';
 import { Link } from 'react-router-dom';
 import { NoteGroup } from '../../components/notes/note-group';
+import { useSpellStyles } from '../../components/spells/spell-styles';
 
 export const CharacterNotes: React.FC = (): JSX.Element => {
+    const { classes } = useSpellStyles();
     const char: Character = useSelector((state) => store.getState().character);
     const [isAdding, setIsAdding] = useState(false);
-
+    const [noteName, setNoteName] = useState('');
     const [notes, setNotes] = useState<Note[]>([])
     useEffect(() => {
         getCharacterNotes(char.charID.toString()).
@@ -35,10 +37,28 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
                         <NoteGroup grp={note} isAdding={isAdding} hidden={true}/>
                     )
                 })}
-                
-                <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-                <Button style={{width:'fit-content'}} variant="contained">Add New Note</Button>
             </Grid>
+            {!isAdding &&
+                <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+                    <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(true)}>Add New Note</Button>
+                </Grid>
+            }
+            {isAdding &&
+                <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
+                        <TextField
+                            style={{display:'flex', flexGrow:'1',}} 
+                            value={noteName}
+                            onChange={ (evt)=> setNoteName(evt.target.value) }
+                            placeholder='Note Title'
+                        />
+                    </Grid>
+                    <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Save</Button>
+                    </Grid>
+                </Grid>
+            }
         </>
-    );
+    )
 }
