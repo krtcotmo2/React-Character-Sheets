@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
 import { store } from '../../redux/configure-store';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import { SingleLineEdit } from './single-edit-line';
 import { deleteCharacterNotes } from '../../api/notes-api';
 export interface NoteTitleProps {
@@ -16,6 +16,8 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const [note, setNote] = useState<Note>(state.note);
+    const [isAdding, setIsAdding] = useState(false);
+    const [noteText, setNoteText] = useState('');
 
     const updateOneNoteLine = (id: number, newText:string) => {
         const aNote = note.notes.find(n => n.id === id) || {itemDetails:''} as NoteItem;
@@ -57,6 +59,9 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
     const saveNotes = () => {
         console.log(note.notes.filter(n => n.changed))
     }
+    const newNote = () => {
+
+    }
     useEffect(()=>{
         setNote(note)
     },[note]);
@@ -79,11 +84,31 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
                         })
                     }
                 </Grid>
-                <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
-                    <Button style={{width:'fit-content'}} variant="contained" onClick={()=>{navigate(`/character/notes/${char.charID}`)}}>Cancel</Button>
-                    <Button style={{width:'fit-content'}} variant="contained" onClick={()=>saveNotes()}>Save</Button>
+                {!isAdding &&
+                    <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                        <Button style={{width:'fit-content'}} variant="contained" onClick={()=>{navigate(`/character/notes/${char.charID}`)}}>Cancel</Button>
+                        <Button style={{width:'fit-content'}} variant="contained" onClick={()=>saveNotes()}>Save</Button>
+                        <Button style={{width:'fit-content'}} variant="contained" onClick={()=>setIsAdding(true)}>New</Button>
+                    </Grid>
+                }
+                {isAdding &&
+                <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
+                        <TextField
+                            style={{display:'flex', flexGrow:'1',}} 
+                            value={noteText}
+                            onChange={ (evt)=> setNoteText(evt.target.value) }
+                            placeholder='Note'
+                            multiline
+                        />
+                    </Grid>
+                    <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>{}}>Save</Button>
+                    </Grid>
                 </Grid>
-                </Grid>
+                }
+            </Grid>
         </>
     )
 }
