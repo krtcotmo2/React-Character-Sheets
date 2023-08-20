@@ -66,7 +66,7 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
     return (
         <Grid container direction='column' justifyContent="center" alignItems='center'>
             <Grid item style={{alignSelf:'center'}}>
-                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - {state.modified}</p>
+                <p><Link className='nonDecLink' to={`${getNavigateUrl(state.whatIsMod, char.charID.toString())}`}>{char?.charName}</Link> - {state.modified}</p>
             </Grid>
             <Grid direction='column' rowGap={2} style={{display:"flex"}}>
                 <Grid container direction='column' rowGap={2} item alignContent='center'>

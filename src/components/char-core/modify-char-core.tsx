@@ -88,7 +88,7 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
                             }
                         }}
                     >
-                        <MenuItem value={12}>Lawful Good</MenuItem>
+                        c
                         <MenuItem value={13}>Lawful Neutral</MenuItem>
                         <MenuItem value={14}>Lawful Evil</MenuItem>
                         <MenuItem value={15}>Neutral Good</MenuItem>

@@ -34,6 +34,11 @@ export const showError = (err: string, param?: KeyValuePair[]) => {
             msg = "You will need to login to proceed with that action";
             modalName= 'not_logged_in'
             break;
+        case 'note_missing_title':
+            title = 'Invalid title';
+            msg = "A note must have a title";
+            modalName= 'note_missing_title'
+            break;
         default:
             title = err;
             msg = 'undefined error';

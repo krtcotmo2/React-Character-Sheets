@@ -7,7 +7,7 @@ import { Character } from '../../interfaces/character';
 import { store } from '../../redux/configure-store';
 import { Button, Grid, TextField } from '@mui/material';
 import { SingleLineEdit } from './single-edit-line';
-import { deleteCharacterNotes } from '../../api/notes-api';
+import { deleteCharacterNotes, sendNewNoteDetail, sendUpdateNotes } from '../../api/notes-api';
 export interface NoteTitleProps {
     
 }
@@ -56,11 +56,38 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
         }
         )
     }
-    const saveNotes = () => {
-        console.log(note.notes.filter(n => n.changed))
+    const saveNotes = async () => {
+        const updates = note.notes.filter(n => n.changed);
+        if(!updates.length){
+            navigate(`/character/notes/${char.charID}`);
+            return;
+        }
+        await sendUpdateNotes(updates, char.charID)
+            .then(() => {
+                navigate(`/character/notes/${char.charID}`);
+            })
+            .catch(err => {
+                console.log('err',err)
+            })
     }
     const newNote = () => {
-
+        const noteItem: NoteItem = {
+            id:0,
+            itemDetails: noteText,
+            itemOrder: note.notes.length + 1,
+            noteID: note.noteID
+        }
+        sendNewNoteDetail(noteItem, char.charID)
+            .then(nte => {
+                const newNote: Note = {
+                    ...note,
+                    notes: [...nte]
+                }
+                setNote(newNote);
+                setNoteText('');
+                setIsAdding(false);
+            })
+            .catch(err => console.log(err))
     }
     useEffect(()=>{
         setNote(note)
@@ -103,8 +130,8 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
                         />
                     </Grid>
                     <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
-                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
-                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>{}}>Save</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>{ setNoteText('');setIsAdding(false)}}>Cancel</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>newNote()}>Save</Button>
                     </Grid>
                 </Grid>
                 }

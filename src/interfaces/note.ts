@@ -10,6 +10,7 @@ export interface Note {
 
 export interface NoteItem {
     id: number,
+    noteID: number,
     itemOrder: number,
     itemDetails: string,
     changed?: boolean

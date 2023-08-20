@@ -76,3 +76,13 @@ export const deleteSkillLines = async (charId: string, id:string) => {
             throw new Error(err.message);
         });
 }
+
+export const saveNewSkill= async (charId: string, body:any) => {
+    const statData = body;
+    return await axios
+        .post(`${siteHost}/api/skill/new-skill/${charId}`, statData)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}

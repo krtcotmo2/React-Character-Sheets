@@ -11,9 +11,9 @@ import { Note } from '../../interfaces/note';
 import { Link } from 'react-router-dom';
 import { NoteGroup } from '../../components/notes/note-group';
 import { useSpellStyles } from '../../components/spells/spell-styles';
+import { showError } from '../../components/modal/business-logic/error-handler';
 
 export const CharacterNotes: React.FC = (): JSX.Element => {
-    const { classes } = useSpellStyles();
     const char: Character = useSelector((state) => store.getState().character);
     const [isAdding, setIsAdding] = useState(false);
     const [noteName, setNoteName] = useState('');
@@ -26,6 +26,10 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
     }, []);
 
     const createNote = () => {
+        if(noteName === ''){
+            showError('note_missing_title');
+            return;
+        }
         const n: Note = {
             charID: char.charID,
             noteID: 0,
@@ -65,10 +69,11 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
                 <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
                     <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
                         <TextField
-                            style={{display:'flex', flexGrow:'1',}} 
+                            style={{display:'flex', flexGrow:'1'}} 
                             value={noteName}
                             onChange={ (evt)=> setNoteName(evt.target.value) }
                             placeholder='Note Title'
+                            multiline
                         />
                     </Grid>
                     <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>

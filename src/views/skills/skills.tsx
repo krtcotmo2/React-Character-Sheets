@@ -5,11 +5,12 @@ import { store } from '../../redux/configure-store';
 import { formatSkills } from './business-logic/skill-formatter';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { Character } from '../../interfaces/character';
-import { Button, Divider, Grid } from '@mui/material';
-import { getAllSkills } from '../../api/skills-api';
+import { Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { getAllSkills, saveNewSkill } from '../../api/skills-api';
 import { SkillActions } from '../../redux/reducers/skills.reducer';
 import { Link } from 'react-router-dom';
 import { WHATISMOD } from '../../enum/what-is-mod-type';
+import { skillOptions as skills } from './business-logic/skill-oprions';
 
 interface SkillsProps {
     skills?: Skill[];
@@ -17,10 +18,12 @@ interface SkillsProps {
 
 
 export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.Element => {
-    
+    const [isAdding, setIsAdding] = useState(false);
     const curSkills: RawSkill[] = useSelector(state => store.getState().skills);
     const [grpdSkills, setGrpdSkills ] = useState<Skill[]>([]);
     const char: Character = useSelector(state => store.getState().character);
+    const [selectedSkill, setSelectedSkill] = useState('');
+    const skillOptions = skills;
 
     useEffect(() => {
         getAllSkills(char.charID.toString()).then(skills => {
@@ -33,6 +36,26 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
         const a = formatSkills(curSkills);
         setGrpdSkills(a);
     }, [curSkills]);
+
+    const saveSkill = () => {
+        const skill = {
+            skillID: +selectedSkill,
+            charID: char.charID,
+            score: 0,
+            isMod: true,
+            modDesc: 'Ranks',
+            isClassSkill: false,
+            isRanks: false,
+            pinned: false,
+        }
+        saveNewSkill(char.charID.toString(), skill).then(arg => {
+            setGrpdSkills(formatSkills(arg)); 
+            store.dispatch(SkillActions.setSkills(arg as RawSkill[]));
+            setSelectedSkill('');
+            setIsAdding(false);
+        }
+        );
+    }
     return (
         
         <>
@@ -57,7 +80,34 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
                 }
                 
                 <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-                <Button style={{width:'fit-content'}} variant="contained">Add New Skill</Button>
+                {!isAdding &&
+                    <Button style={{width:'fit-content'}} variant="contained" onClick={()=>setIsAdding(true)}>Add New Skill</Button>
+                }
+                {isAdding &&
+                <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px', background:'#e4dcc7'}} className="standardRow">
+                           <Select
+                                id="demo-simple-select"
+                                variant="filled"
+                                value={selectedSkill}
+                                onChange={(event) => setSelectedSkill(event.target.value)}
+                                style={{backgroundColor: 'none'}}
+                                placeholder='Skill Name'
+                                fullWidth
+                            >
+                                {skillOptions.map( skill => (
+                                    <MenuItem value={skill.id} style={{background:'#e4dcc7'}}>{skill.skillName}</MenuItem>
+                                ))}
+                                
+                            
+                            </Select>
+                    </Grid>
+                    <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>saveSkill()}>Save</Button>
+                    </Grid>
+                </Grid>
+            }
             </Grid>
         </>     
     )
