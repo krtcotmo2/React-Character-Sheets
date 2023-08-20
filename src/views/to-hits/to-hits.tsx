@@ -257,7 +257,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
                             style={{display:'flex', flexGrow:'1'}} 
                             value={critRange}
                             onChange={ (evt)=> setCritRange(evt.target.value) }
-                            placeholder='Crit Range'
+                            placeholder='Crit Range and Multiplier'
                             multiline
                         />
                     </Grid>

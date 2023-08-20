@@ -7,6 +7,7 @@ import { Button, Divider, FormControlLabel, Grid, Switch, TextField } from "@mui
 import { Character } from "../../interfaces/character";
 import { addTempUpdate } from "./business-logic/add-temp-adj-helper";
 import { SavesActions } from "../../redux/reducers/saves-reducer";
+import { IOSSwitch } from "../ios-switch/ios-switch";
 
 export interface  FormProps  {
     items: FromInput[];
@@ -41,18 +42,18 @@ export const AddTempAdjustment: React.FC<FormProps> = (props: FormProps): JSX.El
         setSelected(list);
     }
     return (
-        <>
-            <Grid container direction='row' gap={4}>
+        <Grid container direction='column' gap={4} >
+            <Grid container direction='row' gap={4} justifyContent='center'>
                 <Grid item><TextField id="outlined-basic" label="Description" variant="outlined" onChange={(event)=>setDescription(event.target.value)}/></Grid>
                 <Grid item><TextField id="outlined-basic" label="Value" variant="outlined" onChange={(event)=>setValue(event.target.value)}/></Grid>
             </Grid>
-            <Grid container direction='row'>
+            <Grid container direction='row' justifyContent='center'>
                 <Grid item>
                     {items.map(item => {
                         return (
                             <FormControlLabel
                                 control={
-                                    <Switch aria-label={item.label} onChange={(event) => filterSelected(event, item.label.toLowerCase())}/>
+                                    <IOSSwitch aria-label={item.label} onChange={(event) => filterSelected(event, item.label.toLowerCase())}/>
                                 }
                                 label={item.label}
                                 labelPlacement="start"
@@ -61,9 +62,9 @@ export const AddTempAdjustment: React.FC<FormProps> = (props: FormProps): JSX.El
                     }        
                 </Grid>
             </Grid>
-            <Grid container direction='row'>
+            <Grid container direction='row' justifyContent='center'>
                 <Button onClick={submit} variant="contained">Submit</Button>
             </Grid>
-        </>
+        </Grid>
     ) 
 }
