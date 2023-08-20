@@ -1,4 +1,4 @@
-import { Button, Divider, Grid } from "@mui/material";
+import { Button, Divider, FormControlLabel, Grid, Switch, SwitchProps, TextField, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
@@ -6,14 +6,20 @@ import { getCharacterToHits } from "../../api/to-hit-api";
 import { formatToHits } from "./business-logic/to-hit-logic";
 import { ToHitGroup } from "../../interfaces/to-hit";
 import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
-import { strictEqual } from "assert";
 import { CollapsibleRow } from "../../components/collapsible-row/collapsible-row";
 import { ModifierType } from "../../enum/modifier-type";
 import { DamageRow } from "../../components/damage-row/damage-row";
 import { Link } from "react-router-dom";
 import { WHATISMOD } from "../../enum/what-is-mod-type";
+import { IOSSwitch } from "../../components/ios-switch/ios-switch";
 
 export const ToHitView: React.FC = (): JSX.Element => {
+  
+  const [isAdding, setIsAdding] = useState(false);
+  const [isMelee, setIsMelee] = useState(true);
+  const [toHitName, setToHitName] = useState('');
+  const [damage, setDamage] = useState('');
+  const [critRange, setCritRange] = useState('');
   const levels = useSelector((state) => store.getState().levels);
   const stats = useSelector((state) => store.getState().stats);
   const char = useSelector((state) => store.getState().character);
@@ -229,8 +235,61 @@ export const ToHitView: React.FC = (): JSX.Element => {
         ))}
         
         <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
-        <Button style={{width:'fit-content'}} variant="contained">Add New Defined To Hit</Button>
-      </Grid>
+        
+        {!isAdding &&
+          <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+              <Button style={{width:'fit-content'}} variant="contained" onClick={()=>setIsAdding(true)}>Add New Defined To Hit</Button>
+          </Grid>
+        }
+        {isAdding &&
+                <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
+                        <TextField
+                            style={{display:'flex', flexGrow:'1'}} 
+                            value={toHitName}
+                            onChange={ (evt)=> setToHitName(evt.target.value) }
+                            placeholder='To Hit Title'
+                            multiline
+                        />
+                    </Grid>
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
+                        <TextField
+                            style={{display:'flex', flexGrow:'1'}} 
+                            value={critRange}
+                            onChange={ (evt)=> setCritRange(evt.target.value) }
+                            placeholder='Crit Range'
+                            multiline
+                        />
+                    </Grid>
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
+                        <TextField
+                            style={{display:'flex', flexGrow:'1'}} 
+                            value={damage}
+                            onChange={ (evt)=> setDamage(evt.target.value) }
+                            placeholder='Damage'
+                            multiline
+                        />
+                    </Grid>
+                    <Grid item justifyContent={"flex-start"} style={{fontSize:'18px'}} className="standardRow">
+                      <FormControlLabel
+                        control={
+                          <>
+                            <Typography style={{paddingLeft: '24px'}}>Melee Attack</Typography>
+                            <IOSSwitch aria-label='Melee Attack' checked={isMelee} onClick={()=>setIsMelee(!isMelee)}/>
+                          </>
+                        }
+                        label={isMelee ? 'Yes': 'No'}
+                        labelPlacement='end'
+                        style={{padding:'9px 0'}}
+                      />
+                    </Grid>
+                    <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>{}}>Save</Button>
+                    </Grid>
+                </Grid>
+            }
+     </Grid>
     </>
   );
 };
