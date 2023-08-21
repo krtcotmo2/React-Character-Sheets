@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { WHATISMOD } from '../../enum/what-is-mod-type';
 import { Armor } from '../../interfaces/armor';
+import { getFFAC, getTouchAC } from '../../views/armor/business-logic/armor-helper';
 
 interface RowProps {
     title: string;
@@ -84,7 +85,9 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
         <Grid container className={classes.collapsibleRowContainer} direction={'column'}>
             <Grid container item direction={'row'} flexWrap='nowrap'>
                 <Grid item container direction='row' wrap='nowrap' flexGrow={1} style={{textAlign: 'left', width: 'fit-content'}} gap={2}>
-                    <span>{title} </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}</span>
+                    <span>{title} </span><span style={{color: 'rgba(159,6,6,1)', fontWeight: '700'}}>{value}
+                    {props.characteristic === WHATISMOD.ARMOR && (<> <span>/ {getTouchAC(breakdown)}</span> <span>/ {getFFAC(breakdown)}</span></>)}
+                    </span>
                 </Grid>
                 {/* <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>    
                     <InfoIcon onClick={clickIcon} className={`${classes.iconPadded}`}/>

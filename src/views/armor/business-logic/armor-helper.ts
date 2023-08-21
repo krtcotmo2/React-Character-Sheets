@@ -1,5 +1,6 @@
 import { ModifierType } from "../../../enum/modifier-type";
 import { ArmorSet } from "../../../interfaces/armor";
+import { Modifier } from "../../../interfaces/modifier";
 
 export const addStatsToArmor = (armors: ArmorSet[], dex: number) => {
     return armors.forEach(armor => {
@@ -13,6 +14,8 @@ export const addStatsToArmor = (armors: ArmorSet[], dex: number) => {
                     modDesc: 'Dex',
                     score: dexBonus,
                     type: ModifierType.MODIFIER,
+                    aidsFlatfoot: false,
+                    aidsTouchAttach: true,
                 },
                 ...armor.values
             ];
@@ -23,10 +26,19 @@ export const addStatsToArmor = (armors: ArmorSet[], dex: number) => {
                 modDesc: 'Base',
                 score: 10,
                 type: ModifierType.MODIFIER,
+                aidsFlatfoot: true,
+                aidsTouchAttach: true,
             },
             ...armor.values
         ];
         
     })
 
+}
+
+export const getTouchAC = (mods: Modifier[]) => {
+    return mods.reduce((orig, mod) => orig + (mod.aidsTouchAttach ? mod.score : 0), 0 );
+}
+export const getFFAC = (mods: Modifier[]) => {
+    return mods.reduce((orig, mod) => orig + (mod.aidsFlatfoot ? mod.score : 0), 0 );
 }

@@ -36,13 +36,21 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
             acDesc: acName,
             sortValue: acOrder
         }
-        await createArmorGrouping(char.charID, grouping).then(()=> setIsAdding(false));
+        await createArmorGrouping(char.charID, grouping).then((armors)=> {
+            setIsAdding(false);
+            setAcName('');
+            setAcOrder(0);
+            addStatsToArmor(armors, stats.dex.value);
+            setArmors(armors);
+            store.dispatch(ArmorActions.setArmorGroups(armors));
+        });
     }
     return (   
         <>
             <Grid container>
-                <Grid container item justifyContent="center">
-                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Armor</p>
+                <Grid container item justifyContent="center" direction='column'>
+                    <p style={{marginBottom: '0'}}><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Armor</p>
+                    <p style={{marginTop: '0', fontSize: '14px', color:'rgb(159, 6, 6)'}}>Full AC / Touch AC / Flatfooted AC</p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
@@ -74,10 +82,11 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
                                 onChange={(event) => setAcName(event.target.value)}
                             />
                             <TextField
-                                placeholder='Order'
+                                placeholder='Sort Order'
                                 required    
                                 type="number"
                                 value={acOrder}
+                                helperText="Sorting Order"
                                 onChange={(event) => setAcOrder(+event.target.value)}
                             />
                        

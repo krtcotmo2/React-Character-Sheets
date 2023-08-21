@@ -23,4 +23,6 @@ export interface Armor {
     updatedAt: Date | undefined;
     acID: number;
     isBase: boolean;
+    aidsFlatfoot: boolean | undefined;
+    aidsTouchAttach: boolean | undefined
 }

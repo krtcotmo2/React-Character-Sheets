@@ -2,7 +2,7 @@ import { Button, Divider, FormControlLabel, Grid, Switch, SwitchProps, TextField
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
-import { getCharacterToHits } from "../../api/to-hit-api";
+import { getCharacterToHits, saveToHitCategory } from "../../api/to-hit-api";
 import { formatToHits } from "./business-logic/to-hit-logic";
 import { ToHitGroup } from "../../interfaces/to-hit";
 import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
@@ -20,6 +20,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
   const [toHitName, setToHitName] = useState('');
   const [damage, setDamage] = useState('');
   const [critRange, setCritRange] = useState('');
+  const [critDamage, setCritDamage] = useState('');
   const levels = useSelector((state) => store.getState().levels);
   const stats = useSelector((state) => store.getState().stats);
   const char = useSelector((state) => store.getState().character);
@@ -37,6 +38,30 @@ export const ToHitView: React.FC = (): JSX.Element => {
       }
     );
   }, []);
+
+  const saveToHitCat = () => {
+    const toHitCat = {
+      toHitID: 0,
+      toHitOrder: curToHits.length+1,
+      toHitDesc: toHitName,
+      charID: char.charID,
+      damage,
+      critRange,
+      critDamage,
+      isMelee,
+    }
+    saveToHitCategory(char.charID.toString(), toHitCat).then(arg => {
+      const toHitGroups = formatToHits(arg);
+      setCurToHits(toHitGroups);
+      store.dispatch(ToHitActions.setToHitGroups(toHitGroups));
+      setIsAdding(false);
+      setCritDamage('');
+      setCritRange('');
+      setDamage('');
+      setToHitName('');
+      setIsMelee(true);
+    })
+  }
 
   return (
     <>
@@ -255,18 +280,27 @@ export const ToHitView: React.FC = (): JSX.Element => {
                     <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
                         <TextField
                             style={{display:'flex', flexGrow:'1'}} 
-                            value={critRange}
-                            onChange={ (evt)=> setCritRange(evt.target.value) }
-                            placeholder='Crit Range and Multiplier'
+                            value={damage}
+                            onChange={ (evt)=> setDamage(evt.target.value) }
+                            placeholder='Damage'
                             multiline
                         />
                     </Grid>
                     <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
                         <TextField
                             style={{display:'flex', flexGrow:'1'}} 
-                            value={damage}
-                            onChange={ (evt)=> setDamage(evt.target.value) }
-                            placeholder='Damage'
+                            value={critRange}
+                            onChange={ (evt)=> setCritRange(evt.target.value) }
+                            placeholder='Crit Range (IE 19-20)'
+                            multiline
+                        />
+                    </Grid>
+                    <Grid item justifyContent={"center"} style={{fontSize:'18px'}} className="standardRow">
+                        <TextField
+                            style={{display:'flex', flexGrow:'1'}} 
+                            value={critDamage}
+                            onChange={ (evt)=> setCritDamage(evt.target.value) }
+                            placeholder='Crit Multiplier (IE 3x)'
                             multiline
                         />
                     </Grid>
@@ -285,7 +319,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
                     </Grid>
                     <Grid container direction="row" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList" columnGap={3}>
                         <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>setIsAdding(false)}>Cancel</Button>
-                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>{}}>Save</Button>
+                        <Button style={{width:'fit-content', margin:'12px 0'}} variant="contained" onClick={()=>saveToHitCat()}>Save</Button>
                     </Grid>
                 </Grid>
             }

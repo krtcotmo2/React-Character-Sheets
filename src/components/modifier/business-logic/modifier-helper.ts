@@ -218,6 +218,8 @@ export const getNavigateUrl = (whatIsMod: string, charId: string) => {
       return `/character/save/${charId}`;
     case "Skill":
       return `/character/skills/${charId}`;
+    case "Armor":
+        return `/character/acs/${charId}`;
     case "Stat":
       return `/character/stats/${charId}`;
     case "ToHit":
@@ -236,7 +238,8 @@ export const saveModifier = (
   const needsUpdates: Modifier[] = [];
   modified.forEach(mod => {
       const oldVal = modifiers.find(old => old.id === mod.id);
-      if(oldVal?.modDesc !== mod.modDesc || oldVal?.score !== mod.score){
+      if(oldVal?.modDesc !== mod.modDesc || oldVal?.score !== mod.score
+        || oldVal?.aidsFlatfoot !== mod.aidsFlatfoot || oldVal?.aidsTouchAttach !== mod.aidsTouchAttach){
           delete mod.type;
           needsUpdates.push(mod);
       }
@@ -254,7 +257,10 @@ export const addNewModifier = (
   char: Character, 
   newScore: number, 
   newDesc: string,
-  state: { whatIsMod: string; modified: string; id: number; pinned: boolean }
+  state: { whatIsMod: string; modified: string; id: number; pinned: boolean },
+  aidsFlatfoot?: boolean,
+  aidsTouchAttach?: boolean
+
 ) => {
   const addFunction = getAddFunction(state.whatIsMod);
   // need method to build out proper structure
@@ -272,6 +278,8 @@ export const addNewModifier = (
     isRanks: false,
     modDesc: newDesc,
     pinned: state.pinned || false,
+    aidsFlatfoot,
+    aidsTouchAttach
   }
   // need to define other methods including update api
   addFunction(char.charID.toString(), newMod).then(async (c: Character) => {

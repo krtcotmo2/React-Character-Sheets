@@ -23,7 +23,7 @@ export const IOSSwitch = styled((props: SwitchProps) => (
           border: 0,
         },
         '&.Mui-disabled + .MuiSwitch-track': {
-          opacity: 0.5,
+          opacity: 1,
         },
       },
       '&.Mui-focusVisible .MuiSwitch-thumb': {
@@ -34,7 +34,7 @@ export const IOSSwitch = styled((props: SwitchProps) => (
         color: '#ccc'
       },
       '&.Mui-disabled + .MuiSwitch-track': {
-        opacity: 0.3,
+        opacity: 1,
       },
     },
     '& .MuiSwitch-thumb': {

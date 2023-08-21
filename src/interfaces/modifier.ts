@@ -7,4 +7,6 @@ export interface Modifier{
     modDesc: string;
     guid?: string;
     stat?: string;
+    aidsFlatfoot?: boolean;
+    aidsTouchAttach?: boolean;
 }

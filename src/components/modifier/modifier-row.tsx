@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { Modifier } from "../../interfaces/modifier";
 import Delete from '@mui/icons-material/Delete';
@@ -7,6 +7,8 @@ import { deleteModifier, getNavigateUrl } from "./business-logic/modifier-helper
 import { Character } from "../../interfaces/character";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/configure-store";
+import { IOSSwitch } from "../ios-switch/ios-switch";
+import { Armor } from "../../interfaces/armor";
 
 export interface ModifierProps {
     modifier: Modifier;
@@ -20,6 +22,8 @@ export interface ModifierProps {
 export const ModifierRow: React.FC<ModifierProps> = (props: ModifierProps): JSX.Element => {
     const {modifier, index, saveFunction} = props;
     const [score, setScore] = useState(modifier?.score);
+    const [touchAc, setTouchAc] = useState(modifier?.aidsTouchAttach);
+    const [flatFootedAc, setFlatFootedAc] = useState(modifier?.aidsFlatfoot);
     const [modDesc, setModDesc] = useState(modifier?.modDesc);
     const char: Character = useSelector(state => store.getState().character);
     const { state } = useLocation();
@@ -30,7 +34,9 @@ export const ModifierRow: React.FC<ModifierProps> = (props: ModifierProps): JSX.
         const m: Modifier = {
             ...modifier,
             modDesc: evt.target.value,
-            score
+            score,
+            aidsTouchAttach: touchAc,
+            aidsFlatfoot: flatFootedAc
            }
         saveFunction(m);
     }
@@ -40,9 +46,33 @@ export const ModifierRow: React.FC<ModifierProps> = (props: ModifierProps): JSX.
         const m: Modifier = {
             ...modifier,
             score: +evt.target.value,
-            modDesc
+            modDesc,
+            aidsTouchAttach: touchAc,
+            aidsFlatfoot: flatFootedAc
         }
         saveFunction(m);
+    }
+
+    const changedTouchAC = () => {
+        const curState = touchAc;
+        setTouchAc(!curState);
+        const m: Modifier = {
+            ...modifier,
+            aidsTouchAttach: !curState,
+            aidsFlatfoot: flatFootedAc
+        }
+        saveFunction(m);
+    }
+
+    const changedFlatFootedAC = () => {
+        const curState = flatFootedAc;
+        setFlatFootedAc(!curState);
+        const m: Modifier = {
+            ...modifier,
+            aidsFlatfoot: !curState,
+            aidsTouchAttach: touchAc
+        }
+        saveFunction(m)
     }
 
     const deleteLine = async (id: number) => {
@@ -70,6 +100,28 @@ export const ModifierRow: React.FC<ModifierProps> = (props: ModifierProps): JSX.
                     onChange={evt => changedTextField(evt)}
                 />
             </Grid>
+            {state.whatIsMod === 'Armor' && modifier?.id !==0 && (
+                <Grid item>
+                    <>
+                        <FormControlLabel
+                            control={
+                                <IOSSwitch aria-label='Touch Ac' checked={touchAc} onClick={() => changedTouchAC()}/>
+                            }
+                            label ='Touch AC'
+                            labelPlacement='start'
+                            disabled={props.addingMod}
+                        />
+                        <FormControlLabel
+                            control={
+                                <IOSSwitch aria-label='Flatfooted' checked={flatFootedAc} onClick={()=> changedFlatFootedAC()}/>
+                            }
+                            label ='Flatfooted'
+                            labelPlacement='start'
+                            disabled={props.addingMod}
+                        />
+                    </>
+                </Grid>
+            )}
             <Grid item>
                 {modifier?.id!==0 && (
                     <Delete onClick={()=>deleteLine(modifier.id)} style={{cursor:'pointer'}}></Delete>

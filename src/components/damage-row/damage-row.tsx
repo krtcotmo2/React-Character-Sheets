@@ -17,12 +17,12 @@ export const DamageRow: React.FC<RowProps> = (props: RowProps): JSX.Element => {
     const {damage, critRange, critDamage} = props;
     return (
         <Grid container className={classes.damageRowContainer} direction={'row'}>
-            <Grid container item direction={'row'} flexWrap='nowrap' gap={3}>
-                <Grid item  wrap='nowrap' style={{width: 'fit-content', minWidth: 'fit-content'}}>
-                    Damage: {damage}
+            <Grid container item direction={'column'} flexWrap='wrap'>
+                <Grid item  wrap='nowrap' style={{width: 'fit-content', minWidth: 'fit-content', textAlign:'left'}}>
+                    Damage: <span style={{fontWeight: 'normal', fontStyle:'oblique'}}>{damage}</span>
                 </Grid>
                 <Grid item  style={{maxWidth: 'fit-content'}}>    
-                    Crit: {critRange} {critDamage}
+                    Crit:  <span style={{fontWeight: 'normal', fontStyle:'oblique'}}>{critRange} {critDamage}</span>
                 </Grid>
                 
             </Grid>

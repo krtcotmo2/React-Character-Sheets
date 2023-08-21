@@ -51,6 +51,16 @@ export const saveToHitLine = async (charId: string, body:any) => {
         });
 }
 
+export const saveToHitCategory = async (charId: string, body:any) => {
+    const statData = body;
+    return await axios
+        .post(`${siteHost}/api/to-hit/new-to-hit/${charId}`, statData)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}
+
 export const deleteToHitLine = async (charId: string, id:string) => {
     return await axios
         .delete(`${siteHost}/api/to-hit/${charId}/${id}`)
