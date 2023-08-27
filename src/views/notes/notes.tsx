@@ -1,29 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import { Feat } from '../../interfaces/feats';
-import { getCharacterFeats } from '../../api/feats-api';
 import { store } from '../../redux/configure-store';
-import { FeatsActions } from '../../redux/reducers/feates-reducer';
 import { useSelector } from 'react-redux';
 import { Character } from '../../interfaces/character';
-import { Button, Divider, Grid, TextField } from '@mui/material';
+import { Button, Grid, IconButton, TextField } from '@mui/material';
 import { getCharacterNotes, sendNewNote } from '../../api/notes-api';
 import { Note } from '../../interfaces/note';
 import { Link } from 'react-router-dom';
 import { NoteGroup } from '../../components/notes/note-group';
-import { useSpellStyles } from '../../components/spells/spell-styles';
 import { showError } from '../../components/modal/business-logic/error-handler';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export const CharacterNotes: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
     const [isAdding, setIsAdding] = useState(false);
     const [noteName, setNoteName] = useState('');
+    const [listFilter, setListFilter] = useState('');
     const [notes, setNotes] = useState<Note[]>([])
+    const [filteredNotes, setFilteredNotes] = useState<Note[]>([])
     useEffect(() => {
         getCharacterNotes(char.charID.toString())
          .then(theNotes => {
             setNotes(theNotes);
+            setFilteredNotes(theNotes);
           })
     }, []);
+
+    useEffect(()=> {
+        setFilteredNotes(notes.filter(note => 
+            note.noteTitle.toLocaleLowerCase().includes(listFilter.toLocaleLowerCase()) ||
+            note.notes.some(indNote => indNote.itemDetails.toLowerCase().includes(listFilter.toLocaleLowerCase()))
+        ));
+    },[listFilter])
 
     const createNote = () => {
         if(noteName === ''){
@@ -54,7 +61,27 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
-                {notes.map(note => {
+                <Grid item container style={{marginBottom: '12px', border:'none', backgroundColor:'white'}} className='standardRow'>
+                    <TextField 
+                        type='text' 
+                        style={{backgroundColor:'white'}}
+                        placeholder='Filter' 
+                        fullWidth 
+                        value={listFilter}
+                        onChange={(e)=> setListFilter(e.target.value)}
+                        InputProps={{
+                            className:'whiteBk',
+                            endAdornment: (
+                                <IconButton
+                                onClick={()=>setListFilter('')}
+                                >
+                                   <ClearIcon/> 
+                                </IconButton>
+                                    ),
+                                }}
+                          />
+                </Grid>
+                {filteredNotes.map(note => {
                     return (
                         <NoteGroup grp={note} isAdding={isAdding} hidden={true}/>
                     )

@@ -135,3 +135,6 @@ svg.editIcon{
   height: 0px;
   overflow: hidden;
 }
+.whiteBk{
+  background-color: white;
+}

@@ -12,11 +12,15 @@ import { DamageRow } from "../../components/damage-row/damage-row";
 import { Link } from "react-router-dom";
 import { WHATISMOD } from "../../enum/what-is-mod-type";
 import { IOSSwitch } from "../../components/ios-switch/ios-switch";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export const ToHitView: React.FC = (): JSX.Element => {
   
   const [isAdding, setIsAdding] = useState(false);
   const [isMelee, setIsMelee] = useState(true);
+  const [showBase, setShowBase] = useState(true);
+  const [showCustoms, setShowCustoms] = useState(true);
   const [toHitName, setToHitName] = useState('');
   const [damage, setDamage] = useState('');
   const [critRange, setCritRange] = useState('');
@@ -84,134 +88,150 @@ export const ToHitView: React.FC = (): JSX.Element => {
         justifyContent={"center"}
         style={{ fontSize: "18px" }}
       >
-        <Grid
-          container
-          direction="column"
-          justifyContent={"center"}
-          style={{ fontSize: "18px", padding: "0" }}
-          className="standardList"
-        >
-          <Grid item className="standardRow">
-            <CollapsibleRow
-              title="Base Melee"
-              value={toHit + strBonus}
-              allowEditing={false}
-              breakdown={[
-                {
-                  id: 0,
-                  score: toHit,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Base to Hit",
-                },
-                {
-                  id: 0,
-                  score: strBonus,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Strength Bonus",
-                },
-              ]}
-            />
-          </Grid>
+        {showBase &&  <Grid item
+          style={{alignSelf:'flex-end', justifySelf: 'flex-start', marginRight: '12px', marginBottom: '-12px', cursor:'pointer'}}
+          onClick={()=>setShowBase(false)}>
+            <VisibilityOffIcon/>
         </Grid>
-        <Grid
-          container
-          direction="column"
-          justifyContent={"center"}
-          style={{ fontSize: "18px", padding: "0" }}
-          className="standardList"
-        >
-          <Grid item className="standardRow">
-            <CollapsibleRow
-              title="Base Ranged"
-              value={toHit + dexBonus}
-              allowEditing={false}
-              breakdown={[
-                {
-                  id: 0,
-                  score: toHit,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Base to Hit",
-                },
-                {
-                  id: 0,
-                  score: dexBonus,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Dexterity Bonus",
-                },
-              ]}
-            />
-          </Grid>
+        }
+        {!showBase && <Grid item
+          style={{alignSelf:'flex-end', justifySelf: 'flex-start', marginRight: '12px', marginBottom: '-12px', cursor:'pointer'}}
+          onClick={()=>setShowBase(true)}
+          >
+            <VisibilityIcon />
         </Grid>
-        <Grid
-          container
-          direction="column"
-          justifyContent={"center"}
-          style={{ fontSize: "18px", padding: "0" }}
-          className="standardList"
-        >
-          <Grid item className="standardRow">
-            <CollapsibleRow
-              title="Base CMB"
-              value={toHit + strBonus}
-              allowEditing={false}
-              breakdown={[
-                {
-                  id: 0,
-                  score: toHit,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Base to Hit",
-                },
-                {
-                  id: 0,
-                  score: strBonus,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Strength Bonus",
-                },
-              ]}
-            />
+        }
+        {showBase &&<>
+          <Grid
+            container
+            direction="column"
+            justifyContent={"center"}
+            style={{ fontSize: "18px", padding: "0" }}
+            className="standardList"
+          >
+            <Grid item className="standardRow">
+              <CollapsibleRow
+                title="Base Melee"
+                value={toHit + strBonus}
+                allowEditing={false}
+                breakdown={[
+                  {
+                    id: 0,
+                    score: toHit,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Base to Hit",
+                  },
+                  {
+                    id: 0,
+                    score: strBonus,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Strength Bonus",
+                  },
+                ]}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="column"
-          justifyContent={"center"}
-          style={{ fontSize: "18px", padding: "0" }}
-          className="standardList"
-        >
-          <Grid item className="standardRow">
-            <CollapsibleRow
-              title="Base CMD"
-              value={10 + toHit + dexBonus + strBonus}
-              allowEditing={false}
-              breakdown={[
-                {
-                  id: 0,
-                  score: 10,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Base",
-                },
-                {
-                  id: 0,
-                  score: toHit,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Base to Hit",
-                },
-                {
-                  id: 0,
-                  score: strBonus,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Strength Bonus",
-                },
-                {
-                  id: 0,
-                  score: dexBonus,
-                  type: ModifierType.MODIFIER,
-                  modDesc: "Dexterity Bonus",
-                },
-              ]}
-            />
+          <Grid
+            container
+            direction="column"
+            justifyContent={"center"}
+            style={{ fontSize: "18px", padding: "0" }}
+            className="standardList"
+          >
+            <Grid item className="standardRow">
+              <CollapsibleRow
+                title="Base Ranged"
+                value={toHit + dexBonus}
+                allowEditing={false}
+                breakdown={[
+                  {
+                    id: 0,
+                    score: toHit,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Base to Hit",
+                  },
+                  {
+                    id: 0,
+                    score: dexBonus,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Dexterity Bonus",
+                  },
+                ]}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid
+            container
+            direction="column"
+            justifyContent={"center"}
+            style={{ fontSize: "18px", padding: "0" }}
+            className="standardList"
+          >
+            <Grid item className="standardRow">
+              <CollapsibleRow
+                title="Base CMB"
+                value={toHit + strBonus}
+                allowEditing={false}
+                breakdown={[
+                  {
+                    id: 0,
+                    score: toHit,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Base to Hit",
+                  },
+                  {
+                    id: 0,
+                    score: strBonus,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Strength Bonus",
+                  },
+                ]}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            justifyContent={"center"}
+            style={{ fontSize: "18px", padding: "0" }}
+            className="standardList"
+          >
+            <Grid item className="standardRow">
+              <CollapsibleRow
+                title="Base CMD"
+                value={10 + toHit + dexBonus + strBonus}
+                allowEditing={false}
+                breakdown={[
+                  {
+                    id: 0,
+                    score: 10,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Base",
+                  },
+                  {
+                    id: 0,
+                    score: toHit,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Base to Hit",
+                  },
+                  {
+                    id: 0,
+                    score: strBonus,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Strength Bonus",
+                  },
+                  {
+                    id: 0,
+                    score: dexBonus,
+                    type: ModifierType.MODIFIER,
+                    modDesc: "Dexterity Bonus",
+                  },
+                ]}
+              />
+            </Grid>
+          </Grid>
+        </>}
+        
       </Grid>
       <Divider
         color="#fff"
@@ -228,7 +248,21 @@ export const ToHitView: React.FC = (): JSX.Element => {
         style={{ fontSize: "18px", padding: "0" }}
         className="standardList"
       >
-        {curToHits.map((hit) => (
+        {showCustoms &&  <Grid item
+          style={{alignSelf:'flex-end', justifySelf: 'flex-start', marginRight: '12px', marginBottom: '-12px', cursor:'pointer'}}
+          onClick={()=>setShowCustoms(false)}>
+            <VisibilityOffIcon/>
+        </Grid>
+        }
+        {!showCustoms && <Grid item
+          style={{alignSelf:'flex-end', justifySelf: 'flex-start', marginRight: '12px', marginBottom: '-12px', cursor:'pointer'}}
+          onClick={()=>setShowCustoms(true)}
+          >
+            <VisibilityIcon />
+        </Grid>
+        }
+        
+        {showCustoms && curToHits.map((hit) => (
           <Grid item className="standardRow" direction="column">
             <CollapsibleRow
               title={hit.hitName}

@@ -4,10 +4,13 @@ import { store } from '../../redux/configure-store';
 import { createCharacterExpendables, deleteCharacterExpendables, getCharacterExpendables } from '../../api/expenndables-api';
 import { ExpendableAction } from '../../redux/reducers/expendables-reducer';
 import { Character } from '../../interfaces/character';
-import { Button, Divider, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Divider, Grid, IconButton, MenuItem, Select, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ExpendableBar } from '../../components/expendables/expendable-bar';
 import { ExpendableType } from '../../enum/expendable-type';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Expendable } from '../../interfaces/expendable';
+
 
 export const ExpendablesView: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
@@ -16,7 +19,7 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
     const [desc, setDesc] = useState('');
     const [score, setScore] = useState('');
     const [expType, setExpType] = useState('');
-    
+    const [listFilter, setListFilter] = useState('');
     useEffect( () => {
      getCharacterExpendables(store.getState().character.charID.toString())
         .then( curExpendables => {
@@ -46,6 +49,15 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
         setExpType('');
         setDesc('');
     }
+
+    const orderedList = (list: Expendable[]): Expendable[] => {
+        const classList = list.filter(exp => exp.expType === ExpendableType.CLASS);
+        const chargeList = list.filter(exp => exp.expType === ExpendableType.CHARGE);
+        const potionList = list.filter(exp => exp.expType === ExpendableType.POTION);
+        const scrollList = list.filter(exp => exp.expType === ExpendableType.SCROLL);
+        return [...classList, ...chargeList, ...potionList, ...scrollList];
+
+    }
     return(
         <>
         <Grid container>
@@ -54,10 +66,38 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
             </Grid>
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
-            {expendables.map((expendable, i) => {
-                return (
-                    <ExpendableBar key={`bar-${i}`} {...expendable} addingNew={addingNew}/>
-                )
+            <Grid item container style={{border:'none', backgroundColor:'white'}} className='standardRow'>
+                <TextField 
+                    type='text' 
+                    style={{backgroundColor:'white'}}
+                    placeholder='Filter' 
+                    fullWidth 
+                    value={listFilter}
+                    onChange={(e)=> setListFilter(e.target.value)}
+                    InputProps={{
+                        className:'whiteBk',
+                        endAdornment: (
+                            <IconButton
+                            onClick={()=>setListFilter('')}
+                            >
+                                <ClearIcon/> 
+                            </IconButton>
+                                ),
+                            }}
+                        />
+            </Grid>
+        </Grid>
+        <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
+            {orderedList(expendables).map((expendable, i) => { 
+                if(
+                    expendable.description.toLowerCase().includes(listFilter.toLowerCase()) ||
+                    expendable.expType?.toLowerCase().includes(listFilter.toLowerCase())
+                ){
+                    return (
+                        <ExpendableBar key={`bar-${i}`} {...expendable} addingNew={addingNew}/>
+                    )
+                } 
+                return null;
             })}
             
             <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>
