@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { NoteGroup } from '../../components/notes/note-group';
 import { showError } from '../../components/modal/business-logic/error-handler';
 import ClearIcon from '@mui/icons-material/Clear';
+import { FilterBar } from '../../components/filter-bar/filter-bar';
 
 export const CharacterNotes: React.FC = (): JSX.Element => {
     const char: Character = useSelector((state) => store.getState().character);
@@ -60,27 +61,8 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
                 <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Notes</p>
                 </Grid>
             </Grid>
+            <FilterBar value={listFilter} setValue={setListFilter}/>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
-                <Grid item container style={{marginBottom: '12px', border:'none', backgroundColor:'white'}} className='standardRow'>
-                    <TextField 
-                        type='text' 
-                        style={{backgroundColor:'white'}}
-                        placeholder='Filter' 
-                        fullWidth 
-                        value={listFilter}
-                        onChange={(e)=> setListFilter(e.target.value)}
-                        InputProps={{
-                            className:'whiteBk',
-                            endAdornment: (
-                                <IconButton
-                                onClick={()=>setListFilter('')}
-                                >
-                                   <ClearIcon/> 
-                                </IconButton>
-                                    ),
-                                }}
-                          />
-                </Grid>
                 {filteredNotes.map(note => {
                     return (
                         <NoteGroup grp={note} isAdding={isAdding} hidden={true}/>

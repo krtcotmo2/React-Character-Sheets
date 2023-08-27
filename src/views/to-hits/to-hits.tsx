@@ -297,7 +297,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
         
         {!isAdding &&
           <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
-              <Button style={{width:'fit-content'}} variant="contained" onClick={()=>setIsAdding(true)}>Add New Defined To Hit</Button>
+              <Button style={{width:'fit-content'}} variant="contained" onClick={()=>setIsAdding(true)}>Add New To Hit Group</Button>
           </Grid>
         }
         {isAdding &&

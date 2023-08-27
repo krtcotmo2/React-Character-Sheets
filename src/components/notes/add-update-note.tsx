@@ -8,6 +8,7 @@ import { store } from '../../redux/configure-store';
 import { Button, Grid, TextField } from '@mui/material';
 import { SingleLineEdit } from './single-edit-line';
 import { deleteCharacterNotes, sendNewNoteDetail, sendUpdateNotes } from '../../api/notes-api';
+import { FilterBar } from '../filter-bar/filter-bar';
 export interface NoteTitleProps {
     
 }
@@ -18,6 +19,7 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
     const [note, setNote] = useState<Note>(state.note);
     const [isAdding, setIsAdding] = useState(false);
     const [noteText, setNoteText] = useState('');
+    const [listFilter, setListFilter] = useState('');
 
     const updateOneNoteLine = (id: number, newText:string) => {
         const aNote = note.notes.find(n => n.id === id) || {itemDetails:''} as NoteItem;
@@ -99,15 +101,20 @@ export const NoteNewUpdate: React.FC = (): JSX.Element => {
                         <p><Link className='nonDecLink' to={`/character/notes/${char.charID}`}>{char?.charName}</Link> - Note</p>
                     </Grid>
                 </Grid>
+                <FilterBar value={listFilter} setValue={setListFilter}/>
+
                 <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className='standardList'>
                 <Grid item  className='standardRow'>{note.noteTitle}</Grid>
                 <Grid className='standardRow' direction='column'>
                     {note.notes.map((item) => {
+                        if(item.itemDetails.toLocaleLowerCase().includes(listFilter.toLocaleLowerCase())){
                             return (<SingleLineEdit 
                                 item = {item} 
                                 onChange={updateOneNoteLine}
                                 onDelete={deleteNote}
                             />)
+
+                        }
                         })
                     }
                 </Grid>

@@ -5,12 +5,14 @@ import { store } from '../../redux/configure-store';
 import { formatSkills } from './business-logic/skill-formatter';
 import { CollapsibleRow } from '../../components/collapsible-row/collapsible-row';
 import { Character } from '../../interfaces/character';
-import { Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Divider, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { getAllSkills, saveNewSkill } from '../../api/skills-api';
 import { SkillActions } from '../../redux/reducers/skills.reducer';
 import { Link } from 'react-router-dom';
 import { WHATISMOD } from '../../enum/what-is-mod-type';
 import { skillOptions as skills } from './business-logic/skill-oprions';
+import ClearIcon from '@mui/icons-material/Clear';
+import { FilterBar } from '../../components/filter-bar/filter-bar';
 
 interface SkillsProps {
     skills?: Skill[];
@@ -24,6 +26,7 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
     const char: Character = useSelector(state => store.getState().character);
     const [selectedSkill, setSelectedSkill] = useState('');
     const skillOptions = skills;
+    const [listFilter, setListFilter] = useState('');
 
     useEffect(() => {
         getAllSkills(char.charID.toString()).then(skills => {
@@ -64,19 +67,25 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
                 <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Skills</p>
                 </Grid>
             </Grid>
+            <FilterBar value={listFilter} setValue={setListFilter}/>
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
                 {
-                    grpdSkills.map(skl => (
-                        <Grid item className="standardRow" key={skl.skillID}>
-                            <CollapsibleRow 
-                                title={skl.skillName} 
-                                breakdown={skl.breakdown} 
-                                value={skl.value}
-                                skillData={skl}
-                                characteristic={WHATISMOD.SKILL}
-                            />
-                        </Grid>
-                    ))
+                    grpdSkills.map(skl => {
+                        if(skl.skillName.toLowerCase().includes(listFilter.toLowerCase())){
+                            return (
+                                <Grid item className="standardRow" key={skl.skillID}>
+                                    <CollapsibleRow 
+                                        title={skl.skillName} 
+                                        breakdown={skl.breakdown} 
+                                        value={skl.value}
+                                        skillData={skl}
+                                        characteristic={WHATISMOD.SKILL}
+                                    />
+                                </Grid>
+                            )
+                        }
+                        return null;
+                    })
                 }
                 
                 <Divider color='#fff' style={{width:'100%', margin: '12px 0', borderTopWidth: '2px', borderTopColor:'#6a6a6a'}}/>

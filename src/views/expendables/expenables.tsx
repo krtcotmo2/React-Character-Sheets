@@ -10,6 +10,7 @@ import { ExpendableBar } from '../../components/expendables/expendable-bar';
 import { ExpendableType } from '../../enum/expendable-type';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Expendable } from '../../interfaces/expendable';
+import { FilterBar } from '../../components/filter-bar/filter-bar';
 
 
 export const ExpendablesView: React.FC = (): JSX.Element => {
@@ -65,28 +66,7 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
             <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Expendables</p>
             </Grid>
         </Grid>
-        <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
-            <Grid item container style={{border:'none', backgroundColor:'white'}} className='standardRow'>
-                <TextField 
-                    type='text' 
-                    style={{backgroundColor:'white'}}
-                    placeholder='Filter' 
-                    fullWidth 
-                    value={listFilter}
-                    onChange={(e)=> setListFilter(e.target.value)}
-                    InputProps={{
-                        className:'whiteBk',
-                        endAdornment: (
-                            <IconButton
-                            onClick={()=>setListFilter('')}
-                            >
-                                <ClearIcon/> 
-                            </IconButton>
-                                ),
-                            }}
-                        />
-            </Grid>
-        </Grid>
+        <FilterBar value={listFilter} setValue={setListFilter}/>
         <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
             {orderedList(expendables).map((expendable, i) => { 
                 if(

@@ -44,8 +44,8 @@ export const AddTempAdjustment: React.FC<FormProps> = (props: FormProps): JSX.El
     return (
         <Grid container direction='column' gap={4} >
             <Grid container direction='row' gap={4} justifyContent='center'>
+                <Grid item><TextField id="outlined-basic" label="Score" variant="outlined" onChange={(event)=>setValue(event.target.value)}/></Grid>
                 <Grid item><TextField id="outlined-basic" label="Description" variant="outlined" onChange={(event)=>setDescription(event.target.value)}/></Grid>
-                <Grid item><TextField id="outlined-basic" label="Value" variant="outlined" onChange={(event)=>setValue(event.target.value)}/></Grid>
             </Grid>
             <Grid container direction='row' justifyContent='center'>
                 <Grid item>
