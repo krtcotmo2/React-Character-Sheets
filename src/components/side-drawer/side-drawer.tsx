@@ -66,11 +66,11 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
                     <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/skills/${char.charID}`}>View/Edit Skills Details</Link>
                     {char.isCaster && (
                         <>
-                            
                             <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/spells/${char.charID}`}>View/Edit Spells Details</Link>
                         </>
                     )}
                     <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/expendables/${char.charID}`}>View/Edit Expendables Details</Link>
+                    <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/equipment/${char.charID}`}>View/Edit Equipment Details</Link>
                     <Link className='pageLink' onClick={toggleDrawer(false)} to={`/character/notes/${char.charID}`}>View/Edit Notes Details</Link>
                     <Divider/>
                 </>)}

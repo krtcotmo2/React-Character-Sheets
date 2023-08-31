@@ -27,6 +27,7 @@ import { LevelsModified } from "./components/levels-modifier/levels";
 import { ModifierView } from "./components/modifier/modifier";
 import { CoreModifier } from "./components/char-core/modify-char-core";
 import { NoteNewUpdate } from "./components/notes/add-update-note";
+import { EquipmentView } from "./views/equipment/equipment";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/user/new" element={<NewUser />} />
                 <Route path="/main/loadChar" element={<SelectCharacter/>} />
                 <Route path="/main/newChar" element={<NewCharacter />} />
+                <Route path="/character/equipment/*" element={<EquipmentView />} />
                 <Route path="/character/stats/*" element={<CharacterStats />} />
                 <Route path="/character/save/*" element={<CharacterSaves />} />
                 <Route path="/character/core/*" element={<CoreModifier />} />
