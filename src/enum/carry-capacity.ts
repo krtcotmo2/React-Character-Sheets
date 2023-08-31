@@ -1,4 +1,4 @@
-export const carrcyCap = [
+export const carryCap = [
   { str: 1, light: 3, med: 6, heavy: 10 },
   { str: 2, light: 6, med: 13, heavy: 20 },
   { str: 3, light: 10, med: 20, heavy: 30 },
