@@ -10,6 +10,7 @@ const initialState: User = {
     email: '',
     id: '',
     authenticated: false,
+    forcedReset: false,
 };
 
 class UserReducer extends ImmerReducer<User> {
@@ -20,7 +21,6 @@ class UserReducer extends ImmerReducer<User> {
         this.draftState = initialState;
     }
 }
-
 
 export const UserActions = createActionCreators(UserReducer);
 export const UserReducerFunctions = createReducerFunction(UserReducer, initialState);

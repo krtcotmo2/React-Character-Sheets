@@ -3,4 +3,5 @@ export interface User {
     email: string;
     id: string;
     authenticated: boolean;
+    forcedReset?: boolean;
 }

@@ -1,7 +1,7 @@
 import { Button, Grid, TextField } from "@mui/material";
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, resetPassword } from "../../api/user-api";
+import { createNewUser, loginUser, resetPassword } from "../../api/user-api";
 import { store } from "../../redux/configure-store";
 import { UserActions } from "../../redux/reducers/user-reducer";
 import { User } from "../../interfaces/user";
@@ -12,6 +12,7 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
     const [userEmail, setEmail] = useState('');
     const [userPassword, setPassword] = useState('');
     const [userVPassword, setVPassword] = useState('');
+    const [userName, setUserName] = useState('');
     const [addingNew, setAddingNew] = useState(false);
     const [isForgotten, setIsForgotten] = useState(false);
     const [subtitle, setSubtitle] = useState('');
@@ -19,6 +20,15 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
+        if(addingNew){
+            await newUser(event);
+            return;
+        }
+
+        if(isForgotten){
+            await resendPassword(event);
+            return;
+        }
         await loginUser(userEmail, userPassword)
             .then( (user: any) => {
                 const mappedUser: User = {
@@ -26,9 +36,14 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
                     email: user.userEmail,
                     id: user.userID.toString(),
                     authenticated: true,
+                    forcedReset: user.forcedReset
                 }
                 store.dispatch(UserActions.setUser(mappedUser));
-                navigate(`/main/loadChar`);
+                if(mappedUser.forcedReset){
+                    
+                }else{
+                    navigate(`/main/loadChar`);
+                }
             })
             .catch(err => {
                 store.dispatch(UserActions.clearUser());
@@ -40,16 +55,47 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
     }
     const resendPassword= (event: any) =>{
         event?.preventDefault();
-        resetPassword('kurt@aol.com');
+        resetPassword(userEmail)
+            .catch(err => {
+                showError('Email not found',[
+                    {key:'userEmail', value: userEmail}
+                ]);
+                return;
+            })
+            .then(()=> {
+                showError('password_reset',);
+                resetProcess();
+            });
     }
     const newUser = (event: any) =>{
         event?.preventDefault();
-        console.log('Add new User')
+        if(userPassword !== userVPassword){
+            showError("Email not found")
+            return;
+        }
+        return createNewUser(userEmail, userPassword, userName)
+            .catch(err => {
+                if(err.response.data.message === 'User already exists'){
+                    showError('user_already_exists',[
+                        {key:'userEmail', value: userEmail}
+                    ]);
+                    return;
+                };
+                showError(err.message);
+            })
+            .then(arg => {
+                showError('user_created',[
+                    {key:'userName', value: userName}
+                ]);
+                resetProcess();
+            });
     }
     const resetProcess = () => {
         setAddingNew(false); 
         setIsForgotten(false);
         setSubtitle('');
+        setUserName('');
+        setPassword('');
     }
     return (
         <div  className='charList standardList' >
@@ -73,13 +119,22 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
                 />)
                 }
                 { addingNew && 
-                    (<TextField
-                        type='password' 
-                        value={userVPassword} 
-                        onChange={ (evt)=> setVPassword(evt.target.value) }
-                        placeholder="Verify Password*"
-                        required
-                    />)
+                    (<>
+                        <TextField
+                            type='password' 
+                            value={userVPassword} 
+                            onChange={ (evt)=> setVPassword(evt.target.value) }
+                            placeholder="Verify Password*"
+                            required
+                        />
+                        <TextField
+                            type='text' 
+                            value={userName} 
+                            onChange={ (evt)=> setUserName(evt.target.value) }
+                            placeholder="Your Name*"
+                            required
+                        />
+                    </>)
                 }
                 
                 <Button type="submit" variant="contained">Submit</Button>
