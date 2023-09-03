@@ -13,19 +13,19 @@ export const getCharacterEquipment = async (charId: string) => {
     });
 }
 
-export const updateCharacterEquipment = async (charId: string, exp:Equipment) => {
+export const updateCharacterEquipment = async (charId: string, equip:Equipment) => {
     return await axios
-        .put(`${siteHost}/api/equipment/${exp.id}`, exp)
-        .then(results => results.data as Equipment[])
+        .put(`${siteHost}/api/equipment/${equip.id}`, equip)
+        .then(results => results.data as EquipmentData)
         .catch((err) => {
             throw new Error(err.message);
         });
 }
 
-export const createCharacterEquipment = async (exp:Equipment) => {
+export const createCharacterEquipment = async (charId: string, equip:Equipment) => {
     return await axios
-        .post(`${siteHost}/api/equipment/`, exp)
-        .then(results => results.data as Equipment[])
+        .post(`${siteHost}/api/equipment/char/${charId}`, equip)
+        .then(results => results.data as EquipmentData)
         .catch((err) => {
             throw new Error(err.message);
         });

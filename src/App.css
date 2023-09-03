@@ -118,6 +118,27 @@ svg.editIcon{
   flex-wrap: nowrap !important;
   padding: 0 20px;
 }
+
+.standardList .equipRow{
+  overflow: hidden;
+  width: 600px;
+  background-color: #e4dcc7;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap !important;
+  padding: 8px 20px;
+  border-left: 1px solid #6a6a6a;
+  border-right: 1px solid #6a6a6a;
+}
+
+.standardList .equipRow:first-child{
+  border-top: 1px solid #6a6a6a;
+}
+.standardList .equipRow:last-child{
+  border-bottom: 1px solid #6a6a6a;
+}
+
 .spellGrp{
   border: 1px solid #6a6a6a;
   border-bottom: none;
