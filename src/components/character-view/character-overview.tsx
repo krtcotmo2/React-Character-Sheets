@@ -21,6 +21,9 @@ import { CharLevel } from "../../interfaces/levels";
 import { ToHitGroup } from "../../interfaces/to-hit";
 import { HitsBar } from "../hits-bar/hits-bar";
 import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
+import { addStatsToArmor } from "../../views/armor/business-logic/armor-helper";
+import { ArmorActions } from "../../redux/reducers/armor-reducer";
+import { ArmorSet } from "../../interfaces/armor";
 
 const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
   const char = useSelector(state => store.getState().character);
@@ -41,6 +44,7 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
           if(charData){
             charData.isCaster = checkForCaster(charData?.levels);
           }
+          addStatsToArmor(charData?.armors ?? [], charData?.stats?.dex.value ?? 0)
           batch(()=>{
             store.dispatch(CharacterActions.setCharacter(charData as Character));
             store.dispatch(StatsActions.setStat(charData?.stats as Stat));
@@ -48,6 +52,7 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
             store.dispatch(SkillActions.setSkills(charData?.skills as RawSkill[]));
             store.dispatch(CharLevelActions.setCharLevels(charData?.levels as CharLevel[]));
             store.dispatch(ToHitActions.setToHitGroups(charData?.toHitGroups as ToHitGroup[]));
+            store.dispatch(ArmorActions.setArmorGroups(charData?.armors as ArmorSet[]));
           });
         })
         .catch(err => {

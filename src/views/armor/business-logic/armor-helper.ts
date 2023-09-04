@@ -6,20 +6,19 @@ export const addStatsToArmor = (armors: ArmorSet[], dex: number) => {
     return armors.forEach(armor => {
         const dexBonus = Math.floor((dex-10)/2);
         armor.score += 10;
-        if(!armor.name.toLowerCase().includes('flat')){
-            armor.score += dexBonus;
-            armor.values = [
-                {
-                    id: 0,
-                    modDesc: 'Dex',
-                    score: dexBonus,
-                    type: ModifierType.MODIFIER,
-                    aidsFlatfoot: false,
-                    aidsTouchAttach: true,
-                },
-                ...armor.values
-            ];
-        }
+        armor.score += dexBonus;
+        armor.values = [
+            {
+                id: 0,
+                modDesc: 'Dex',
+                score: dexBonus,
+                type: ModifierType.MODIFIER,
+                aidsFlatfoot: false,
+                aidsTouchAttach: true,
+            },
+            ...armor.values
+          ];
+        
         armor.values = [
             {
                 id: 0,

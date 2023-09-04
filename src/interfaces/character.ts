@@ -1,3 +1,4 @@
+import { ArmorSet } from "./armor";
 import { CharLevel } from "./levels";
 import { SavingThrow } from "./saving-throw";
 import { RawSkill } from "./skills";
@@ -20,6 +21,7 @@ export interface Character {
   levels?: CharLevel[];
   isCaster: boolean;
   toHitGroups: ToHitGroup[];
+  armors: ArmorSet[];
 }
 
 export interface SaveCharacter {
