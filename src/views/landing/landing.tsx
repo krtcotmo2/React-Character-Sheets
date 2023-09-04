@@ -4,11 +4,11 @@ import { Login } from '../../components/login/login';
 import { useSelector } from 'react-redux';
 
 export const LandingPage: React.FC = (): JSX.Element => {
-    const userId = useSelector( state => store.getState().user.id);
+    const user = useSelector( state => store.getState().user);
     
     return (
         <>
-            {userId === '' && <Login/>}
+            {(user.id === '' || user.forcedReset) && <Login/>}
         </>
     )
 

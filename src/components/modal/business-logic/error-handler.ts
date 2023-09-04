@@ -66,6 +66,11 @@ export const showError = (err: string, param?: KeyValuePair[]) => {
             title = 'Password reset';
             msg = `Password reset, check the email for a new email. Check you spam box as well and log in with the new provided credentials`;
             break;
+        case 'password_updated': 
+            title = 'Password Updated';
+            msg = `The password has been updated.`;
+            break;
+        break;
         default:
             title = err; 
             msg = 'undefined error';
