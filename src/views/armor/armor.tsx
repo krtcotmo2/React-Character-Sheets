@@ -63,6 +63,7 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
                                 value={armor.score}
                                 characteristic={WHATISMOD.ARMOR}
                                 acID={armor.acID}
+                                armorData={armor}
                             />
                         </Grid>
                     ))

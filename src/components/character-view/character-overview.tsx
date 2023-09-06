@@ -24,12 +24,14 @@ import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
 import { addStatsToArmor } from "../../views/armor/business-logic/armor-helper";
 import { ArmorActions } from "../../redux/reducers/armor-reducer";
 import { ArmorSet } from "../../interfaces/armor";
+import { ArmorBar } from "../armor-bar/armor-bar";
 
 const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
   const char = useSelector(state => store.getState().character);
   const skills = useSelector(state => store.getState().skills);
   const saves = useSelector(state => store.getState().saves);
   const stats = useSelector(state => store.getState().stats);
+  const armors = useSelector(state => store.getState().armor);
   const [charId, setCharId] = useState("");;
   const toHits: ToHitGroup[] = useSelector(state => store.getState().toHitGroups);
   
@@ -115,7 +117,13 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
         <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
           {toHits && <HitsBar hits={toHits} />}
         </Grid>
-    }
+      }
+      {
+        armors && armors.length > 0 &&
+        <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+          {armors && <ArmorBar armors={armors} />}
+        </Grid>
+      }
     </>
   );
 };

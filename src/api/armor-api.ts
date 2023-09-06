@@ -49,3 +49,21 @@ export const deleteArmorLine = async (charId: string, acID: string) => {
             throw new Error(err.message);
         });
 }
+
+export const pinArmor = async (charId: string, id:string) => {
+    return await axios
+        .put(`${siteHost}/api/armor/char/${charId}/pin/${id}`)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}
+
+export const unpinArmor = async (charId: string, id:string) => {
+    return await axios
+        .put(`${siteHost}/api/armor/char/${charId}/unpin/${id}`)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}

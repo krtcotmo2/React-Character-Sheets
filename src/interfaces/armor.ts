@@ -5,6 +5,7 @@ export interface ArmorSet {
     name:string;
     values: Modifier[];
     score: number;
+    pinned: boolean;
 }
 
 export interface ArmorGrouping {

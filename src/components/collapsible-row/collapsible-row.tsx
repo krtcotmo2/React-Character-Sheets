@@ -17,8 +17,9 @@ import { STAT_TYPE } from '../../enum/stat-type';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { WHATISMOD } from '../../enum/what-is-mod-type';
-import { Armor } from '../../interfaces/armor';
+import { Armor, ArmorSet } from '../../interfaces/armor';
 import { getFFAC, getTouchAC } from '../../views/armor/business-logic/armor-helper';
+import { pinArmor, unpinArmor } from '../../api/armor-api';
 
 interface RowProps {
     title: string;
@@ -28,6 +29,7 @@ interface RowProps {
     skillData?: Skill;
     altText?: string;
     toHitData?: ToHitGroup;
+    armorData?: ArmorSet;
     acID?: number
     allowEditing?: boolean;
     characteristic?: WHATISMOD;
@@ -37,7 +39,7 @@ interface RowProps {
 
 export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element => {
     const [hidden, setHidden] = useState(true);
-    const [pinned, setPinned] = useState(props.skillData?.pinned || props.toHitData?.pinned);
+    const [pinned, setPinned] = useState(props.skillData?.pinned || props.toHitData?.pinned|| props.armorData?.pinned);
     const charOwner = useSelector(state => store.getState().character.userID.toString());
     const userId = useSelector(state => store.getState().user.id)
     const navigate = useNavigate();
@@ -60,6 +62,14 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
                 pinToHit(char.charID.toString(), tohitData?.id.toString() || '');
             }else{
                 unpinToHit(char.charID.toString(), tohitData?.id.toString() || '');
+            }
+            setPinned(!pinned);
+        }
+        if(props.characteristic === 'Armor'){
+            if(!pinned){
+                pinArmor(char.charID.toString(), armor?.toString() || '');
+            }else{
+                unpinArmor(char.charID.toString(), armor?.toString() || '');
             }
             setPinned(!pinned);
         }
@@ -104,10 +114,10 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
                     </Grid>)
                 }
                 <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}> 
-                    {(props.skillData || props.toHitData) && pinned && (
+                    {(props.skillData || props.toHitData || props.characteristic === 'Armor') && pinned && (
                         <PushPinIcon onClick={togglePinned} className={`${classes.iconPadded}`}/>
                     )}
-                    {(props.skillData || props.toHitData) && !pinned && (
+                    {(props.skillData || props.toHitData ||  props.characteristic === 'Armor') && !pinned && (
                         <PushPinIconOutlined onClick={togglePinned} className={`${classes.iconPadded}`}/>
                     )}   
                 </Grid>
