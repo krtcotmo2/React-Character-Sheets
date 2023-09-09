@@ -13,3 +13,12 @@ export const saveALevel = async (body:SaveLevel) => {
             throw new Error(err.message);
         });
 }
+
+export const deleteLevel = async (levelId:number) => {
+    return await axios
+        .delete(`${siteHost}/api/levels/delete/${levelId}`)
+        .then(results => results.data)
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+}

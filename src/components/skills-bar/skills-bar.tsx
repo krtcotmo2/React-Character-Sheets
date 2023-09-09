@@ -24,13 +24,13 @@ export const SkillsBar: React.FC<SkillProps> = (props: SkillProps):JSX.Element =
   return (
       <>
         <Grid item>
-          <Link style={{display:'block', margin:'18px 0'}} to={`/character/skills/${char.charID}`}>Skills</Link>
+          <Link style={{display:'block', margin:'0'}} to={`/character/skills/${char.charID}`}>Skills</Link>
         </Grid>
         { 
           finalPinned.map( skill => {
             return (
               <Grid item>
-              <p>{skill.skillName}: {skill.value}</p>
+              <p style={{margin:'0'}}>{skill.skillName}: {skill.value}</p>
             </Grid>
             )
           })

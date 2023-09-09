@@ -108,19 +108,19 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
       }
       {
         skills && skills.length > 0 &&
-        <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+        <Grid container direction="column" justifyContent={"center"} gap={1} style={{fontSize:'18px', marginTop: '33px'}}>
           {skills && <SkillsBar skills={skills} />}
         </Grid>
       }
       {
         toHits.filter(grp => grp.pinned)?.length > 0 &&
-        <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+        <Grid container direction="column" justifyContent={"center"} gap={1} style={{fontSize:'18px', marginTop: '33px'}}>
           {toHits && <HitsBar hits={toHits} />}
         </Grid>
       }
       {
-        armors && armors.length > 0 &&
-        <Grid container direction="row" justifyContent={"center"} gap={2} style={{fontSize:'18px'}}>
+        armors.filter(armor => armor.pinned).length > 0 && armors.length > 0 &&
+        <Grid container direction="column" justifyContent={"center"} gap={1} style={{fontSize:'18px', marginTop: '33px'}}>
           {armors && <ArmorBar armors={armors} />}
         </Grid>
       }

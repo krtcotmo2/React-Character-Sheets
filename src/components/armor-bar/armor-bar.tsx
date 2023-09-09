@@ -27,17 +27,20 @@ export const ArmorBar: React.FC<ArmorProps> = (props: ArmorProps):JSX.Element =>
   }
   return (
       <>
+      <Grid container direction='row' justifyContent='center'>
         <Grid item>
-          <Link style={{display:'block', margin:'18px 0'}} to={`/character/acs/${char.charID}`}>Armor Sets</Link> 
+          <Link style={{display:'block', margin:'0'}} to={`/character/acs/${char.charID}`}>Armor Sets</Link> 
         </Grid>
         <Grid item style={{display:'flex', alignItems:'center'}}>
           <Typography> (reg/touch/ff)</Typography>
         </Grid>
+
+      </Grid>
         { 
           pinnedArmors.map( armor => {
             return (
               <Grid item>
-              <p>{armor.name}: {armor.score}/{getTouch(armor)}/{getFlatFoot(armor)}</p>
+              <p style={{margin:'0'}}>{armor.name}: {armor.score}/{getTouch(armor)}/{getFlatFoot(armor)}</p>
             </Grid>
             )
           })

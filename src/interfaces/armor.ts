@@ -12,6 +12,7 @@ export interface ArmorGrouping {
     charID: number;
     acDesc:string;
     sortValue: number;
+    pinned?: boolean;
 }
 
 export interface Armor {

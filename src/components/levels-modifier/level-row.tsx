@@ -5,7 +5,7 @@ import { batch, useSelector } from 'react-redux';
 import { store } from '../../redux/configure-store';
 import { CharClass, charClasses } from '../../enum/class-types';
 import { CharLevel, SaveLevel } from "../../interfaces/levels";
-import { saveALevel } from "../../api/level-api";
+import { deleteLevel, saveALevel } from "../../api/level-api";
 import { CharLevelActions } from "../../redux/reducers/level-reducer";
 import { getChar } from "../../api/character-api";
 import { checkForCaster } from "../character-view/business-logic/load-chars";
@@ -16,8 +16,7 @@ import { CharacterActions } from "../../redux/reducers/character-reducer";
 import { SavesActions } from "../../redux/reducers/saves-reducer";
 import { SkillActions } from "../../redux/reducers/skills.reducer";
 import { StatsActions } from "../../redux/reducers/stats-reducer";
-import { ToHitActions } from "../../redux/reducers/to-hit-reducer";
-
+import Delete from '@mui/icons-material/Delete';
 
 interface LevelsProps {
     level: CharLevel;
@@ -54,10 +53,21 @@ export const LevelRow: React.FC<LevelsProps> = (props: LevelsProps): JSX.Element
                   })
             });
     }
+
+    const deleteALevel = async () => {
+        console.log(level.id);
+        await deleteLevel(level.id)
+            .then(async ()=> {
+                return await getChar(char.charID.toString());
+            })
+            .then(charData => {
+                store.dispatch(CharLevelActions.setCharLevels(charData?.levels as CharLevel[]));
+            })
+    }
     return (
         <>
-            <Grid container item justifyContent="center" direction='row' columnGap={2}>
-                <Grid item style={{alignSelf:'center'}}>
+            <Grid container item justifyContent="center" direction='row' columnGap={2} alignItems='center'>
+                <Grid item style={{alignSelf:'center'}} justifyContent='center'>
                     {level.className}
                 </Grid>
                 <Grid item>
@@ -70,6 +80,7 @@ export const LevelRow: React.FC<LevelsProps> = (props: LevelsProps): JSX.Element
                         InputProps={{ inputProps: { min: "1", step: "1" } }}
                     />
                 </Grid>
+                <Delete style={{marginLeft:'12px', cursor:'pointer'}} onClick={deleteALevel}></Delete>
             </Grid>
         </>
     )

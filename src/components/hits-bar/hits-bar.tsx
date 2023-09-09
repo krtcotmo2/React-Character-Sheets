@@ -18,13 +18,13 @@ export const HitsBar: React.FC<HitProps> = (props: HitProps):JSX.Element => {
   return (
       <>
         <Grid item>
-          <Link style={{display:'block', margin:'18px 0'}} to={`/character/tohits/${char.charID}`}>Hits</Link>
+          <Link style={{display:'block', margin:'0'}} to={`/character/tohits/${char.charID}`}>Hits</Link>
         </Grid>
         { 
           pinnedHits.map( hit => {
             return (
               <Grid item>
-              <p>{hit.hitName}: {hit.value + Math.floor((hit.isMelee ? stats.str.value - 10 : stats.dex.value - 10)/2) + levelTohit}</p>
+              <p style={{margin:'0'}}>{hit.hitName}: {hit.value + Math.floor((hit.isMelee ? stats.str.value - 10 : stats.dex.value - 10)/2) + levelTohit}</p>
             </Grid>
             )
           })

@@ -34,7 +34,8 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
         const grouping: ArmorGrouping  = {
             charID: char.charID,
             acDesc: acName,
-            sortValue: acOrder
+            sortValue: acOrder,
+            pinned: false,
         }
         await createArmorGrouping(char.charID, grouping).then((armors)=> {
             setIsAdding(false);
