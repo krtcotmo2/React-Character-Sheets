@@ -159,3 +159,14 @@ svg.editIcon{
 .whiteBk{
   background-color: white;
 }
+.topLink:link{
+  cursor: pointer;
+  padding: 6px 6px 6px 24px;
+}
+.topLink:hover{
+  border-top: none;
+  border-bottom: none;
+}
+.topLineIcons{
+  width: 16px;
+}

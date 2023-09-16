@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import { Character } from "../../interfaces/character";
 import { StatsBar } from "../stats-bar/stats-bar";
@@ -93,7 +94,11 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
     <>
       <Grid container>
         <Grid container item justifyContent='center'>
-            <p>{char?.charName} {char.charName && `-`} Overview</p>
+            <p>{char?.charName} {char.charName && `-`} Overview 
+              <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+              <Link className='topLink' to={`/character/expendables/${char.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+              <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
+            </p>
         </Grid>
       </Grid>
       {
@@ -107,9 +112,9 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
         </Grid>)
       }
       {
-        skills && skills.length > 0 &&
+        armors.filter(armor => armor.pinned).length > 0 && armors.length > 0 &&
         <Grid container direction="column" justifyContent={"center"} gap={1} style={{fontSize:'18px', marginTop: '33px'}}>
-          {skills && <SkillsBar skills={skills} />}
+          {armors && <ArmorBar armors={armors} />}
         </Grid>
       }
       {
@@ -119,9 +124,9 @@ const CharacterOverview: React.FunctionComponent = (): JSX.Element => {
         </Grid>
       }
       {
-        armors.filter(armor => armor.pinned).length > 0 && armors.length > 0 &&
+        skills && skills.length > 0 &&
         <Grid container direction="column" justifyContent={"center"} gap={1} style={{fontSize:'18px', marginTop: '33px'}}>
-          {armors && <ArmorBar armors={armors} />}
+          {skills && <SkillsBar skills={skills} />}
         </Grid>
       }
     </>
