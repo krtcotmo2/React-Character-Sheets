@@ -3,6 +3,9 @@ import { Box, Button, FormControl, Grid, TextField } from "@mui/material";
 import React, { FormEventHandler, useEffect, useState } from "react";
 import './new-user.css'
 import axios from "axios";
+const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
+    `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
+
 
 export const NewUser: React.FunctionComponent = (newUserProps):JSX.Element => {
     const [userEmail, setEmail] = useState('');
@@ -12,7 +15,7 @@ export const NewUser: React.FunctionComponent = (newUserProps):JSX.Element => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         const newUser = await axios
-        .post(`http://localhost:3001/api/user/signup`, {userEmail, userPassword, userName})
+        .post(`${siteHost}/api/user/signup`, {userEmail, userPassword, userName})
         .catch((err) => {
             alert(err.response.data.message)
         });
@@ -30,6 +33,11 @@ export const NewUser: React.FunctionComponent = (newUserProps):JSX.Element => {
     
         <form onSubmit={handleSubmit}>
             <Grid container direction='column' rowGap='12px' style={{paddingTop:'12px'}}>
+                <TextField
+                    value={userName} onChange={ (evt)=> setUserName(evt.target.value) }
+                    label="Name"
+                    required
+                />
                 <TextField 
                     value={userEmail} 
                     onChange={ (evt)=> setEmail(evt.target.value) }
@@ -41,11 +49,6 @@ export const NewUser: React.FunctionComponent = (newUserProps):JSX.Element => {
                     type='password' 
                     value={userPassword} onChange={ (evt)=> setPassword(evt.target.value) }
                     label="Password"
-                    required
-                />
-                <TextField
-                    value={userName} onChange={ (evt)=> setUserName(evt.target.value) }
-                    label="Name"
                     required
                 />
                 <Button type="submit">Submit</Button>

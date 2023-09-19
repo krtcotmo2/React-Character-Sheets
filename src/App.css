@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-image: url('../public/images/map1.jpg');
 }
 
 .App-logo {
@@ -14,16 +15,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  max-height: 100vh;
-  overflow: hidden;
+  font-size: calc(10px + 1.5vmin);
+  color: #6a6a6a;
+  font-weight: 600;
 }
 
 .App-link {
@@ -47,34 +46,127 @@ svg.rotated{
   }
 }
 
-
-.charList {
+.standardList {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  padding: 12px;
+  padding: 12px 0;
   overflow-y: auto;
+  align-items: center;
+  width: 100%;
 }
 
-.characterRow {
+.standardList .standardRow{
+  overflow: hidden;
+  width: 600px;
+  background-color: #e4dcc7;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid #6a6a6a;
   margin-bottom: 6px;
-  min-height: 74px;
   display: flex;
   align-items: flex-start;
   flex-wrap: nowrap !important;
-  overflow: hidden;
+}
+
+.standardList .standardRow.spellTitleBar{
+  border: none;
+  border-bottom: 1px solid #6a6a6a;
+}
+
+.characterRow {
+  height: 72px;
+  padding: 0;
 }
 .deceasedBanner{
   font-size: 14px;
   transform: rotate(45deg);
   position: relative;
   color: white;
-  background: rgb(251, 8, 8);
+  background: rgb(0, 0, 0);
   padding: 6px 32px;
   z-index: 1;
   right: -26px;
   top: 18px;
-  box-shadow: -1px 3px 12px 0px rgba(0,0,0,0.5);
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+}
+
+p a:-webkit-any-link{
+    text-decoration: none;
+    color:#6a6a6a;
+}
+.pointer{
+  cursor: pointer;
+}
+svg.editIcon{
+    /* fill: red;     */
+ }
+
+ .padding12{
+  padding: 12px;
+ }
+ .vCen{
+  align-items: center !important;
+ }
+
+ .standardList .spellRow{
+  overflow: hidden;
+  width: 600px;
+  background-color: #e4dcc7;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap !important;
+  padding: 0 20px;
+}
+
+.standardList .equipRow{
+  overflow: hidden;
+  width: 600px;
+  background-color: #e4dcc7;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap !important;
+  padding: 8px 20px;
+  border-left: 1px solid #6a6a6a;
+  border-right: 1px solid #6a6a6a;
+}
+
+.standardList .equipRow:first-child{
+  border-top: 1px solid #6a6a6a;
+}
+.standardList .equipRow:last-child{
+  border-bottom: 1px solid #6a6a6a;
+}
+
+.spellGrp{
+  border: 1px solid #6a6a6a;
+  border-bottom: none;
+}
+.hiddenContents{
+  height: 50px;
+  overflow: hidden;
+}
+.spellGrp:last-of-type{
+  border: 1px solid #6a6a6a;
+  border-bottom: 1px solid #6a6a6a;
+}
+
+.hiddenGrp{
+  height: 0px;
+  overflow: hidden;
+}
+.whiteBk{
+  background-color: white;
+}
+.topLink:link{
+  cursor: pointer;
+  padding: 6px 6px 6px 24px;
+}
+.topLink:hover{
+  border-top: none;
+  border-bottom: none;
+}
+.topLineIcons{
+  width: 16px;
 }

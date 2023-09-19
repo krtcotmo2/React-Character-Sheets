@@ -1,0 +1,7 @@
+export enum FeatType {
+    'GENERAL'='GENERAL',
+    'COMBAT'='COMBAT',
+    'ITEM_CREATION'='ITEM CREATION',
+    'METAMAGIC'='METAMAGIC',
+    'CHANNELING'='CHANNELING',
+}

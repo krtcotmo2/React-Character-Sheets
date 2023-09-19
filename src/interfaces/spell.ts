@@ -6,3 +6,11 @@ export interface Spell {
     spellName: string;
     isCast:boolean
 }
+
+export interface SpellLevelCategory{
+    spellLevel: number;
+    quantity: number;
+    cast: number;
+    dcCheck: number;
+    spells: Spell[]
+}

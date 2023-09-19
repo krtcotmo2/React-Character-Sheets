@@ -1,7 +1,5 @@
 import { CharLevel } from "../../../interfaces/levels";
 import { getChar } from "../../../api/character-api";
-import _ from "lodash";
-import { updateReturn } from "typescript";
 
 export const loadChar = async (charId: string) => {
     const searchParam = charId;
