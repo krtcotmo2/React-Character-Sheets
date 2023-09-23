@@ -6,7 +6,6 @@ import CharacterOverview from "./components/character-view/character-overview";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import { CharMain } from "./views/char-main";
 import { Button} from "@mui/material";
-import { NewUser } from "./components/new-user/new-user";
 import { SideDrawer } from "./components/side-drawer/side-drawer";
 import { MessageManager } from "./components/modal/modal-manager";
 import { SelectCharacter } from "./views/select-character/select-character";
@@ -47,7 +46,6 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/main" element={<CharMain />} />
                 <Route path="/login" element={<LandingPage />} />
-                <Route path="/user/new" element={<NewUser />} />
                 <Route path="/main/loadChar" element={<SelectCharacter/>} />
                 <Route path="/main/newChar" element={<NewCharacter />} />
                 <Route path="/character/equipment/*" element={<EquipmentView />} />
