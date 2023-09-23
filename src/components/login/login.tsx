@@ -85,25 +85,26 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
     const newUser = (event: any) =>{
         event?.preventDefault();
         if(userPassword !== userVPassword){
-            showError("Email not found")
+            showError("passwords_dont_match")
             return;
         }
         return createNewUser(userEmail, userPassword, userName)
-            .catch(err => {
-                if(err.response.data.message === 'User already exists'){
-                    showError('user_already_exists',[
-                        {key:'userEmail', value: userEmail}
-                    ]);
-                    return;
-                };
-                showError(err.message);
-            })
-            .then(arg => {
-                showError('user_created',[
-                    {key:'userName', value: userName}
+        .then(arg => {
+            showError('user_created',[
+                {key:'userName', value: userName}
+            ]);
+            resetProcess();
+        })
+        .catch(err => {
+            if(err.response.data.message === 'User already exists'){
+                showError('user_already_exists',[
+                    {key:'userEmail', value: userEmail}
                 ]);
-                resetProcess();
-            });
+                return;
+            };
+            showError(err.response.data.message);
+        });
+           
     }
     const resetProcess = () => {
         setAddingNew(false); 
@@ -163,7 +164,7 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
                 {!isForgotten && !addingNew && !isResetting &&  <Button variant='outlined' style={{background:'white'}} type="button" onClick={()=>{setAddingNew(true); setSubtitle('Create New')}}>New User</Button>}
                 {(isForgotten || addingNew) &&  <Button variant='outlined' style={{background:'yellow'}} type="button" onClick={resetProcess}>Cancel</Button>}
             </Grid>
-        </form>
+            </form>
         </div>
     )
 }

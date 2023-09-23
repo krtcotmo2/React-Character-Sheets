@@ -56,6 +56,7 @@ export const showError = (err: string, param?: KeyValuePair[]) => {
             msg = `Account for ${nameKey?.value} has been created. Please login with the credentials just submitted.`;
             modalName= 'user_created'
             break;
+        case 'user_not_found':
         case 'Email not found':
             const eamil2Key = param?.find(key => key.key === 'userEmail')
             title = 'Password reset';
