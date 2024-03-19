@@ -4,6 +4,7 @@ import { Grid } from '@mui/material';
 import { Note } from '../../interfaces/note';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export interface NoteTitleProps {
     note: Note,
@@ -12,6 +13,8 @@ export interface NoteTitleProps {
 export const NoteTitleBar: React.FC<NoteTitleProps> = (props: NoteTitleProps): JSX.Element => {
     const {noteTitle, noteID } = props.note;
     const navigate = useNavigate();
+    const charOwner = useSelector(state => store.getState().character.userID.toString());
+    const userId = useSelector(state => store.getState().user.id);
     const editNote = (event: any) => {
             console.log('Open up the edit note feature' , noteID)
             navigate(`/note/edit/${noteID}`, {
@@ -28,7 +31,7 @@ export const NoteTitleBar: React.FC<NoteTitleProps> = (props: NoteTitleProps): J
             </Grid>
             <Grid item >
                 <Grid container item>
-                    <EditIcon onClick={(event)=> editNote(event)}/>
+                    {userId === charOwner  &&  <EditIcon onClick={(event)=> editNote(event)}/>}
                 </Grid>
             </Grid>
         </Grid>

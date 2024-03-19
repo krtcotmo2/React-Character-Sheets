@@ -114,12 +114,12 @@ export const CollapsibleRow: React.FC<RowProps> = (props: RowProps): JSX.Element
                     </Grid>)
                 }
                 <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}> 
-                    {(props.skillData || props.toHitData || props.characteristic === 'Armor') && pinned && (
+                    {(props.skillData || props.toHitData || props.characteristic === 'Armor') && pinned && userId === charOwner && (
                         <PushPinIcon onClick={togglePinned} className={`${classes.iconPadded}`}/>
                     )}
-                    {(props.skillData || props.toHitData ||  props.characteristic === 'Armor') && !pinned && (
+                    {(props.skillData || props.toHitData ||  props.characteristic === 'Armor') && !pinned && userId === charOwner && (
                         <PushPinIconOutlined onClick={togglePinned} className={`${classes.iconPadded}`}/>
-                    )}   
+                    )}    
                 </Grid>
                 <Grid item container  flexShrink={1} style={{maxWidth: 'fit-content'}}>    
                     <InfoIcon onClick={clickIcon} className={`${classes.iconPadded}`}/>
