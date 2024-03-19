@@ -63,7 +63,11 @@ export const ExpendablesView: React.FC = (): JSX.Element => {
         <>
         <Grid container>
             <Grid container item justifyContent="center">
-            <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Expendables</p>
+            <p>
+                <Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Expendables
+                <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+                <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
+            </p>
             </Grid>
         </Grid>
         <FilterBar value={listFilter} setValue={setListFilter}/>

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { showError } from "../components/modal/business-logic/error-handler";
 import { User } from "../interfaces/user";
+import { getConfiguration } from "../app-config/app-config";
 
-const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
-    `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
+const siteHost: string = getConfiguration().siteHost;
 
 export const loginUser = async (userEmail: string, userPassword: string) => {
     return await axios

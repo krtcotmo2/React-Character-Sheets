@@ -27,6 +27,7 @@ import { ModifierView } from "./components/modifier/modifier";
 import { CoreModifier } from "./components/char-core/modify-char-core";
 import { NoteNewUpdate } from "./components/notes/add-update-note";
 import { EquipmentView } from "./views/equipment/equipment";
+import { Reports } from "./views/reports/reports";
 
 function App() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/note/edit/*" element={ <NoteNewUpdate /> } />
                 <Route path="/character/notes/*" element={<CharacterNotes />} />
                 <Route path="/character/characteristic/edit/" element={ <ModifierView/>} />
+                <Route path="/reports/" element={ <Reports/>} />
               </Routes>
             </header>
             <SideDrawer drawerStatus = {drawerOpen} setDrawerStatus={setDrawerOpen}/>

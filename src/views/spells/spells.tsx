@@ -66,7 +66,11 @@ export const Spells: React.FC = (): JSX.Element => {
         <>
            <Grid container>
                 <Grid container item justifyContent='center'>
-                    <p><Link className='nonDecLink' to={`/character/overview/${char?.charID}`}>{char?.charName}</Link> - Spells</p>
+                    <p>
+                        <Link className='nonDecLink' to={`/character/overview/${char?.charID}`}>{char?.charName}</Link> - Spells
+                        <Link className='topLink' to={`/character/expendables/${char?.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+                        <Link className='topLink' to={`/character/notes/${char?.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
+                    </p>
                 </Grid>
             </Grid>
             <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">

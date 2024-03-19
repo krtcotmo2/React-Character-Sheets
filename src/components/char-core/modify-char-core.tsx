@@ -87,8 +87,10 @@ export const CoreModifier: React.FC<CoreProps> = (props: CoreProps) => {
                                 placeholder: state.whatIsModified,
                             }
                         }}
+                        style={{width:'200px', textAlign:'left'}}
                     >
-                        c
+                        
+                        <MenuItem value={12}>Lawful Good</MenuItem>
                         <MenuItem value={13}>Lawful Neutral</MenuItem>
                         <MenuItem value={14}>Lawful Evil</MenuItem>
                         <MenuItem value={15}>Neutral Good</MenuItem>

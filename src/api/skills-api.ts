@@ -5,6 +5,8 @@ import { store } from "../redux/configure-store";
 import { SavesActions } from "../redux/reducers/saves-reducer";
 import { StatsActions } from "../redux/reducers/stats-reducer";
 import { ToHitActions } from "../redux/reducers/to-hit-reducer";
+import { formatToHits } from "../views/to-hits/business-logic/to-hit-logic";
+import { ToHit } from "../interfaces/to-hit";
 const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
     `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
 
@@ -46,15 +48,15 @@ export const getAllSkills = async (charId: string) => {
         });
 }
 
-export const updateReducersAfterCharUpdates = async (c: Character) => {
-    if(c.toHitGroups){
-        await store.dispatch(ToHitActions.setToHitGroups(c.toHitGroups));
+export const updateReducersAfterCharUpdates = async (char: Character) => {
+    if(char.toHitGroups){
+        await store.dispatch(ToHitActions.setToHitGroups(char.toHitGroups));
     }
-    if(c.saves){
-        await store.dispatch(SavesActions.setSaves(c.saves));
+    if(char.saves){
+        await store.dispatch(SavesActions.setSaves(char.saves));
     }
-    if(c.stats){
-        await store.dispatch(StatsActions.setStat(c.stats));
+    if(char.stats){
+        await store.dispatch(StatsActions.setStat(char.stats));
     }
 }
 

@@ -14,6 +14,8 @@ import { WHATISMOD } from "../../enum/what-is-mod-type";
 import { IOSSwitch } from "../../components/ios-switch/ios-switch";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { CharacterActions } from "../../redux/reducers/character-reducer";
+import { updateReducersAfterCharUpdates } from "../../api/skills-api";
 
 export const ToHitView: React.FC = (): JSX.Element => {
   
@@ -28,6 +30,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
   const levels = useSelector((state) => store.getState().levels);
   const stats = useSelector((state) => store.getState().stats);
   const char = useSelector((state) => store.getState().character);
+  const storeHits = useSelector((state) => store.getState().toHitGroups);
   const toHit = levels.reduce((orig, lvl) => orig + lvl.toHit, 0);
   const strBonus = Math.floor((stats.str.value - 10) / 2);
   const dexBonus = Math.floor((stats.dex.value - 10) / 2);
@@ -35,13 +38,21 @@ export const ToHitView: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     getCharacterToHits(store.getState().character.charID.toString()).then(
-      (currentHits) => {
-        const toHitGroups = formatToHits(currentHits);
+      async (currentHits) => {
+        const toHitGroups = await formatToHits(currentHits);
         setCurToHits(toHitGroups);
+        const updatedC = {...store.getState().character,
+          toHitGroups: toHitGroups
+        }
+        store.dispatch(CharacterActions.setCharacter(updatedC));
         store.dispatch(ToHitActions.setToHitGroups(toHitGroups));
       }
     );
   }, []);
+
+  useEffect(() => {
+    setCurToHits(storeHits);
+  }, [storeHits]);
 
   const saveToHitCat = () => {
     const toHitCat = {
@@ -54,10 +65,15 @@ export const ToHitView: React.FC = (): JSX.Element => {
       critDamage,
       isMelee,
     }
-    saveToHitCategory(char.charID.toString(), toHitCat).then(arg => {
-      const toHitGroups = formatToHits(arg);
-      setCurToHits(toHitGroups);
-      store.dispatch(ToHitActions.setToHitGroups(toHitGroups));
+    saveToHitCategory(char.charID.toString(), toHitCat).then(async arg => {
+      // const toHitGroups = await formatToHits(arg);
+      // const updatedChar = {...char,
+      //   toHitGroups: toHitGroups,
+      // }
+      arg.toHitGroups = formatToHits(arg.toHitGroups);
+      updateReducersAfterCharUpdates(arg);
+      // store.dispatch(CharacterActions.setCharacter(updatedChar));
+      // store.dispatch(ToHitActions.setToHitGroups(toHitGroups));
       setIsAdding(false);
       setCritDamage('');
       setCritRange('');
@@ -79,6 +95,9 @@ export const ToHitView: React.FC = (): JSX.Element => {
               {char?.charName}
             </Link>{" "}
             - To Hits
+            <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+            <Link className='topLink' to={`/character/expendables/${char.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+            <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
           </p>
         </Grid>
       </Grid>
@@ -307,7 +326,7 @@ export const ToHitView: React.FC = (): JSX.Element => {
                             style={{display:'flex', flexGrow:'1'}} 
                             value={toHitName}
                             onChange={ (evt)=> setToHitName(evt.target.value) }
-                            placeholder='To Hit Title'
+                            placeholder='To Hit Title - must be unique'
                             multiline
                         />
                     </Grid>

@@ -66,7 +66,11 @@ export const ModifierView: React.FC<ModifierProps> = (props: ModifierProps): JSX
                 modifiers
             );
         }
-        navigate(`${getNavigateUrl(state.whatIsMod, char.charID.toString())}`);
+        setTimeout( 
+            ()=> navigate(`${getNavigateUrl(state.whatIsMod, char.charID.toString())}`)
+            , 200
+        );
+        
     }
     const char: Character = useSelector(state => store.getState().character);
     return (

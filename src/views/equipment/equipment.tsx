@@ -98,12 +98,17 @@ export const EquipmentView: React.FC = (): JSX.Element => {
     return(<>
         <Grid container>
             <Grid container item justifyContent="center">
-            <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Equipment</p>
+            <p>
+                <Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Equipment
+                <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+                <Link className='topLink' to={`/character/expendables/${char.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+                <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
+            </p>
             </Grid>
         </Grid>
         <FilterBar value={listFilter} setValue={setListFilter}/>
         <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
-            {encumbrance} ({theWeight} lbs)
+            {encumbrance} ({theWeight?.toFixed(2)} lbs)
         </Grid>
         <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
             {

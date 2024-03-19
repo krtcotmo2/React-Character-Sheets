@@ -52,8 +52,8 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
             pinned: false,
         }
         saveNewSkill(char.charID.toString(), skill).then(arg => {
-            setGrpdSkills(formatSkills(arg)); 
-            store.dispatch(SkillActions.setSkills(arg as RawSkill[]));
+            setGrpdSkills(formatSkills(arg.skills)); 
+            store.dispatch(SkillActions.setSkills(arg.skills as RawSkill[]));
             setSelectedSkill('');
             setIsAdding(false);
         }
@@ -64,7 +64,12 @@ export const CharacterSkills:React.FC<SkillsProps> = (props: SkillsProps): JSX.E
         <>
             <Grid container>
                 <Grid container item justifyContent="center">
-                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Skills</p>
+                <p>
+                    <Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Skills
+                    <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+                    <Link className='topLink' to={`/character/expendables/${char.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+                    <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
+                </p>
                 </Grid>
             </Grid>
             <FilterBar value={listFilter} setValue={setListFilter}/>

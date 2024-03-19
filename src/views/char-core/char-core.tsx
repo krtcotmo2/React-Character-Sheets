@@ -43,6 +43,9 @@ export const CharacterCore: React.FC = (): JSX.Element => {
               {char?.charName}
             </Link>{" "}
             - Core
+            <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+            <Link className='topLink' to={`/character/expendables/${char.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+            <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
           </p>
         </Grid>
       </Grid>

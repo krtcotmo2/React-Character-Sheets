@@ -31,7 +31,7 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
             note.noteTitle.toLocaleLowerCase().includes(listFilter.toLocaleLowerCase()) ||
             note.notes.some(indNote => indNote.itemDetails.toLowerCase().includes(listFilter.toLocaleLowerCase()))
         ));
-    },[listFilter])
+    },[listFilter, notes])
 
     const createNote = () => {
         if(noteName === ''){
@@ -58,7 +58,11 @@ export const CharacterNotes: React.FC = (): JSX.Element => {
         <>
              <Grid container>
                 <Grid container item justifyContent="center">
-                <p><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Notes</p>
+                <p>
+                    <Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Notes
+                    <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+                    <Link className='topLink' to={`/character/expendables/${char?.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+                </p>
                 </Grid>
             </Grid>
             <FilterBar value={listFilter} setValue={setListFilter}/>

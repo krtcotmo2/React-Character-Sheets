@@ -3,6 +3,7 @@ import { PRODUCTION_CONFIG } from "./profiles/production-config";
 
 export interface AppConfig {
     weightSymbol: string;
+    siteHost: string;
 }
 
 const enum EnvType {

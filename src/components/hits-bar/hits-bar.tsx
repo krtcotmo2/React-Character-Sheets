@@ -25,6 +25,7 @@ export const HitsBar: React.FC<HitProps> = (props: HitProps):JSX.Element => {
             return (
               <Grid item>
               <p style={{margin:'0'}}>{hit.hitName}: {hit.value + Math.floor((hit.isMelee ? stats.str.value - 10 : stats.dex.value - 10)/2) + levelTohit}</p>
+              <p style={{margin:'0', fontSize:'0.75rem'}}>Damage: {hit.damage}</p>
             </Grid>
             )
           })

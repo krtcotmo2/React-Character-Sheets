@@ -5,13 +5,14 @@ import { Character } from "../../../interfaces/character";
 import { SavingThrow } from "../../../interfaces/saving-throw";
 import { Modifier } from "../../../interfaces/modifier";
 import { ModifierType } from "../../../enum/modifier-type";
-import { ToHitGroup } from "../../../interfaces/to-hit";
+import { ToHit, ToHitGroup } from "../../../interfaces/to-hit";
 import { deleteStatLine, saveStatLine, updateStatLines } from "../../../api/stats-api";
 import { deleteSavesLine, saveSavesLine, updateSavesLines } from "../../../api/saves-api";
 import { deleteSkillLines, saveSkillLine, updateReducersAfterCharUpdates, updateSkillLines } from "../../../api/skills-api";
 import { deleteToHitLine, saveToHitLine, updateToHitLines } from "../../../api/to-hit-api";
 import { ArmorSet } from "../../../interfaces/armor";
 import { deleteArmorLine, saveArmorLine, updateArmorLines } from "../../../api/armor-api";
+import { formatToHits } from "../../../views/to-hits/business-logic/to-hit-logic";
 
 export const getStatToModify = (stat: string) => {
   return stat;
@@ -247,7 +248,8 @@ export const saveModifier = (
   if(needsUpdates.length > 0){
       const updateFunction = getSaveFunction(state.whatIsMod);
       updateFunction(char.charID.toString(), needsUpdates)
-          .then( async (c: Character) => {
+          .then( async (c: any) => {
+            c.toHitGroups = formatToHits(c.toHitGroups);
              updateReducersAfterCharUpdates(c);
           });
   }
@@ -282,7 +284,8 @@ export const addNewModifier = (
     aidsTouchAttach
   }
   // need to define other methods including update api
-  addFunction(char.charID.toString(), newMod).then(async (c: Character) => {
+  addFunction(char.charID.toString(), newMod).then(async (c: any) => {
+    c.toHitGroups = formatToHits(c.toHitGroups);
     updateReducersAfterCharUpdates(c);
   });
 };
@@ -290,7 +293,8 @@ export const addNewModifier = (
 export const deleteModifier = (char: Character, state: any, id: number) => {
   const deleteFunction = getDeleteFunction(state.whatIsMod);
   deleteFunction(char.charID.toString(), id.toString())
-    .then( async (c: Character) => {
-      updateReducersAfterCharUpdates(c);
+    .then( async (ch: any) => {
+      ch.toHitGroups = formatToHits(ch.toHitGroups);
+      updateReducersAfterCharUpdates(ch);
     })
 }

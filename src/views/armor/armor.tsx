@@ -50,7 +50,12 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
         <>
             <Grid container>
                 <Grid container item justifyContent="center" direction='column'>
-                    <p style={{marginBottom: '0'}}><Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Armor</p>
+                    <p style={{marginBottom: '0'}}>
+                        <Link className='nonDecLink' to={`/character/overview/${char.charID}`}>{char?.charName}</Link> - Armor
+                        <Link className='topLink' to={`/character/spells/${char.charID}`} title="Spells"><img className='topLineIcons' src='/images/clean.svg'/></Link>
+                        <Link className='topLink' to={`/character/expendables/${char.charID}`} title="Expendables"><img className='topLineIcons' src='/images/testing-tube.svg'/></Link>
+                        <Link className='topLink' to={`/character/notes/${char.charID}`} title="Notes"><img className='topLineIcons' src='/images/ancient-scroll.svg'/></Link> 
+                    </p>
                     <p style={{marginTop: '0', fontSize: '14px', color:'rgb(159, 6, 6)'}}>Full AC / Touch AC / Flatfooted AC</p>
                 </Grid>
             </Grid>
