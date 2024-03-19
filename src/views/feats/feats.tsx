@@ -41,8 +41,8 @@ export const CharacterFeats: React.FC = (): JSX.Element => {
         <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
             {curFeats.map((feat, i) => {
                 return (
-                    <Grid item className="standardRow">
-                        <CollapsibleRow key={i} title={feat.desc.name} desc={feat.desc} breakdown={[]} allowEditing={false}/>
+                    <Grid key={i} item className="standardRow">
+                        <CollapsibleRow title={feat.desc.name} desc={feat.desc} breakdown={[]} allowEditing={false}/>
                     </Grid>
                 )
             })}

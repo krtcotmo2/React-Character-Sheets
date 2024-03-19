@@ -113,7 +113,7 @@ export const EquipmentView: React.FC = (): JSX.Element => {
         <Grid container direction="column" justifyContent={"center"} style={{fontSize:'18px'}} className="standardList">
             {
                 theStuff.map(item => { 
-                    return (<EquipmentRow equipItem={item} isAdding={addingNew}/>)
+                    return (<EquipmentRow key={item.id} equipItem={item} isAdding={addingNew}/>)
                 }
             )}
             {theStuff.some(item => !item.partOfOverallWeight)? <>* not considered part of overall weight</> : <></>}

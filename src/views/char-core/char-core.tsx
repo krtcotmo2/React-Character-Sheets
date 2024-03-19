@@ -121,7 +121,7 @@ export const CharacterCore: React.FC = (): JSX.Element => {
             <Grid container item justifyContent='flex-start'>
                 {levels.map((lvl) => {
                 return (
-                    <Grid container item justifyContent='flex-start'>
+                    <Grid key={lvl.className} container item justifyContent='flex-start'>
                         {`${lvl.className} - ${lvl.classLevel}`}
                     </Grid>
                 )
