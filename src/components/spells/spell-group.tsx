@@ -23,7 +23,7 @@ export const SpellGroup: React.FC<SpellGrpProps> = (props: SpellGrpProps): JSX.E
             <SpellLevelBar spellGrp={grp} onClick={()=> toggleBar()}/>
             {
                 grp.spells.map(sp => {
-                    return (<SpellRow spell={sp} isAdding={isAdding}/>)
+                    return (<SpellRow key={`${sp.id}-${sp.charID}`} spell={sp} isAdding={isAdding}/>)
                 } )
             }
         </div>
