@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Character, SaveCharacter, UpdateCharacter } from "../interfaces/character";
 import { formatToHits } from "../views/to-hits/business-logic/to-hit-logic";
+import { httpGet, httpPut } from "./http-calls";
 
 const siteHost: string =
   process.env.REACT_APP_NODE_MODE === "development"
@@ -8,12 +9,9 @@ const siteHost: string =
     : `https://nest-typeorm.herokuapp.com`;
 
 export const getAllCharacters = async () => {
-  const allCharacters = await axios
-    .get(`${siteHost}/api/character/with-levels/`)
-    .catch((err) => {
-      throw new Error(err.message);
-    });
-  return allCharacters?.data;
+  const url = `/api/character/with-levels/`;
+  const allCharacters = await httpGet(url);
+  return allCharacters;
 };
 
 export const getChar = async (charId: string) => {
@@ -21,25 +19,26 @@ export const getChar = async (charId: string) => {
   if (charId.trim() === "" || +charId < 1) {
     throw new Error("invalid_id");
   }
-  const aCharacter = await axios
-    .get(`${siteHost}/api/character/with-calc-stats/${searchParam}`)
+  
+  const url = `/api/character/with-calc-stats/${searchParam}`;
+  const aCharacter = await httpGet(url)
     .then((char) => {
-      char.data.toHitGroups = formatToHits(char.data.toHitGroups);
-      return char;
+        char.toHitGroups = formatToHits(char.toHitGroups);
+        return char;
     })
     .catch((err) => {
       if (err.response.data.message === "Character Not Found") {
         return;
       } else if (err.response.data.message === "stat_not_found") {
-        throw new Error(err.response.data.message);
+        throw new Error(err.message);
       } else {
         throw new Error(err);
       }
     });
-  if (!aCharacter) {
-    throw new Error("char_not_found");
-  }
-  return aCharacter.data;
+    if (!aCharacter) {
+        throw new Error("char_not_found");
+      }
+    return aCharacter;
 };
 
 export const saveCharacter = async (char: SaveCharacter) => {
@@ -52,10 +51,6 @@ export const saveCharacter = async (char: SaveCharacter) => {
 };
 
 export const updateCharacter = async (char: UpdateCharacter): Promise<Character> => {
-  const updatedChar = await axios
-    .put(`${siteHost}/api/character/${char.charID}`, { ...char })
-    .catch((err) => {
-      throw new Error(err.message);
-    });
-  return updatedChar?.data;
+  const url = `/api/character/${char.charID}`;
+  return await httpPut(url, { ...char });
 };

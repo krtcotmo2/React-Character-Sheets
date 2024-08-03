@@ -8,17 +8,24 @@ import { Armor, ArmorGrouping, ArmorSet } from '../../interfaces/armor';
 import { createArmorGrouping, getCharacterArmor } from '../../api/armor-api';
 import { Stat } from '../../interfaces/stat';
 import { addStatsToArmor } from './business-logic/armor-helper';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArmorActions } from '../../redux/reducers/armor-reducer';
 import { WHATISMOD } from '../../enum/what-is-mod-type';
-
+import useCookie, {setCookie} from 'react-use-cookie';
+import { CharacterActions } from '../../redux/reducers/character-reducer';
+import { SavesActions } from '../../redux/reducers/saves-reducer';
+import { SkillActions } from '../../redux/reducers/skills.reducer';
+import { StatsActions } from '../../redux/reducers/stats-reducer';
+import { ToHitActions } from '../../redux/reducers/to-hit-reducer';
+import { UserActions } from '../../redux/reducers/user-reducer';
 
 export const CharacterArmor:React.FC = (): JSX.Element => {
-    
+    const navigate = useNavigate();
     const [acName, setAcName] = useState('');
     const [acOrder, setAcOrder] = useState(0);
     const [isAdding, setIsAdding] = useState(false);
     const [armors, setArmors] = useState<ArmorSet[]>([]);
+    const [userToken, setUserToken] = useCookie('token', '0');
     const char: Character = useSelector(state => store.getState().character);
     const stats: Stat = useSelector(state => store.getState().stats);
 
@@ -28,6 +35,18 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
                 addStatsToArmor(armors, stats.dex.value);
                 setArmors(armors);
                 store.dispatch(ArmorActions.setArmorGroups(armors));
+            }).catch(err=>{
+                setUserToken('');
+                setCookie('token', '',{days:-1});
+                store.dispatch(StatsActions.clearStats());
+                store.dispatch(SavesActions.clearSaves());
+                store.dispatch(SkillActions.clearSkills());
+                store.dispatch(CharacterActions.clearCharacter());
+                store.dispatch(ArmorActions.clearArmor());
+                store.dispatch(ToHitActions.clearToHits());
+                store.dispatch(UserActions.clearUser());
+                navigate('/');
+                
             })
     }, []);
     const saveAC = async () => {
@@ -62,7 +81,7 @@ export const CharacterArmor:React.FC = (): JSX.Element => {
             <Grid container direction="column" justifyContent={"center"} style={{ fontSize: "18px" }} className="standardList">
                 {
                     armors.map(armor => (
-                        <Grid item className="standardRow">
+                        <Grid key={armor.acID} item className="standardRow">
                             <CollapsibleRow 
                                 title={armor.name} 
                                 breakdown={armor.values} 

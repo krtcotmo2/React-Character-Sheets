@@ -5,45 +5,40 @@ import { store } from "../redux/configure-store";
 import { SavesActions } from "../redux/reducers/saves-reducer";
 import { StatsActions } from "../redux/reducers/stats-reducer";
 import { ToHitActions } from "../redux/reducers/to-hit-reducer";
-import { formatToHits } from "../views/to-hits/business-logic/to-hit-logic";
-import { ToHit } from "../interfaces/to-hit";
+import { httpDelete, httpGet, httpPut } from "./http-calls";
 const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
     `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
 
 
 export const pinSkill = async (charId: string, id:string) => {
-    return await axios
-        .put(`${siteHost}/api/skill/char/${charId}/pin/${id}`)
-        .then(results => results.data)
-        .catch((err) => {
-            throw new Error(err.message);
-        });
+    const url = `/api/skill/char/${charId}/pin/${id}`;
+    return await httpPut(url,{})
+        .then(results => results)
+        .catch((err) => { throw new Error(err.message);});
 }
 
 export const unpinSkill = async (charId: string, id:string) => {
-    return await axios
-        .put(`${siteHost}/api/skill/char/${charId}/unpin/${id}`)
-        .then(results => results.data)
-        .catch((err) => {
-            throw new Error(err.message);
-        });
+    const url = `/api/skill/char/${charId}/unpin/${id}`;
+    return await httpPut(url,{})
+        .then(results => results)
+        .catch((err) => { throw new Error(err.message);});
 }
 
 export const updateSkillLines = async (charId: string, body:Modifier[]) => {
-    const saveData = body;
-    return await axios
-        .put(`${siteHost}/api/skill/updates/${charId}`, saveData)
-        .then(results => results.data)
+    const url = `/api/skill/updates/${charId}`;
+    return await httpPut(url, body)
+        .then(results => results)
         .catch((err) => {
             throw new Error(err.message);
         });
 }
 
 export const getAllSkills = async (charId: string) => {
-    return await axios
-        .get(`${siteHost}/api/skill/char/${charId}`)
-        .then(results => results.data)
-        .catch((err) => {
+    const url = `/api/skill/char/${charId}`;
+    return await httpGet(url)
+        .then(data => {
+            return data;
+        }).catch((err) => {
             throw new Error(err.message);
         });
 }
@@ -71,9 +66,11 @@ export const saveSkillLine = async (charId: string, body:any) => {
 }
 
 export const deleteSkillLines = async (charId: string, id:string) => {
-    return await axios
-        .delete(`${siteHost}/api/skill/${charId}/${id}`)
-        .then(results => results.data)
+    const url = `/api/skill/${charId}/${id}`;
+    return await httpDelete(url)
+        .then(results => {
+            return results;
+        })
         .catch((err) => {
             throw new Error(err.message);
         });

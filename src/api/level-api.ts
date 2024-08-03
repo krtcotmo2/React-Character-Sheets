@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SaveLevel } from "../interfaces/levels";
+import { httpDelete } from "./http-calls";
 
 const siteHost: string  = process.env.REACT_APP_NODE_MODE === 'development' ?
     `http://localhost:3001` : `https://nest-typeorm.herokuapp.com`;
@@ -15,9 +16,11 @@ export const saveALevel = async (body:SaveLevel) => {
 }
 
 export const deleteLevel = async (levelId:number) => {
-    return await axios
-        .delete(`${siteHost}/api/levels/delete/${levelId}`)
-        .then(results => results.data)
+    const url = `/api/levels/delete/${levelId}`;
+    return await httpDelete(url)
+        .then(results => {
+            return results;
+        })
         .catch((err) => {
             throw new Error(err.message);
         });

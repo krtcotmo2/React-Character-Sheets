@@ -12,6 +12,7 @@ import { SavesActions } from '../../redux/reducers/saves-reducer';
 import { SkillActions } from '../../redux/reducers/skills.reducer';
 import { UserActions } from '../../redux/reducers/user-reducer';
 import { ArmorActions } from '../../redux/reducers/armor-reducer';
+import { setCookie } from 'react-use-cookie';
 
 
 
@@ -44,7 +45,7 @@ export const SideDrawer: React.FunctionComponent<DrawerProp> = (props: DrawerPro
             store.dispatch(ToHitActions.clearToHits());
             store.dispatch(UserActions.clearUser());
         });
-        
+        setCookie('token', '',{days:-1});
         setDrawerStatus(false);
     }
     return (

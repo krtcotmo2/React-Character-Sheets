@@ -7,6 +7,7 @@ import { UserActions } from "../../redux/reducers/user-reducer";
 import { User } from "../../interfaces/user";
 import { showError } from "../modal/business-logic/error-handler";
 import { useSelector } from "react-redux";
+import useCookie, { setCookie } from 'react-use-cookie';
 
 
 export const Login: React.FunctionComponent = ():JSX.Element => {
@@ -19,6 +20,7 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
     const [isForgotten, setIsForgotten] = useState(false);
     const [subtitle, setSubtitle] = useState('');
     const currentUser: User = useSelector(state => store.getState().user);
+    const [userToken, setUserToken] = useCookie('token', '0');
 
     const navigate = useNavigate();
 
@@ -49,6 +51,8 @@ export const Login: React.FunctionComponent = ():JSX.Element => {
                     authenticated: true,
                     forcedReset: user.forcedReset
                 }
+                setUserToken(user.token);
+                setCookie('token', user.token, {days:1})
                 store.dispatch(UserActions.setUser(mappedUser));
                 if(mappedUser.forcedReset){
                     setIsResetting(true);

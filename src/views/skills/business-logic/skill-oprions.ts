@@ -82,6 +82,59 @@ export const skillOptions = [
     skillName: "Knowledge",
     skillAttr: "Int",
     skillDesc: "You are educated in a field of study and can answer both simple and complex questions. Like the Craft, Perform, and Profession skills, Knowledge actually encompasses a number of different specialties..",
+  },{
+    id: 36,
+    skillName: "Knowledge (Engineering)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (buildings, aqueducts, bridges, fortifications); This is the most important skill with regard to technological subjects. Knowledge (engineering) can be used to identify a robot’s abilities and weaknesses. Knowledge (engineering) is also used to identify and understand unknown technological objects in a similar manner to how Spellcraft is used to identify the properties of a magic item. The DC to correctly identify and understand an unknown technological object is equal to the object’s Craft DC ",
+  },
+  {
+    id: 37,
+    skillName: "Knowledge (History)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (wars, colonies, migrations, founding of cities)",
+  },
+  {
+    id: 38,
+    skillName: "Knowledge (Local)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (legends, personalities, inhabitants, laws, customs, traditions, humanoids)",
+  },
+  {
+    id: 39,
+    skillName: "Knowledge (Nature)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (animals, fey, monstrous humanoids, plants, seasons and cycles, weather, vermin)",
+  },
+  {
+    id: 40,
+    skillName: "Knowledge (Nobility)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (lineages, heraldry, personalities, royalty)",
+  },
+  {
+    id: 41,
+    skillName: "Knowledge (Planes)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, planar magic)",
+  },
+  {
+    id: 42,
+    skillName: "Knowledge (Religion)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead)",
+  },
+  {
+    id: 43,
+    skillName: "Knowledge (Dungeoneering)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (aberrations, caverns, oozes, spelunking)",
+  },
+  {
+    id: 43,
+    skillName: "Knowledge (Geography)",
+    skillAttr: "Int",
+    skillDesc: "You are educated in a field of study and can answer both simple and complex questions related to (lands, terrain, climate, people.) Used for astronomy.",
   },
   {
     id: 16,
@@ -161,4 +214,8 @@ export const skillOptions = [
     skillAttr: "Con & Modifier Stat",
     skillDesc: "You are skilled in casting spells while bing threatend. Each rank adds to the concentration check on defensive casting. Round Spell Stat Mod down",
   },
+
+
+
+  
 ];

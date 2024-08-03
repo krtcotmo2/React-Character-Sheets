@@ -30,27 +30,6 @@ export const EquipmentRow: React.FC<EquipmentRowProps> = (props: EquipmentRowPro
     const [itemWeight, setItemWeight] = useState(weight);
     const [includeWt, setIncludeWt] = useState(partOfOverallWeight);
 
-    const toggleSpell = async() => {
-        setIncludeWt(!includeWt);
-        // const theSpell: Spell = {
-        //     ...props.equipItem,
-        //     isCast: !spellCast,
-        //     spellName: editSpellName,
-        // };
-        // await updateSpell(id, theSpell);
-        // setSpellCast(!spellCast);
-        // const spells = await getCharacterSpells(charId.toString());
-        // store.dispatch(SpellActions.setSpells(spells));
-    }
-
-    // useEffect(()=>{
-    //     setEditSpellName(spellName);
-    // },[spellName]);
-
-    // useEffect(()=>{
-    //     setSpellCast(isCast);
-    // },[isCast]);
-
     const deleteItem =  async (spellId: string) => {
         await deleteCharacterEquipment(spellId, charId.toString());
         const equip = await getCharacterEquipment(charId.toString());
