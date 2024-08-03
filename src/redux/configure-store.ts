@@ -6,6 +6,12 @@ import { SavesReducerFunctions } from "./reducers/saves-reducer";
 import { SkillReducerFunctions } from "./reducers/skills.reducer";
 import { CharLevelReducerFunctions } from "./reducers/level-reducer";
 import { SpellReducerFunctions } from "./reducers/spell-reducer";
+import { FeatsReducerFunctions } from "./reducers/feates-reducer";
+import { ExpendableReducerFunctions } from "./reducers/expendables-reducer";
+import { ToHitReducerFunctions } from "./reducers/to-hit-reducer";
+import { ArmorReducerFunctions } from "./reducers/armor-reducer";
+import { EquipmentReducerFunctions } from './reducers/equipment-reducer'
+import { UserReducerFunctions } from "./reducers/user-reducer";
 
 const rootReducer = combineReducers({
     character: CharacterReducerFunctions,
@@ -14,6 +20,12 @@ const rootReducer = combineReducers({
     skills: SkillReducerFunctions,
     levels: CharLevelReducerFunctions,
     spells: SpellReducerFunctions,
+    feats: FeatsReducerFunctions,
+    expendables: ExpendableReducerFunctions,
+    toHitGroups: ToHitReducerFunctions,
+    user: UserReducerFunctions,
+    armor: ArmorReducerFunctions,
+    equipment: EquipmentReducerFunctions,
 })
 export type AppState = ReturnType<typeof rootReducer>
 

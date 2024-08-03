@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Modal } from '../../interfaces/modal';
 
-let allModals:any[] = [];
+let allModals:Modal[] = [];
 let setAllModals: Dispatch<SetStateAction<Modal[]>>;
 
 export const pushModal = (component: JSX.Element, modalId: string) => {
   const newModal:Modal = {
       component: component,
       id: modalId,
-      zIndex: allModals.length + 1,
+      zIndex: (allModals.at(0)?.zIndex ?? 0) + 1,
 
   };
   const existingModal = allModals.find(modal => modal.id === newModal.id);
